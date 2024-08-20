@@ -24,20 +24,21 @@ fun AppNavHost(
     startDestination: String = NavigationItem.Login.route // Start route
 ) {
     NavHost( // Provides in place in the Compose hierarchy for self contained navigation to occur.
-        navController = navController,
-        startDestination = startDestination,
-        modifier = modifier
+        modifier = modifier,
+        navController =  navController,
+        startDestination = startDestination
     ) {
         composable( // This method adds the composable to the NavGraphBuilder
             route = NavigationItem.Login.route // Route for the destination
-        ) {
-            // borrar / LoginScreen( navController) // Composable for the destination
+        )
+        {
+             LoginScreen( navController) // Composable for the destination
         }
 
         composable( // This method adds the composable to the NavGraphBuilder
             route = NavigationItem.Home.route // Route for the destination
         ) {
-            HomeScreen()  //Composable for the destination
+            HomeScreen(navController)  //Composable for the destination
         }
 
         composable( // This method adds the composable to the NavGraphBuilder
@@ -53,7 +54,7 @@ fun AppNavHost(
             // Create a new movie object
             val movie = Movie(image, name)
 
-       // borrar /    DetailScreen(movie = movie, navController) // Composable for the destination, this composable receives a movie object
+      DetailScreen(movie = movie, navController) // Composable for the destination, this composable receives a movie object
         }
     }
     }

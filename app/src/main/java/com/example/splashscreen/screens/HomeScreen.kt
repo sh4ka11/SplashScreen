@@ -2,6 +2,7 @@ package com.example.splashscreen.screens
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -20,31 +21,44 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
+import com.example.splashscreen.navigation.NavigationItem
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     MoviesColumn( movies = listOf(
         Movie(drawable = R.drawable.`deadpool3`, name = "Deadpool 3"),
         Movie(drawable = R.drawable.arepas, name = "Spider-Man"),
         Movie(drawable = R.drawable.logo, name = "Thor - Love & Thunder")
-    )
+    ),
+        navController = navController // Set navController
+
     )
 }
-
 @Composable
 fun MoviesColumn(
     modifier: Modifier = Modifier,
-    movies: List<Movie> = emptyList()
+    movies: List<Movie> = emptyList(),
+    navController: NavController
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding =  PaddingValues(horizontal = 16.dp, vertical = 10.dp),
         modifier = modifier
     ) {
-        items(movies) { movie ->
-            FavoriteCollectionCard(movie.drawable, movie.name)
+        items(movies) { category  ->
+            FavoriteCollectionCard(
+                category.drawable,
+                category.name,
+                onClick = {
+                    navController.navigate(
+                        NavigationItem.Detail.route + "/${category.name}/${category.drawable}"
+                    )
+                }
+            )
         }
     }
 }
@@ -53,7 +67,8 @@ fun MoviesColumn(
 fun FavoriteCollectionCard(
     @DrawableRes drawable: Int,
     name: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = { }
 ) {
     Surface(
         shape = MaterialTheme.shapes.medium,
@@ -63,6 +78,7 @@ fun FavoriteCollectionCard(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
+                .clickable(enabled = true, onClick = onClick)
         ) {
             Image(
                 painter = painterResource(id = drawable),
@@ -84,12 +100,12 @@ fun FavoriteCollectionCard(
 @Composable
 fun FavoriteCollectionCardPreview() {
     FavoriteCollectionCard(
-        drawable = R.drawable.`deadpool3`,
+        drawable = R.drawable.deadpool3,
         name = "Deadpool 3")
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen(rememberNavController())
 }

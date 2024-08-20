@@ -16,11 +16,13 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
 
 @Composable
-fun DetailScreen(movie: Movie) {
+fun DetailScreen(movie: Movie, navController: NavController) {
     MovieDetail(movie = movie)
 }
 
@@ -70,5 +72,5 @@ fun MovieDetail(movie: Movie) {
 @Preview(showBackground = true)
 @Composable
 fun DetailScreenPreview() {
-    DetailScreen(movie = Movie(name = "Deadpool 3", drawable = R.drawable.`deadpool3`))
+    DetailScreen(Movie(name = "Deadpool 3", drawable = R.drawable.deadpool3), rememberNavController()) // Set NavController by paramete
 }

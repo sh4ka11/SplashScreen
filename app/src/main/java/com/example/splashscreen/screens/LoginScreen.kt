@@ -15,9 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.splashscreen.navigation.NavigationItem
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavController) {
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -44,11 +47,20 @@ fun LoginScreen() {
         Button(onClick = { /*TODO*/ }) {
             Text("Log In")
         }
+        Button(
+            onClick = {
+                navController.navigate( // Navigate to a route in the current NavGraph
+                    NavigationItem.Home.route // Route defined in AppNavHost
+                ) }
+        ) {
+            Text("Log In")
+        }
+
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+    LoginScreen(rememberNavController())
 }
