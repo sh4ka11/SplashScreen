@@ -11,4 +11,6 @@ sealed class NavigationItem(val route: String) {
     object Login: NavigationItem(Screen.LOGIN.name)
     object Home: NavigationItem(Screen.HOME.name)
     object Detail: NavigationItem(Screen.DETAIL.name)
+
+
 }
