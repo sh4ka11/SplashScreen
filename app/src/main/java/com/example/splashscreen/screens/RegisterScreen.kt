@@ -1,5 +1,4 @@
 package com.example.splashscreen.screens
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
@@ -138,7 +137,4 @@ fun TextFieldDecoration(label: String, innerTextField: @Composable () -> Unit) {
         innerTextField()
     }
 }
-sealed class NavigationItem(val route: String) {
-    // ... otros items ...
-    object Register : NavigationItem("register")
-}
+
