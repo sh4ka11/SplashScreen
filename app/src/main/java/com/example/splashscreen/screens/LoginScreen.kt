@@ -27,25 +27,25 @@ fun LoginScreen(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Welcome!", style = MaterialTheme.typography.bodyLarge)
+        Text(text = "Bienvenido!", style = MaterialTheme.typography.bodyLarge)
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = "",
             onValueChange = { },
-            label = { Text("User name")},
+            label = { Text("Usuario")},
             singleLine = true
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = "",
             onValueChange = { },
-            label = { Text("Password")},
+            label = { Text("Contraseña")},
             visualTransformation = PasswordVisualTransformation(),
             singleLine = true
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = { /*TODO*/ }) {
-            Text("Log In")
+            Text("Iniciar Sesion")
         }
         Button(
             onClick = {
@@ -53,7 +53,7 @@ fun LoginScreen(navController: NavController) {
                     NavigationItem.Home.route // Route defined in AppNavHost
                 ) }
         ) {
-            Text("Log In")
+            Text("Registrarse")
         }
 
     }

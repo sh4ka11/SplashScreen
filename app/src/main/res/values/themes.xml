@@ -2,8 +2,8 @@
 <resources>
     <style name="Theme.SplashScreen" parent="android:Theme.Material.Light.NoActionBar" />
     <style name="Theme.MyApplicationSplashScreen" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/red_500</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/arepas</item>
-        <item name="windowSplashScreenIconBackgroundColor">@color/white</item> <!-- Opcional -->
+        <item name="windowSplashScreenBackground">@color/black</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logocir</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/Gris</item>
     </style>
 </resources>
