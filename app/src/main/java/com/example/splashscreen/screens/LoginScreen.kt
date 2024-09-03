@@ -70,7 +70,9 @@ fun LoginScreen(navController: NavController) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate(
+                NavigationItem.Home.route
+            ) },
             colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
         ) {
             Text("Iniciar Sesión", color = Color.White)

@@ -1,11 +1,15 @@
 package com.example.splashscreen.screens
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,9 +22,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.splashscreen.navigation.NavigationItem
 
 @Composable
-fun UserRegistrationScreen() {
+fun RegistrationScreen(navController: NavHostController) {
     Box(modifier = Modifier.fillMaxSize()) {
         // Fondo (opcional si deseas agregar uno)
         // Imagen de fondo o color sólido
@@ -42,7 +48,7 @@ fun UserRegistrationScreen() {
                     painter = painterResource(id = LocalContext.current.resources.getIdentifier("logo", "drawable", LocalContext.current.packageName)),
                     contentDescription = "Logo",
                     modifier = Modifier
-                        .size(80.dp)
+                        .size(200.dp)
                         .padding(top = 16.dp),
                     contentScale = ContentScale.Fit
                 )
@@ -73,58 +79,55 @@ fun UserRegistrationScreen() {
                 val documento = remember { mutableStateOf(TextFieldValue()) }
                 val telefono = remember { mutableStateOf(TextFieldValue()) }
 
-                BasicTextField(
-                    value = nombre.value,
-                    onValueChange = { nombre.value = it },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    decorationBox = { innerTextField ->
-                        TextFieldDecoration("Nombre", innerTextField)
-                    }
+                OutlinedTextField(
+                    value = "",
+                    onValueChange = { },
+                    label = { Text("Nombre") },
+                    singleLine = true
                 )
+                Spacer(modifier = Modifier.height(16.dp))
 
-                BasicTextField(
-                    value = apellido.value,
-                    onValueChange = { apellido.value = it },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    decorationBox = { innerTextField ->
-                        TextFieldDecoration("Apellido", innerTextField)
-                    }
+                OutlinedTextField(
+                    value = "",
+                    onValueChange = { },
+                    label = { Text("Apellido") },
+                    singleLine = true
                 )
+                Spacer(modifier = Modifier.height(16.dp))
 
-                BasicTextField(
-                    value = documento.value,
-                    onValueChange = { documento.value = it },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    decorationBox = { innerTextField ->
-                        TextFieldDecoration("Documento", innerTextField)
-                    }
+                OutlinedTextField(
+                    value = "",
+                    onValueChange = { },
+                    label = { Text("Documento") },
+                    singleLine = true
                 )
+                Spacer(modifier = Modifier.height(16.dp))
 
-                BasicTextField(
-                    value = telefono.value,
-                    onValueChange = { telefono.value = it },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    decorationBox = { innerTextField ->
-                        TextFieldDecoration("Telefono", innerTextField)
-                    }
+                OutlinedTextField(
+                    value = "",
+                    onValueChange = { },
+                    label = { Text("Telefono") },
+                    singleLine = true
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
-                    onClick = { /* Acción del botón */ },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+                    onClick = {  },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black) ,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+
                 ) {
                     Text(text = "Siguiente", color = Color.White)
                 }
+                TextButton(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    onClick = {  navController.navigate(
+                                NavigationItem.Login.route) }
+                ){
+                    Text(text = "Ya tienes una cuenta?. Inicia Sesión!",color = Color.Gray)
+                }
+
             }
         }
     }
