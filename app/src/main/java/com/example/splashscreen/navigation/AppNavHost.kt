@@ -32,7 +32,7 @@ fun AppNavHost(
             route = NavigationItem.Login.route // Route for the destination
         )
         {
-             LoginScreen( navController) // Composable for the destination
+            LoginScreen( navController) // Composable for the destination
         }
 
         composable( // This method adds the composable to the NavGraphBuilder
@@ -54,9 +54,8 @@ fun AppNavHost(
             // Create a new movie object
             val movie = Movie(image, name)
 
-      DetailScreen(movie = movie, navController) // Composable for the destination, this composable receives a movie object
+            DetailScreen(movie = movie, navController) // Composable for the destination, this composable receives a movie object
         }
     }
-    }
-
+}
 
