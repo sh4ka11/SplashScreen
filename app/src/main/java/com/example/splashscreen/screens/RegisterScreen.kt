@@ -127,7 +127,6 @@ fun RegistrationScreen(navController: NavHostController) {
                 ){
                     Text(text = "Ya tienes una cuenta?. Inicia Sesión!",color = Color.Gray)
                 }
-
             }
         }
     }
