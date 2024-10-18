@@ -72,5 +72,5 @@ fun MovieDetail(movie: Movie) {
 @Preview(showBackground = true)
 @Composable
 fun DetailScreenPreview() {
-    DetailScreen(Movie(name = "Deadpool 3", drawable = R.drawable.deadpool3), rememberNavController()) // Set NavController by paramete
+    DetailScreen(Movie(name = "Deadpool 3", drawable = R.drawable.flecha), rememberNavController()) // Set NavController by paramete
 }

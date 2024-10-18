@@ -190,9 +190,10 @@ fun userregister_redesView() {
 
 @Preview(showBackground = true)
 @Composable
-fun user_redesViewPreview() {
+fun user_redesaViewPreview() {
     val navController = rememberNavController() // Create a NavController for preview
     user_registration_redes(navController = navController) // Pass it to HomeScreen
 }
+
 
 
