@@ -1,5 +1,3 @@
-package com.example.splashscreen
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,6 +10,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.ProfileEditScreen
 import com.example.splashscreen.ui.theme.SplashScreenTheme
+import com.example.splashscreen.screens.DetailScreen
+import com.example.splashscreen.data.Movie
+import com.example.splashscreen.screens.CodiaMainView
+import com.example.splashscreen.screens.ProfileEditScreen1
+import com.example.splashscreen.screens.UserProfileMainView // Cambié CodiaMainView a UserProfileMainView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +24,8 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
+
+                    // Inicializa el NavController
                     val navController = rememberNavController()
 
                     NavHost(
@@ -46,6 +51,30 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+                    }
+
+
+                    // Crear un NavHostController y pasar a AppNavHost
+                    AppNavHost(navController = rememberNavController())
+
+
+
+                }
+
+            }
         }
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    SplashScreenTheme {
+        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+            // Aquí puedes hacer una vista previa de UserProfileMainView
+            UserProfileMainView()  // Cambié CodiaMainView a UserProfileMainView
+        }
+    }
+}
+
+
