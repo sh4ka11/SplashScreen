@@ -23,6 +23,7 @@ import com.example.splashscreen.screens.DetailScreen
 import com.example.splashscreen.data.Movie
 import com.example.splashscreen.screens.CodiaMainView
 import com.example.splashscreen.screens.ProfileEditScreen1
+import com.example.splashscreen.screens.UserProfileMainView // Cambié CodiaMainView a UserProfileMainView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,18 +33,16 @@ class MainActivity : ComponentActivity() {
                 // Contenedor de superficie utilizando el color de fondo del tema
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-
                 ) {
 
                     // Inicializa el NavController
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = "codiaMain" // Pantalla inicial
+                        startDestination = "userProfileMain" // Cambié "codiaMain" a "userProfileMain"
                     ) {
-                        composable("codiaMain") {
-                            // Asegúrate de que CodiaMainView reciba el navController si es necesario
-
+                        composable("userProfileMain") {
+                            UserProfileMainView(navController) // Cambié CodiaMainView a UserProfileMainView
                         }
                         composable("detalles") {
                             DetailScreen(
@@ -71,8 +70,8 @@ class MainActivity : ComponentActivity() {
 fun DefaultPreview() {
     SplashScreenTheme {
         Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-            // Aquí puedes hacer una vista previa de tu CodiaMainView
-
+            // Aquí puedes hacer una vista previa de UserProfileMainView
+            UserProfileMainView()  // Cambié CodiaMainView a UserProfileMainView
         }
     }
 }
