@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
@@ -13,8 +14,8 @@ import com.example.splashscreen.screens.DetailScreen
 import com.example.splashscreen.navigation.AppNavController
 import com.example.splashscreen.screens.HomeScreen
 import com.example.splashscreen.screens.LoginScreen
-
-
+import com.example.splashscreen.screens.ProfileEditScreen
+import com.example.splashscreen.screens.ProfileScreen
 
 
 @Composable
@@ -27,6 +28,10 @@ fun AppNavHost(
         modifier = modifier,
         navController =  navController,
         startDestination = startDestination
+
+
+
+
     ) {
         composable( // This method adds the composable to the NavGraphBuilder
             route = NavigationItem.Login.route // Route for the destination
@@ -40,6 +45,8 @@ fun AppNavHost(
         ) {
             HomeScreen(navController)  //Composable for the destination
         }
+
+
 
         composable( // This method adds the composable to the NavGraphBuilder
             route = NavigationItem.Detail.route + "/{movieName}/{movieImage}", // Route for the destination that receives 2 arguments
@@ -56,6 +63,7 @@ fun AppNavHost(
 
             DetailScreen(movie = movie, navController) // Composable for the destination, this composable receives a movie object
         }
+
+
     }
 }
-

@@ -12,11 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplicationSplashScreen"
         tools:targetApi="31">
+
         <activity
-            android:name=".navigation.MainActivity"
+            android:name=".screens.MainActivity"
             android:exported="true"
             android:label="EmprendeLink"
             android:theme="@style/Theme.MyApplicationSplashScreen">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,5 +26,5 @@
             </intent-filter>
         </activity>
     </application>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 </manifest>

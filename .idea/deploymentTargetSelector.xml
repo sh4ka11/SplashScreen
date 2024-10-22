@@ -2,28 +2,20 @@
 <project version="4">
   <component name="deploymentTargetSelector">
     <selectionStates>
-      <SelectionState runConfigName="SplashScreenMainViewPreview">
+      <SelectionState runConfigName="MainScreenPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="app">
+      <SelectionState runConfigName="MenuScreenPreview">
         <option name="selectionMode" value="DROPDOWN" />
-<<<<<<< HEAD
       </SelectionState>
-      <SelectionState runConfigName="MainActivity">
+      <SelectionState runConfigName="Preview1CodiaMainView">
         <option name="selectionMode" value="DROPDOWN" />
-=======
-<<<<<<< HEAD
-=======
-        <DropdownSelection timestamp="2024-10-15T16:31:25.336891300Z">
-          <Target type="DEFAULT_BOOT">
-            <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Aprendiz\.android\avd\Medium_Phone_API_30.avd" />
-            </handle>
-          </Target>
-        </DropdownSelection>
-        <DialogSelection />
->>>>>>> def3438a81f11240284257d0a4f8886be23952a6
->>>>>>> 82536d37bad23c7298f8cff9198fc54238aa487c
+      </SelectionState>
+      <SelectionState runConfigName="PreviewCodia1MainView">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="ProfileEditScreen1">
+        <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
   </component>

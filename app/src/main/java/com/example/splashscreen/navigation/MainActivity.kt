@@ -3,13 +3,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-<<<<<<< HEAD
+
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-=======
+
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
->>>>>>> def3438a81f11240284257d0a4f8886be23952a6
+
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,6 +22,7 @@ import com.example.splashscreen.ui.theme.SplashScreenTheme
 import com.example.splashscreen.screens.DetailScreen
 import com.example.splashscreen.data.Movie
 import com.example.splashscreen.screens.CodiaMainView
+import com.example.splashscreen.screens.ProfileEditScreen1
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +34,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
 
                 ) {
-<<<<<<< HEAD
+
                     // Inicializa el NavController
                     val navController = rememberNavController()
                     NavHost(
@@ -51,12 +52,15 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     }
-=======
+
 
                     // Crear un NavHostController y pasar a AppNavHost
                     AppNavHost(navController = rememberNavController())
->>>>>>> def3438a81f11240284257d0a4f8886be23952a6
+
+
+
                 }
+
             }
         }
     }
@@ -72,3 +76,5 @@ fun DefaultPreview() {
         }
     }
 }
+
+
