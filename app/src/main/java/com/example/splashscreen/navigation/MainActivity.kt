@@ -3,13 +3,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-<<<<<<< HEAD
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-=======
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
->>>>>>> def3438a81f11240284257d0a4f8886be23952a6
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,7 +18,7 @@ import com.example.splashscreen.R
 import com.example.splashscreen.ui.theme.SplashScreenTheme
 import com.example.splashscreen.screens.DetailScreen
 import com.example.splashscreen.data.Movie
-import com.example.splashscreen.screens.CodiaMainView
+import com.example.splashscreen.screens.UserProfileMainView // Cambié CodiaMainView a UserProfileMainView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,18 +28,15 @@ class MainActivity : ComponentActivity() {
                 // Contenedor de superficie utilizando el color de fondo del tema
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-
                 ) {
-<<<<<<< HEAD
                     // Inicializa el NavController
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = "codiaMain" // Pantalla inicial
+                        startDestination = "userProfileMain" // Cambié "codiaMain" a "userProfileMain"
                     ) {
-                        composable("codiaMain") {
-                            // Asegúrate de que CodiaMainView reciba el navController si es necesario
-
+                        composable("userProfileMain") {
+                            UserProfileMainView(navController) // Cambié CodiaMainView a UserProfileMainView
                         }
                         composable("detalles") {
                             DetailScreen(
@@ -51,11 +45,6 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     }
-=======
-
-                    // Crear un NavHostController y pasar a AppNavHost
-                    AppNavHost(navController = rememberNavController())
->>>>>>> def3438a81f11240284257d0a4f8886be23952a6
                 }
             }
         }
@@ -67,8 +56,8 @@ class MainActivity : ComponentActivity() {
 fun DefaultPreview() {
     SplashScreenTheme {
         Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-            // Aquí puedes hacer una vista previa de tu CodiaMainView
-
+            // Aquí puedes hacer una vista previa de UserProfileMainView
+            UserProfileMainView()  // Cambié CodiaMainView a UserProfileMainView
         }
     }
 }

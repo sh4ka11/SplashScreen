@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
+import com.example.splashscreen.navigation.NavigationItem
 
 
 @Composable
@@ -47,12 +48,12 @@ fun HomePrincipalScreen(navController: NavController) {
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         // Call to EmprendeMainView (if this is your main content)
-        CodiaMainView()
+        MainActivity()
     }
 }
 
 @Composable
-fun CodiaMainView() {
+fun NavigationItem.HomePrincipal() {
     // Box-710:268-HOME-
     Box(
         contentAlignment = Alignment.TopStart,
