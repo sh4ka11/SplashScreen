@@ -1,5 +1,7 @@
 package com.example.splashscreen.data
 
-class Movie  (val drawable: Int, val name: String){
 
-}
+data class Movie(
+    val image: Int,
+    val name: String
+)

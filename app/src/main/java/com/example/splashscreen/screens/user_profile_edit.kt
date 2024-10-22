@@ -21,11 +21,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.splashscreen.data.UserProfile
 import androidx.navigation.NavHostController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileEditScreen(
+fun ProfileEditUserScreen(
     onMenuClick: () -> Unit = {}, // Define correctamente como un lambda que no recibe parámetros
     onUpdateProfile: () -> Unit = {}
 ) {
@@ -196,16 +197,7 @@ private fun EditableField(label: String, value: String) {
     }
 }
 
-data class UserProfile1(
-    val name: String,
-    val birthDate: String,
-    val email: String,
-    val location: String,
-    val phone: String,
-    val document: String,
-    val experienceFile: String,
-    val certification: String
-)
+
 
 @Preview(showBackground = true, widthDp = 430, heightDp = 894)
 @Composable

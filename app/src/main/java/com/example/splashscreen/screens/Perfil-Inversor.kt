@@ -191,7 +191,7 @@ private fun ProfileField(label: String, value: String) {
     }
 }
 
-data class UserProfile(
+data class UserProfile1(
     val name: String,
     val birthDate: String,
     val email: String,

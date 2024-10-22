@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.splashscreen.data.UserProfile
 import com.example.splashscreen.navigation.NavigationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
