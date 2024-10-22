@@ -24,7 +24,8 @@ import com.example.splashscreen.data.Movie
 import com.example.splashscreen.screens.CodiaMainView
 import com.example.splashscreen.screens.ProfileEditScreen1
 import com.example.splashscreen.screens.UserProfileMainView // Cambié CodiaMainView a UserProfileMainView
-
+import com.example.splashscreen.screens.CodiaMainView
+import com.example.splashscreen.screens.ProfileEditScreen1
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,8 +62,7 @@ class MainActivity : ComponentActivity() {
 
 
 
-import com.example.splashscreen.screens.CodiaMainView
-import com.example.splashscreen.screens.ProfileEditScreen1
+
 
 
 
