@@ -13,8 +13,8 @@ import com.example.splashscreen.screens.DetailScreen
 import com.example.splashscreen.navigation.AppNavController
 import com.example.splashscreen.screens.HomeScreen
 import com.example.splashscreen.screens.LoginScreen
-
-
+import com.example.splashscreen.screens.ProfileEditScreen
+import com.example.splashscreen.screens.UserProfileMainView
 
 
 @Composable
@@ -23,6 +23,7 @@ fun AppNavHost(
     navController: NavHostController, // The navController for this host
     startDestination: String = NavigationItem.Login.route // Start route
 ) {
+
     NavHost( // Provides in place in the Compose hierarchy for self contained navigation to occur.
         modifier = modifier,
         navController =  navController,
@@ -57,5 +58,47 @@ fun AppNavHost(
             DetailScreen(movie = movie, navController) // Composable for the destination, this composable receives a movie object
         }
     }
+    @Composable
+    fun AppNavHost(
+        modifier: Modifier = Modifier,
+        navController: NavHostController,
+        startDestination: String = NavigationItem.Login.route
+    ) {
+
+        NavHost(
+            modifier = modifier,
+            navController = navController,
+            startDestination = startDestination
+        ) {
+            composable("userProfileMain") {
+                UserProfileMainView(navController) { /* acción de menú aquí */ }
+            }
+            composable("profileEdit") {
+                ProfileEditScreen { /* acción de menú aquí */ }
+            }
+            composable(NavigationItem.Login.route) {
+                LoginScreen(navController)
+            }
+
+            composable(NavigationItem.Home.route) {
+                HomeScreen(navController)
+            }
+
+            composable(NavigationItem.Detail.route + "/{movieName}/{movieImage}",
+                arguments = listOf(
+                    navArgument("movieName") { defaultValue = ""; type = NavType.StringType },
+                    navArgument("movieImage") { defaultValue = R.drawable.no_image_available; type = NavType.ReferenceType }
+                )
+            ) {
+                val image = it.arguments?.getInt("movieImage", R.drawable.no_image_available) ?: R.drawable.no_image_available
+                val name = it.arguments?.getString("movieName", "") ?: ""
+                val movie = Movie(image, name)
+                DetailScreen(movie = movie, navController)
+            }
+
+
+        }
+    }
+
 }
 
