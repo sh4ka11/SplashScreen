@@ -58,7 +58,21 @@ class MainActivity : ComponentActivity() {
 
 
 
+
+
+
+import com.example.splashscreen.screens.CodiaMainView
+import com.example.splashscreen.screens.ProfileEditScreen1
+
+
+
+                    // Crear un NavHostController y pasar a AppNavHost
+                    AppNavHost(navController = rememberNavController())
+
+
+
                 }
+
 
             }
         }
