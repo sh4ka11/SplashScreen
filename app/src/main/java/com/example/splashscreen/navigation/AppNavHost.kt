@@ -9,7 +9,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
-import com.example.splashscreen.screens.DetailScreen
 import com.example.splashscreen.screens.HomeScreen
 import com.example.splashscreen.screens.LoginScreen
 import com.example.splashscreen.screens.ProfileEditScreen
@@ -69,10 +68,7 @@ fun AppNavHost(
         ) {
             val image = it.arguments?.getInt("movieImage") ?: R.drawable.no_image_available
             val name = it.arguments?.getString("movieName") ?: ""
-            DetailScreen(
-                movie = Movie(image = image, name = name),
-                navController = navController
-            )
+
         }
     }
 }
