@@ -45,6 +45,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.BorderStroke
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 
 data class BusinessItem(
@@ -55,7 +57,7 @@ data class BusinessItem(
 )
 
 @Composable
-fun BusinessListView(
+fun BusinessListView(navController: NavController,
     modifier: Modifier = Modifier,
     onVisitClick: (BusinessItem) -> Unit = {}
 ) {
@@ -114,7 +116,7 @@ fun BusinessListView(
                     painter = painterResource(id = R.drawable.logo),
                     contentDescription = "Logo",
                     modifier = Modifier
-                        .height(40.dp)
+                        .height(200.dp)
                         .padding(vertical = 8.dp),
                     contentScale = ContentScale.Fit
                 )
@@ -261,8 +263,6 @@ private fun BusinessCard(
 
 @Preview(showBackground = true)
 @Composable
-fun BusinessListPreview() {
-    MaterialTheme {
-        BusinessListView()
-    }
+fun PreviewWiewApp() {
+    BusinessListView(navController = rememberNavController())
 }
