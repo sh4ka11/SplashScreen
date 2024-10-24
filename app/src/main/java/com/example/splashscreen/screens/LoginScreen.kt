@@ -71,7 +71,7 @@ fun LoginScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = { navController.navigate(
-                NavigationItem.Home.route
+                NavigationItem.HomeUsuarios.route
             ) },
             colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
         ) {

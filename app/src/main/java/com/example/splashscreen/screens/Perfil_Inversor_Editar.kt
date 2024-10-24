@@ -230,16 +230,7 @@ private fun EditableField(label: String, value: String) {
     }
 }
 
-data class UserProfile1(
-    val name: String,
-    val birthDate: String,
-    val email: String,
-    val location: String,
-    val phone: String,
-    val document: String,
-    val experienceFile: String,
-    val certification: String
-)
+
 
 @Preview(showBackground = true, widthDp = 430, heightDp = 894)
 @Composable
