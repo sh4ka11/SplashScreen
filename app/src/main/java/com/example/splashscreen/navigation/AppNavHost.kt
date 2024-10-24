@@ -1,5 +1,6 @@
 package com.example.splashscreen.navigation
 
+import WineEditAppApp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -31,9 +32,13 @@ fun AppNavHost(
         }
 
         // Home Screen
-        composable(NavigationItem.Home.route) {
+        composable(NavigationItem.HomeUsuarios.route) {
             HomeScreen(navController)
         }
+        composable(NavigationItem.EditarEmpredimiento.route) {
+            WineEditAppApp(navController)
+        }
+
 
         // User Profile Screens
         composable("userProfileMain") {
@@ -52,23 +57,33 @@ fun AppNavHost(
             )
         }
 
-        // Detail Screen
-        composable(
-            route = NavigationItem.Detail.route + "/{movieName}/{movieImage}",
-            arguments = listOf(
-                navArgument("movieName") {
-                    defaultValue = ""
-                    type = NavType.StringType
-                },
-                navArgument("movieImage") {
-                    defaultValue = R.drawable.no_image_available
-                    type = NavType.IntType
+        composable("Menu de Home") {
+            ProfileEditScreen(
+                onMenuClick = { /* acción de menú aquí */ },
+                onUpdateProfile = {
+                    navController.navigateUp()
                 }
             )
-        ) {
-            val image = it.arguments?.getInt("movieImage") ?: R.drawable.no_image_available
-            val name = it.arguments?.getString("movieName") ?: ""
-
         }
+
+
+//
+//        composable(Screen.Catalog.route) {
+//            CatalogScreen(navController = navController)
+//        }
+//        composable(Screen.Contact.route) {
+//            ContactScreen(navController = navController)
+//        }
+//        composable(Screen.About.route) {
+//            AboutScreen(navController = navController)
+//        }
+
+
+
+
+
+
+        // Detail Screen
+
     }
 }

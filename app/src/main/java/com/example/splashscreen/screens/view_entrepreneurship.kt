@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
+import com.example.splashscreen.navigation.NavigationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,6 +47,22 @@ fun WineShopApp(navController: NavController) {
                         Icon(
                             imageVector = if (showContactInfo) Icons.Filled.Person else Icons.Filled.Warning, // Adjust this line
                             contentDescription = "Toggle Contact Info",
+                            tint = Color.White
+                        )
+                    }
+                    IconButton(
+                        //Icono editar
+                        onClick ={// { navController.navigate(
+//                            NavigationItem.EditarEmpredimiento.route)
+                        },
+                        modifier = Modifier
+                            .size(32.dp)
+                            .fillMaxWidth()
+                            .padding(start = 8.dp) // Añade padding desde la izquierda
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = "Editar",
                             tint = Color.White
                         )
                     }
