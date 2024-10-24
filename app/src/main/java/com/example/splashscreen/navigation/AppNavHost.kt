@@ -43,14 +43,7 @@ fun AppNavHost(
             )
         }
 
-        composable("profileEdit") {
-            ProfileEditScreen(
-                onMenuClick = { /* acción de menú aquí */ },
-                onUpdateProfile = {
-                    navController.navigateUp()
-                }
-            )
-        }
+
 
         // Detail Screen
         composable(
