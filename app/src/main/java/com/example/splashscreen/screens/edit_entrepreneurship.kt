@@ -40,7 +40,7 @@ data class WineProduct(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WineEditApp(navController: NavController) {
+fun WineEditAppApp(navController: NavController) {
     var showContactInfo by remember { mutableStateOf(true) }
     var showEditDialog by remember { mutableStateOf(false) }
     var selectedProduct by remember { mutableStateOf<WineProduct?>(null) }
@@ -255,7 +255,7 @@ fun EditProductDialog(
                             .background(Color.Black.copy(alpha = 0.3f))
                     )
                     Icon(
-                        imageVector = Icons.Default.ArrowDropDown,
+                        imageVector = Icons.Default.Person,
                         contentDescription = "Cambiar imagen",
                         modifier = Modifier
                             .align(Alignment.Center)
@@ -348,5 +348,5 @@ fun EditProductDialog(
 @Preview(showBackground = true)
 @Composable
 fun PreviewWineEditApp() {
-    WineEditApp(navController = rememberNavController())
+    WineEditAppApp(navController = rememberNavController())
 }

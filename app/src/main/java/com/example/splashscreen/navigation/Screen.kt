@@ -2,20 +2,34 @@ package com.example.splashscreen.navigation
 
 enum class Screen { // Names to identify the screens
     LOGIN,
-    HOME,
+    HOMEUSUARIO,
     DETAIL,
     REGISTER,
-    HOMEPRINCIPAL
+    HOMEPRINCIPAL,
+    MYPROFILE,
+    SEARCHFORENTREPRENEURSHIP,
+    ABOUT,
+    MYENTREPRENEURSHIP,
+    NOTIFICATIONS,
+    CHAT,
+    LOGOUT,
+    EDITAREMPREDIMIENTO
 }
 
-// Objects to identify where navigate
+
 sealed class NavigationItem(val route: String) {
     object Login: NavigationItem(Screen.LOGIN.name)
-    object Home: NavigationItem(Screen.HOME.name)
+    object HomeUsuarios: NavigationItem(Screen.HOMEUSUARIO.name)
     object Register: NavigationItem(Screen.REGISTER.name)
     object Detail: NavigationItem(Screen.DETAIL.name)
     object HomePrincipal: NavigationItem(Screen.HOMEPRINCIPAL.name)
 
-
-
+    object EditarEmpredimiento: NavigationItem(Screen.EDITAREMPREDIMIENTO.name)
+    object MyProfile: NavigationItem(Screen.MYPROFILE.name)
+    object SearchForEntrepreneurship: NavigationItem(Screen.SEARCHFORENTREPRENEURSHIP.name)
+    object About: NavigationItem(Screen.ABOUT.name)
+    object MyEntrepreneurship: NavigationItem(Screen.MYENTREPRENEURSHIP.name)
+    object Notifications: NavigationItem(Screen.NOTIFICATIONS.name)
+    object Chat: NavigationItem(Screen.CHAT.name)
+    object Logout: NavigationItem(Screen.LOGOUT.name)
 }
