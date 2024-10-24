@@ -9,9 +9,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
-import com.example.splashscreen.screens.DetailScreen
+
 import com.example.splashscreen.screens.HomeScreen
 import com.example.splashscreen.screens.LoginScreen
+import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.ProfileEditScreen
 import com.example.splashscreen.screens.UserProfileMainView
 
@@ -31,10 +32,7 @@ fun AppNavHost(
             LoginScreen(navController)
         }
 
-        // Home Screen
-        composable(NavigationItem.Home.route) {
-            HomeScreen(navController)
-        }
+//        z
 
         // User Profile Screens
         composable("userProfileMain") {
@@ -72,6 +70,8 @@ fun AppNavHost(
                 }
             )
         }
+    }
+}
 
 
 //
@@ -90,26 +90,3 @@ fun AppNavHost(
 
 
 
-        // Detail Screen
-        composable(
-            route = NavigationItem.Detail.route + "/{movieName}/{movieImage}",
-            arguments = listOf(
-                navArgument("movieName") {
-                    defaultValue = ""
-                    type = NavType.StringType
-                },
-                navArgument("movieImage") {
-                    defaultValue = R.drawable.no_image_available
-                    type = NavType.IntType
-                }
-            )
-        ) {
-            val image = it.arguments?.getInt("movieImage") ?: R.drawable.no_image_available
-            val name = it.arguments?.getString("movieName") ?: ""
-            DetailScreen(
-                movie = Movie(image = image, name = name),
-                navController = navController
-            )
-        }
-    }
-}
