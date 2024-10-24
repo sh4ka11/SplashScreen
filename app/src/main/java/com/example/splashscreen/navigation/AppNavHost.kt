@@ -48,6 +48,17 @@ fun AppNavHost(
             )
         }
 
+        // Personal Profile Edit Screen kevin
+        composable("personal_profile_edit") {
+            PersonalProfileEditScreen(
+                onMenuClick = { /* acción de menú aquí */ },
+                onUpdateProfile = {
+                    navController.navigateUp()
+                }
+            )
+        }
+
+        // Profile Edit Screen (existing)
         composable("profileEdit") {
             ProfileEditScreen(
                 onMenuClick = { /* acción de menú aquí */ },

@@ -158,8 +158,6 @@ fun UserProfileMainView(
                     ProfileField("Ubicacion", userProfile.location)
                     ProfileField("Celular", userProfile.phone)
                     ProfileField("Documento", userProfile.document)
-                    ProfileField("Experiencia", userProfile.experienceFile)
-                    ProfileField("Certificacion", userProfile.certification)
                 }
             }
 
