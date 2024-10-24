@@ -13,7 +13,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.ProfileEditScreen
-import com.example.splashscreen.screens.ProfileEditUserScreen
 import com.example.splashscreen.ui.theme.SplashScreenTheme
 import com.example.splashscreen.data.UserProfile
 
@@ -38,14 +37,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        composable("profileEdit") {
-                            ProfileEditUserScreen(
-                                onMenuClick = { /* Manejo del menú */ },
-                                onUpdateProfile = {
-                                    navController.navigateUp()
-                                }
-                            )
-                        }
+
                     }
                 }
             }
