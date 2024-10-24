@@ -1,5 +1,6 @@
 package com.example.splashscreen.navigation
 
+import WineEditAppApp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -9,10 +10,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
-
 import com.example.splashscreen.screens.HomeScreen
 import com.example.splashscreen.screens.LoginScreen
-import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.ProfileEditScreen
 import com.example.splashscreen.screens.UserProfileMainView
 
@@ -32,7 +31,14 @@ fun AppNavHost(
             LoginScreen(navController)
         }
 
-//        z
+        // Home Screen
+        composable(NavigationItem.HomeUsuarios.route) {
+            HomeScreen(navController)
+        }
+        composable(NavigationItem.EditarEmpredimiento.route) {
+            WineEditAppApp(navController)
+        }
+
 
         // User Profile Screens
         composable("userProfileMain") {
@@ -70,8 +76,6 @@ fun AppNavHost(
                 }
             )
         }
-    }
-}
 
 
 //
@@ -90,3 +94,7 @@ fun AppNavHost(
 
 
 
+        // Detail Screen
+
+    }
+}
