@@ -9,11 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
-import com.example.splashscreen.screens.DetailScreen
-import com.example.splashscreen.screens.HomeScreen
-import com.example.splashscreen.screens.LoginScreen
-import com.example.splashscreen.screens.ProfileEditScreen
-import com.example.splashscreen.screens.UserProfileMainView
+import com.example.splashscreen.screens.*
 
 @Composable
 fun AppNavHost(
@@ -44,8 +40,19 @@ fun AppNavHost(
             )
         }
 
+        // Personal Profile Edit Screen kevin
+        composable("personal_profile_edit") {
+            PersonalProfileEditScreen(
+                onMenuClick = { /* acción de menú aquí */ },
+                onUpdateProfile = {
+                    navController.navigateUp()
+                }
+            )
+        }
+
+        // Profile Edit Screen (existing)
         composable("profileEdit") {
-            ProfileEditScreen(
+            ProfileEditUserScreen(
                 onMenuClick = { /* acción de menú aquí */ },
                 onUpdateProfile = {
                     navController.navigateUp()
