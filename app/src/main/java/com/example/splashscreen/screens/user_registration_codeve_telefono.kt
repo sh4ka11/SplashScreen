@@ -49,9 +49,6 @@ fun user_registration_codeve_telefono(navController: NavController) {
     }
 }
 
-/**
- * Created by codia-figma
- */
 @Composable
 fun usertecodevteView() {
 

@@ -25,7 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
+//import coil.compose.rememberAsyncImagePainter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -108,19 +108,19 @@ fun ProfileEditScreen(
                     .padding(16.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = if (imageUri != null) {
-                        rememberAsyncImagePainter(imageUri)
-                    } else {
-                        painterResource(id = android.R.drawable.ic_menu_gallery)
-                    },
-                    contentDescription = "Profile Picture",
-                    modifier = Modifier
-                        .size(120.dp)
-                        .clip(CircleShape)
-                        .clickable { launcher.launch("image/*") },
-                    contentScale = ContentScale.Crop
-                )
+//                Image(
+//                    painter = if (imageUri != null) {
+//                        rememberAsyncImagePainter(imageUri)
+//                    } else {
+//                        painterResource(id = android.R.drawable.ic_menu_gallery)
+//                    },
+//                    contentDescription = "Profile Picture",
+//                    modifier = Modifier
+//                        .size(120.dp)
+//                        .clip(CircleShape)
+//                        .clickable { launcher.launch("image/*") },
+//                    contentScale = ContentScale.Crop
+//                )
             }
 
             // Profile Fields Card

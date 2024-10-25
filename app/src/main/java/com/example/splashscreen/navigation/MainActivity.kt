@@ -1,5 +1,7 @@
 package com.example.splashscreen
 
+
+//import ai.codia.x.composeui.demo.HomePincipalScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,6 +17,45 @@ import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.ProfileEditScreen
 import com.example.splashscreen.ui.theme.SplashScreenTheme
 import com.example.splashscreen.data.UserProfile
+import com.example.splashscreen.navigation.AppNavHost
+
+//class MainActivity : ComponentActivity() {
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContent {
+//            SplashScreenTheme {
+//                Surface(
+//                    modifier = Modifier.fillMaxSize(),
+//                ) {
+//                    val navController = rememberNavController()
+//
+//                    NavHost(
+//                        navController = navController,
+//                        startDestination = "userProfileMain"
+//                    ) {
+//                        composable("userProfileMain") {
+//                            UserProfileMainView(
+//                                navController = navController,
+//                                onMenuClick = { /* Manejo del menú */ }
+//                            )
+//                        }
+//
+//                        composable("profileEdit") {
+//                            ProfileEditUserScreen(
+//                                onMenuClick = { /* Manejo del menú */ },
+//                                onUpdateProfile = {
+//                                    navController.navigateUp()
+//                                }
+//                            )
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,34 +66,23 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     val navController = rememberNavController()
-
-                    NavHost(
-                        navController = navController,
-                        startDestination = "userProfileMain"
-                    ) {
-                        composable("userProfileMain") {
-                            UserProfileMainView(
-                                navController = navController,
-                                onMenuClick = { /* Manejo del menú */ }
-                            )
-                        }
-
-
-                    }
+                    AppNavHost(navController = navController)
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    SplashScreenTheme {
-        val navController = rememberNavController()
-        UserProfileMainView(
-            navController = navController,
-            onMenuClick = {}
-        )
-    }
-}
+
+
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview() {
+//    SplashScreenTheme {
+//        val navController = rememberNavController()
+//        UserProfileMainView(
+//            navController = navController,
+//            onMenuClick = {}
+//        )
+//    }
+//}

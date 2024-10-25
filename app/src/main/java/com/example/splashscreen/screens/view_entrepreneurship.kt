@@ -52,8 +52,8 @@ fun WineShopApp(navController: NavController) {
                     }
                     IconButton(
                         //Icono editar
-                        onClick ={// { navController.navigate(
-//                            NavigationItem.EditarEmpredimiento.route)
+                        onClick ={ navController.navigate(
+                           NavigationItem.EditarEmpredimiento.route)
                         },
                         modifier = Modifier
                             .size(32.dp)
