@@ -12,6 +12,7 @@ import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
 import com.example.splashscreen.screens.HomeScreen
 import com.example.splashscreen.screens.LoginScreen
+import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.NotificacionesUsu
 import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.ProfileEditScreen

@@ -1,7 +1,8 @@
-package com.example.splashscreen.screens
+package com.example.myapplication.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -22,71 +24,93 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.splashscreen.R
+import com.example.splashscreen.screens.ChatScreen1
 import com.example.splashscreen.ui.theme.SplashScreenTheme
 
-/**
- * Created by codia-figma
- */
+
 @Composable
-fun CodiaMainView() {
-    // Box-1088:307-Busqueda por categoria 1
+fun Busqueda1() {
+
+
     Box(
         contentAlignment = Alignment.TopStart,
         modifier = Modifier
-            .background(Color(0xffffffff))
-            .size(430.dp, 1575.dp)
+            .background(Color(0xffd9d9d9))
+            .fillMaxWidth() // Llenar todo el ancho disponible
+            .height(1000.dp) // Mantener el alto
+            .verticalScroll(rememberScrollState()) // Habilitar scroll vertical
             .clipToBounds(),
     ) {
-        // Empty-1088:308-Rectangle 761
+        // Rectángulo interior
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 0.dp, y = -101.dp)
+                //.offset(x = 0.dp, y = -101.dp) // Elimina esto para evitar desplazamiento
                 .background(Color(0xffd9d9d9))
-                .size(430.dp, 2097.dp),
+                .fillMaxWidth() // Llenar todo el ancho disponible
+                .height(3000.dp), // Mantener el alto
         )
-        // Image-1088:323-image 190
+
+        // Imagen
         Image(
-            painter = painterResource(id = R.drawable.fondo),
+            painter = painterResource(id = R.drawable.sinfondo),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 503.dp, y = 308.dp)
+                .offset(x = 503.dp, y = 308.dp) // Ajusta esto si es necesario
                 .size(36.dp, 33.dp),
         )
+
+
         // Image-1088:332-588a6507d06f6719692a2d15 3
         Image(
-            painter = painterResource(id = R.drawable.fondo),
+            painter = painterResource(id = R.drawable.sinfondo),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 19.dp, y = 28.dp)
-                .size(35.dp, 24.dp),
+                .size(width = 160.dp, height = 70.dp) // Aumenta el ancho a 160dp y mantiene la altura en 70dp
         )
+
+
         // Empty-1088:163-Rectangle 653
         Box(
             modifier = Modifier
@@ -181,52 +205,62 @@ fun CodiaMainView() {
         )
         // Image-1088:383-Rectangle 685
         Image(
-            painter = painterResource(id = R.drawable.fondo),
+            painter = painterResource(id = R.drawable.escritorios),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 21.dp, y = 518.dp)
-
-                .size(186.dp, 191.dp)
-                .border(5.dp, Color(0xff000000), RoundedCornerShape(20.dp)),
+                .size(172.dp, 187.dp)
+                .clip(RoundedCornerShape(20.dp)) // Curvatura en las esquinas
         )
         // Image-1088:370-image 232
         Image(
-            painter = painterResource(id = R.drawable.fondo),
+            painter = painterResource(id = R.drawable.arepas),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 233.dp, y = 224.dp)
-                .size(173.dp, 179.dp),
+                .size(170.dp, 179.dp),
         )
-        // Empty-1088:214-Rectangle 681
+
+
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 19.dp, y = 468.dp)
-                .background(Color(0xff000000), RoundedCornerShape(10.dp))
-                .size(60.dp, 30.dp),
-        )
-        // Text-1088:215-Visitar
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 31.dp, y = 474.dp)
-                .size(42.dp, 18.dp),
-            text = "Visitar",
-            color = Color(0xffffffff),
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
+        ) {
+            Button(
+                onClick = { /* Acción al hacer clic */ },
+                modifier = Modifier
+                    .width(80.dp) // Ancho del botón ajustado
+                    .height(40.dp), // Altura del botón ajustada
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF000000), // Fondo negro
+                    contentColor = Color(0xFFFFFFFF) // Texto blanco
+                ),
+                elevation = null // Sin sombra
+            ) {
+                Text(
+                    text = "Visitar",
+                    fontSize = 11.sp, // Tamaño de la fuente
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center, // Texto centrado
+                    modifier = Modifier.fillMaxWidth(), // Ocupa todo el ancho del botón
+                    overflow = TextOverflow.Clip // Evita truncamiento del texto
+                )
+            }
+        }
+
+
+
         // Text-1088:224-Empresa procesadora de vino de todos los sabores
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 19.dp, y = 424.dp)
+                .offset(x = 19.dp, y = 430.dp)
                 .size(195.dp, 54.dp),
             text = "Empresa procesadora de vino de todos los sabores",
             color = Color(0xff000000),
@@ -248,32 +282,47 @@ fun CodiaMainView() {
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
-        // Empty-1088:384-Rectangle 768
+
+
+
+
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 21.dp, y = 768.dp)
-                .background(Color(0xff000000), RoundedCornerShape(10.dp))
-                .size(60.dp, 30.dp),
-        )
-        // Text-1088:385-Visitar
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 33.dp, y = 774.dp)
-                .size(42.dp, 18.dp),
-            text = "Visitar",
-            color = Color(0xffffffff),
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
+        ) {
+            Button(
+                onClick = { /* Acción al hacer clic */ },
+                modifier = Modifier
+                    .width(80.dp) // Ancho del botón
+                    .height(40.dp), // Altura del botón
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF000000), // Fondo negro
+                    contentColor = Color(0xFFFFFFFF) // Texto blanco
+                ),
+                elevation = null // Sin sombra
+            ) {
+                Text(
+                    text = "Visitar",
+                    fontSize = 11.sp, // Tamaño de la fuente
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center, // Texto centrado
+                    modifier = Modifier.fillMaxWidth(), // Ocupa todo el ancho del botón
+                    overflow = TextOverflow.Clip // Evita truncamiento del texto
+                )
+            }
+        }
+
+
+
+
+
         // Text-1088:386-Empresa fabricante de fichas de construccion para el aprendizaje
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 21.dp, y = 724.dp)
+                .offset(x = 21.dp, y = 730.dp)
                 .size(195.dp, 54.dp),
             text = "Empresa fabricante de fichas de construccion para el aprendizaje",
             color = Color(0xff000000),
@@ -288,39 +337,53 @@ fun CodiaMainView() {
                 .align(Alignment.TopStart)
                 .offset(x = 21.dp, y = 709.dp)
                 .size(157.dp, 30.dp),
-            text = "Lego",
+            text = "Escritorios",
             color = Color(0xff000000),
             fontSize = 20.sp,
             fontWeight = FontWeight.Normal,
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
-        // Empty-1088:389-Rectangle 769
+
+
+
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 225.dp, y = 768.dp)
-                .background(Color(0xff000000), RoundedCornerShape(10.dp))
-                .size(60.dp, 30.dp),
-        )
-        // Text-1088:390-Visitar
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 237.dp, y = 774.dp)
-                .size(42.dp, 18.dp),
-            text = "Visitar",
-            color = Color(0xffffffff),
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
+        ) {
+            Button(
+                onClick = { /* Acción al hacer clic */ },
+                modifier = Modifier
+                    .width(80.dp) // Ancho del botón ajustado
+                    .height(40.dp), // Altura del botón ajustada
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF000000), // Fondo negro
+                    contentColor = Color(0xFFFFFFFF) // Texto blanco
+                ),
+                elevation = null // Sin sombra
+            ) {
+                Text(
+                    text = "Visitar",
+                    fontSize = 11.sp, // Tamaño de la fuente
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center, // Texto centrado
+                    modifier = Modifier.fillMaxWidth(), // Ocupa todo el ancho del botón
+                    overflow = TextOverflow.Clip // Evita truncamiento del texto
+                )
+            }
+        }
+
+
+
+
+
         // Text-1088:391-Empresa dedicada a la fabricacion de papas de todos los sabores
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 225.dp, y = 724.dp)
+                .offset(x = 225.dp, y = 730.dp)
                 .size(195.dp, 54.dp),
             text = "Empresa dedicada a la fabricacion de papas de todos los sabores",
             color = Color(0xff000000),
@@ -342,32 +405,43 @@ fun CodiaMainView() {
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
-        // Empty-1088:393-Rectangle 770
+
+
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 21.dp, y = 1079.dp)
-                .background(Color(0xff000000), RoundedCornerShape(10.dp))
-                .size(60.dp, 30.dp),
-        )
-        // Text-1088:394-Visitar
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 33.dp, y = 1085.dp)
-                .size(42.dp, 18.dp),
-            text = "Visitar",
-            color = Color(0xffffffff),
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
+        ) {
+            Button(
+                onClick = { /* Acción al hacer clic */ },
+                modifier = Modifier
+                    .width(80.dp) // Ancho del botón ajustado
+                    .height(40.dp), // Altura del botón ajustada
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF000000), // Fondo negro
+                    contentColor = Color(0xFFFFFFFF) // Texto blanco
+                ),
+                elevation = null // Sin sombra
+            ) {
+                Text(
+                    text = "Visitar",
+                    fontSize = 11.sp, // Tamaño de la fuente
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center, // Texto centrado
+                    modifier = Modifier.fillMaxWidth(), // Ocupa todo el ancho del botón
+                    overflow = TextOverflow.Clip // Evita truncamiento del texto
+                )
+            }
+        }
+
+
+
         // Text-1088:395-Empresa audiovisual enfocada en la produccion de largometrajes
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 21.dp, y = 1035.dp)
+                .offset(x = 21.dp, y = 1041.dp)
                 .size(195.dp, 54.dp),
             text = "Empresa audiovisual enfocada en la produccion de largometrajes",
             color = Color(0xff000000),
@@ -389,32 +463,44 @@ fun CodiaMainView() {
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
-        // Empty-1088:397-Rectangle 771
+
+
+
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 225.dp, y = 1079.dp)
-                .background(Color(0xff000000), RoundedCornerShape(10.dp))
-                .size(60.dp, 30.dp),
-        )
-        // Text-1088:398-Visitar
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 237.dp, y = 1085.dp)
-                .size(42.dp, 18.dp),
-            text = "Visitar",
-            color = Color(0xffffffff),
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
+        ) {
+            Button(
+                onClick = { /* Acción al hacer clic */ },
+                modifier = Modifier
+                    .width(80.dp) // Ancho del botón ajustado
+                    .height(40.dp), // Altura del botón ajustada
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF000000), // Fondo negro
+                    contentColor = Color(0xFFFFFFFF) // Texto blanco
+                ),
+                elevation = null // Sin sombra
+            ) {
+                Text(
+                    text = "Visitar",
+                    fontSize = 11.sp, // Tamaño de la fuente
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center, // Texto centrado
+                    modifier = Modifier.fillMaxWidth(), // Ocupa todo el ancho del botón
+                    overflow = TextOverflow.Clip // Evita truncamiento del texto
+                )
+            }
+        }
+
+
+
         // Text-1088:399-Empresa promotora de cine y peliculas de todo tipo
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 225.dp, y = 1035.dp)
+                .offset(x = 225.dp, y = 1041.dp)
                 .size(195.dp, 54.dp),
             text = "Empresa promotora de cine y peliculas de todo tipo",
             color = Color(0xff000000),
@@ -423,32 +509,45 @@ fun CodiaMainView() {
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
-        // Empty-1105:16-Rectangle 779
+
+
+
+
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 19.dp, y = 1384.dp)
-                .background(Color(0xff000000), RoundedCornerShape(10.dp))
-                .size(60.dp, 30.dp),
-        )
-        // Text-1105:17-Visitar
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 31.dp, y = 1390.dp)
-                .size(42.dp, 18.dp),
-            text = "Visitar",
-            color = Color(0xffffffff),
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
+        ) {
+            Button(
+                onClick = { /* Acción al hacer clic */ },
+                modifier = Modifier
+                    .width(80.dp) // Ancho del botón ajustado
+                    .height(40.dp), // Altura del botón ajustada
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF000000), // Fondo negro
+                    contentColor = Color(0xFFFFFFFF) // Texto blanco
+                ),
+                elevation = null // Sin sombra
+            ) {
+                Text(
+                    text = "Visitar",
+                    fontSize = 11.sp, // Tamaño de la fuente
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center, // Texto centrado
+                    modifier = Modifier.fillMaxWidth(), // Ocupa todo el ancho del botón
+                    overflow = TextOverflow.Clip // Evita truncamiento del texto
+                )
+            }
+        }
+
+
+
         // Text-1105:18-Empresa enfocada en la creacion de prendas deportivas
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 19.dp, y = 1340.dp)
+                .offset(x = 19.dp, y = 1346.dp)
                 .size(195.dp, 54.dp),
             text = "Empresa enfocada en la creacion de prendas deportivas",
             color = Color(0xff000000),
@@ -483,32 +582,45 @@ fun CodiaMainView() {
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
-        // Empty-1105:20-Rectangle 780
+
+
+
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 223.dp, y = 1384.dp)
-                .background(Color(0xff000000), RoundedCornerShape(10.dp))
-                .size(60.dp, 30.dp),
-        )
-        // Text-1105:21-Visitar
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 235.dp, y = 1390.dp)
-                .size(42.dp, 18.dp),
-            text = "Visitar",
-            color = Color(0xffffffff),
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
+        ) {
+            Button(
+                onClick = { /* Acción al hacer clic */ },
+                modifier = Modifier
+                    .width(80.dp) // Ancho del botón ajustado
+                    .height(40.dp), // Altura del botón ajustada
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF000000), // Fondo negro
+                    contentColor = Color(0xFFFFFFFF) // Texto blanco
+                ),
+                elevation = null // Sin sombra
+            ) {
+                Text(
+                    text = "Visitar",
+                    fontSize = 11.sp, // Tamaño de la fuente
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center, // Texto centrado
+                    modifier = Modifier.fillMaxWidth(), // Ocupa todo el ancho del botón
+                    overflow = TextOverflow.Clip // Evita truncamiento del texto
+                )
+            }
+        }
+
+
+
+
         // Text-1105:22-Empresa enfocada en la fabricacion de zapatos deportivos finos
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 223.dp, y = 1340.dp)
+                .offset(x = 223.dp, y = 1346.dp)
                 .size(195.dp, 54.dp),
             text = "Empresa enfocada en la fabricacion de zapatos deportivos finos",
             color = Color(0xff000000),
@@ -530,32 +642,45 @@ fun CodiaMainView() {
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
-        // Empty-1088:371-Rectangle 763
+
+
+
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 225.dp, y = 468.dp)
-                .background(Color(0xff000000), RoundedCornerShape(10.dp))
-                .size(60.dp, 30.dp),
-        )
-        // Text-1088:372-Visitar
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 237.dp, y = 474.dp)
-                .size(42.dp, 18.dp),
-            text = "Visitar",
-            color = Color(0xffffffff),
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
+        ) {
+            Button(
+                onClick = { /* Acción al hacer clic */ },
+                modifier = Modifier
+                    .width(80.dp) // Ancho del botón ajustado
+                    .height(40.dp), // Altura del botón ajustada
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF000000), // Fondo negro
+                    contentColor = Color(0xFFFFFFFF) // Texto blanco
+                ),
+                elevation = null // Sin sombra
+            ) {
+                Text(
+                    text = "Visitar",
+                    fontSize = 11.sp, // Tamaño de la fuente
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center, // Texto centrado
+                    modifier = Modifier.fillMaxWidth(), // Ocupa todo el ancho del botón
+                    overflow = TextOverflow.Clip // Evita truncamiento del texto
+                )
+            }
+        }
+
+
+
+
         // Text-1088:373-Empresa de navegacion web que te ofrece todo tipo de informacion
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 225.dp, y = 424.dp)
+                .offset(x = 225.dp, y = 430.dp)
                 .size(195.dp, 54.dp),
             text = "Empresa de navegacion web que te ofrece todo tipo de informacion",
             color = Color(0xff000000),
@@ -570,7 +695,7 @@ fun CodiaMainView() {
                 .align(Alignment.TopStart)
                 .offset(x = 225.dp, y = 409.dp)
                 .size(157.dp, 30.dp),
-            text = "Google Chrome",
+            text = "Arepas",
             color = Color(0xff000000),
             fontSize = 20.sp,
             fontWeight = FontWeight.Normal,
@@ -579,24 +704,27 @@ fun CodiaMainView() {
         )
         // Image-1088:366-image 389
         Image(
-            painter = painterResource(id = R.drawable.fondo),
+            painter = painterResource(id = R.drawable.vino),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 19.dp, y = 225.dp)
-                .size(188.dp, 179.dp),
+                .size(183.dp, 179.dp),
         )
         // Image-1088:401-Rectangle 675
         Image(
-            painter = painterResource(id = R.drawable.fondo),
+            painter = painterResource(id = R.drawable.guanteschimbas),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 233.dp, y = 524.dp)
-                .size(173.dp, 179.dp),
+                .size(165.dp, 173.dp)
+
+                .clip(RoundedCornerShape(20.dp)) // Curvatura en las esquinas
         )
+
         // Text-1088:404-Cargando...
         Text(
             modifier = Modifier
@@ -610,72 +738,74 @@ fun CodiaMainView() {
             textAlign = TextAlign.Center,
             overflow = TextOverflow.Ellipsis,
         )
-        // Empty-1088:453-Rectangle 776
+
+
+        val textState = remember { mutableStateOf("") }
+
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 27.dp, y = 109.dp)
-                .background(Color(0xffffffff), RoundedCornerShape(30.dp))
-                .size(386.dp, 37.dp),
+                .background(Color.White, RoundedCornerShape(30.dp))
+                .widthIn(max = 300.dp) // Ancho máximo de 300 dp
+                .height(50.dp) // Mantener el alto
+                .border(3.dp, Color.Black, RoundedCornerShape(15.dp)) // Agregar borde negro con esquinas redondeadas
+
         )
-        // Text-1088:408-Emprende LInk
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 27.dp, y = 115.dp)
-                .size(150.dp, 24.dp),
-            text = "Emprende LInk",
-            color = Color(0xff000000),
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Center,
-            overflow = TextOverflow.Ellipsis,
-        )
-        // Image-1099:165-image 398
-        Image(
-            painter = painterResource(id = R.drawable.fondo),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 374.dp, y = 115.dp)
-                .size(28.dp, 28.dp),
-        )
-        // Image-1105:30-image 490
-        Image(
-            painter = painterResource(id = R.drawable.fondo),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 19.dp, y = 1129.dp)
-                .size(188.dp, 191.dp),
-        )
-        // Image-1105:610-image 504
-        Image(
-            painter = painterResource(id = R.drawable.fondo),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 231.dp, y = 1135.dp)
-                .size(173.dp, 179.dp),
-        )
+        {
+            TextField(
+                value = textState.value,
+                onValueChange = { newText -> textState.value = newText },
+                modifier = Modifier
+                    .fillMaxSize() // Hace que el TextField ocupe todo el espacio disponible en el Box
+                    .padding(vertical = 0.dp, horizontal = 0.dp), // Aumenta el padding vertical
+                textStyle = TextStyle(
+                    color = Color.Black,
+                    fontSize = 15.sp, // Aumenta el tamaño de la fuente para mayor legibilidad
+                    textAlign = TextAlign.Center
+                ),
+
+
+                )
+        }
     }
+
+
+    // Image-1099:165-image 398
+    Image(
+        painter = painterResource(id = R.drawable.lupa),
+        contentDescription = null,
+        contentScale = ContentScale.FillBounds,
+        modifier = Modifier
+            .offset(x = 374.dp, y = 115.dp)
+            .size(28.dp, 28.dp),
+    )
+    // Image-1105:30-image 490
+    Image(
+        painter = painterResource(id = R.drawable.fondo),
+        contentDescription = null,
+        contentScale = ContentScale.FillBounds,
+        modifier = Modifier
+            .offset(x = 19.dp, y = 1129.dp)
+            .size(188.dp, 191.dp),
+    )
+    // Image-1105:610-image 504
+    Image(
+        painter = painterResource(id = R.drawable.fondo),
+        contentDescription = null,
+        contentScale = ContentScale.FillBounds,
+        modifier = Modifier
+            .offset(x = 231.dp, y = 1135.dp)
+            .size(173.dp, 179.dp),
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun CodiaMainViewPreview() {
-    SplashScreenTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            val scrollState = rememberScrollState()
-            Column(modifier = Modifier.verticalScroll(scrollState)) {
-                CodiaMainView()
-            }
-        }
+fun ChatScreen1Preview() {
+    MaterialTheme {
+        Busqueda1(
+
+        )
     }
 }
