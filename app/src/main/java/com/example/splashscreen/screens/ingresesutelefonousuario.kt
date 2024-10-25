@@ -27,7 +27,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.splashscreen.R
-import com.example.splashscreen.screens.ChatScreen1
 
 @Composable
 fun Olvidar3(
