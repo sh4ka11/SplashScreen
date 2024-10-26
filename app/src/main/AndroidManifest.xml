@@ -16,7 +16,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/logocir"
-        android:label="EmprendeLink"
+        android:label="Emprende Link"
         android:roundIcon="@drawable/logocir"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplicationSplashScreen"
@@ -25,7 +25,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="EmprendeLink"
+            android:label="Emprende Link"
             android:theme="@style/Theme.MyApplicationSplashScreen">
 
             <intent-filter>
