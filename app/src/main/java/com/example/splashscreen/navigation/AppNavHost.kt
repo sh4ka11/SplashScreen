@@ -12,9 +12,9 @@ import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
 import com.example.splashscreen.screens.HomeScreen
 import com.example.splashscreen.screens.LoginScreen
-import com.example.splashscreen.screens.PersonalProfileEditScreen
+//import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.NotificacionesUsu
-import com.example.splashscreen.screens.PersonalProfileEditScreen
+//import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.ProfileEditScreen
 import com.example.splashscreen.screens.UserProfileMainView
 
@@ -52,14 +52,14 @@ fun AppNavHost(
         }
 
         // Personal Profile Edit Screen kevin
-        composable("personal_profile_edit") {
-            PersonalProfileEditScreen(
-                onMenuClick = { /* acción de menú aquí */ },
-                onUpdateProfile = {
-                    navController.navigateUp()
-                }
-            )
-        }
+//        composable("personal_profile_edit") {
+//            PersonalProfileEditScreen(
+//                onMenuClick = { /* acción de menú aquí */ },
+//                onUpdateProfile = {
+//                    navController.navigateUp()
+//                }
+//            )
+//        }
 //  kevin
         composable("notificaciones_screen") {
             NotificacionesUsu(
