@@ -70,6 +70,8 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.ui.android)
+    implementation("io.coil-kt:coil-compose:2.1.0")
+
     implementation ("androidx.navigation:navigation-compose:2.4.0-alpha10") // Verifica la versión más reciente
     implementation ("androidx.compose.ui:ui:1.0.0")
     implementation ("androidx.activity:activity-compose:1.3.0")
