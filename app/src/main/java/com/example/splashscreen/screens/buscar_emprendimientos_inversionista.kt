@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.splashscreen.R
-
+import kotlinx.coroutines.launch
 
 data class Emprendimientos(
     val nombre: String,
@@ -28,69 +30,181 @@ data class Emprendimientos(
     val imagen: Int
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Busquedaemprendeinver() {
     var searchText by remember { mutableStateOf("") }
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
 
     val emprendimientos = listOf(
         Emprendimiento("Vinos el éxtasis", "Empresa procesadora de vino con productos artesanales de calidad", R.drawable.vino),
-
-        Emprendimiento("Vinos el éxtasis", "Empresa procesadora de vino con productos artesanales de calidad", R.drawable.vino),
-
-        Emprendimiento("Vinos el éxtasis", "Empresa procesadora de vino con productos artesanales de calidad", R.drawable.vino),
-
-        Emprendimiento("Vinos el éxtasis", "Empresa procesadora de vino con productos artesanales de calidad", R.drawable.vino),
-
-        Emprendimiento("Vinos el éxtasis", "Empresa procesadora de vino con productos artesanales de calidad", R.drawable.vino),
-
-        Emprendimiento("Vinos el éxtasis", "Empresa procesadora de vino con productos artesanales de calidad ora de vino con productos artesanales de calidad ora de vino con productos artesanales de calidad ora de vino con productos artesanales de calidad ora de vino con productos artesanales de calidad ora de vino con productos artesanales de calidad ", R.drawable.vino),
         Emprendimiento("Arepas", "Empresa de arepas frescas y caseras que trae el sabor auténtico de Colombia", R.drawable.arepas),
         Emprendimiento("Escritorios", "Fabricante de escritorios ergonómicos para espacios de trabajo cómodos", R.drawable.escritorios),
         Emprendimiento("Artesanías", "Venta de artesanías locales hechas a mano con materiales sostenibles", R.drawable.artesanias),
+        // Agrega más emprendimientos según sea necesario
     )
 
     val filteredEmprendimientos = emprendimientos.filter {
         it.nombre.contains(searchText, ignoreCase = true)
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFD9D9D9))
-            .padding(16.dp)
-    ) {
-        // Logo
-        Image(
-            painter = painterResource(id = R.drawable.sinfondo),
-            contentDescription = "Logo",
-            modifier = Modifier
-                .padding(start = 8.dp)
-                .height(70.dp)
-        )
-
-        // Cuadro de búsqueda
-        OutlinedTextField(
-            value = searchText,
-            onValueChange = { searchText = it },
-            placeholder = { Text("Buscar...") },
-            singleLine = true,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
-                .background(Color.White) // Fondo blanco del cuadro de búsqueda
-        )
-
-        // Lista de cards agrupadas en filas
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            items(filteredEmprendimientos.chunked(2)) { rowItems ->
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet(
+                modifier = Modifier.width(300.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(vertical = 16.dp),
+                    horizontalAlignment = Alignment.Start
                 ) {
-                    rowItems.forEach { emprendimiento ->
-                        EmprendimientosCard(emprendimiento)
+                    // Imagen del perfil
+                    Image(
+                        painter = painterResource(id = R.drawable.imagenrealdesebas),
+                        contentDescription = "Perfil",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp)
+                    )
+
+                    // Nombre de usuario
+                    Text(
+                        text = "Inversionista",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+                    )
+
+                    // Correo electrónico
+                    Text(
+                        text = "usuario@example.com",
+                        fontSize = 14.sp,
+                        color = Color.Gray,
+                        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
+                    )
+
+                    // Línea divisoria
+                    Divider(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp),
+                        color = Color.LightGray
+                    )
+                }
+
+                // Opciones del menú
+                val menuItems = listOf(
+                    Pair(Icons.Default.Person, "Mi Perfil"),
+                    Pair(Icons.Default.Home, "Inicio"),
+                    Pair(Icons.Default.Search, "Busqueda por categoria"),
+                    Pair(Icons.Default.Share, "Consultar redes"),
+                    Pair(Icons.Default.List, "Lista de emprendimientos"),
+                    Pair(Icons.Default.Notifications, "Notificaciones"),
+                    Pair(Icons.Default.Email, "Chat"),
+                    Pair(Icons.Default.ExitToApp, "Cerrar Sesión")
+                )
+
+                LazyColumn {
+                    items(menuItems) { (icon, label) ->
+                        NavigationDrawerItem(
+                            icon = { Icon(icon, contentDescription = label) },
+                            label = { Text(label) },
+                            selected = false,
+                            onClick = {
+                                scope.launch { drawerState.close() }
+                            }
+                        )
+                    }
+
+                    // Espaciador para empujar "Ayuda" hacia abajo
+                    item {
+                        Spacer(modifier = Modifier.weight(1f))
+                    }
+
+                    // Espaciador adicional para ajustar la altura
+                    item {
+                        Spacer(modifier = Modifier.height(120.dp)) // Ajusta la altura según lo que desees
+                    }
+
+                    // Opción "Ayuda"
+                    item {
+                        NavigationDrawerItem(
+                            icon = { Icon(Icons.Default.Info, contentDescription = "Ayuda") },
+                            label = { Text("Ayuda") },
+                            selected = false,
+                            onClick = {
+                                scope.launch { drawerState.close() }
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFFD9D9D9))
+                .padding(16.dp)
+        ) {
+            // Header con menú y logo
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(70.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(
+                    onClick = {
+                        scope.launch {
+                            if (drawerState.isClosed) drawerState.open()
+                            else drawerState.close()
+                        }
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Menu,
+                        contentDescription = "Menu",
+                        tint = Color.Black
+                    )
+                }
+
+                Image(
+                    painter = painterResource(id = R.drawable.sinfondo),
+                    contentDescription = "Logo",
+                    modifier = Modifier.height(70.dp)
+                )
+
+                // Espaciador para mantener el logo centrado
+                Spacer(modifier = Modifier.width(48.dp))
+            }
+
+            // Cuadro de búsqueda
+            OutlinedTextField(
+                value = searchText,
+                onValueChange = { searchText = it },
+                placeholder = { Text("Buscar...") },
+                singleLine = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp)
+                    .background(Color.White)
+            )
+
+            // Lista de cards agrupadas en filas
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(filteredEmprendimientos.chunked(2)) { rowItems ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        rowItems.forEach { emprendimiento ->
+                            EmprendimientosCard(emprendimiento)
+                        }
                     }
                 }
             }
@@ -100,17 +214,17 @@ fun Busquedaemprendeinver() {
 
 @Composable
 fun EmprendimientosCard(emprendimiento: Emprendimiento) {
-    var isExpanded by remember { mutableStateOf(false) } // Estado para controlar la expansión de la descripción
+    var isExpanded by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
-            .width(180.dp) // Ancho ajustado para que todas las cards sean iguales
-            .height(250.dp) // Altura ajustada para que todas las cards sean iguales
+            .width(180.dp)
+            .height(250.dp)
             .padding(8.dp)
             .border(1.dp, Color.Black),
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White // Fondo blanco para las cards
+            containerColor = Color.White
         )
     ) {
         Column(
@@ -131,7 +245,6 @@ fun EmprendimientosCard(emprendimiento: Emprendimiento) {
                 modifier = Modifier.padding(top = 4.dp)
             )
 
-            // Descripción con "Ver más" / "Ver menos"
             Column(modifier = Modifier.fillMaxWidth()) {
                 val description = if (isExpanded) emprendimiento.descripcion else emprendimiento.descripcion.take(40) + if (emprendimiento.descripcion.length > 40) "..." else ""
                 Text(
@@ -146,13 +259,12 @@ fun EmprendimientosCard(emprendimiento: Emprendimiento) {
                         color = Color.Black,
                         fontSize = 12.sp,
                         modifier = Modifier
-                            .clickable { isExpanded = !isExpanded } // Cambiar estado al hacer clic
-                            .padding(top = 4.dp) // Espacio entre la descripción y el texto de ver más/menos
+                            .clickable { isExpanded = !isExpanded }
+                            .padding(top = 4.dp)
                     )
                 }
             }
 
-            // Botón "Visitar" en la parte inferior izquierda
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -167,7 +279,7 @@ fun EmprendimientosCard(emprendimiento: Emprendimiento) {
                     ),
                     modifier = Modifier
                         .padding(4.dp)
-                        .width(90.dp) // Ajustado para que el texto sea visible
+                        .width(90.dp)
                         .height(30.dp)
                 ) {
                     Text("Visitar", fontSize = 12.sp)
@@ -182,3 +294,4 @@ fun EmprendimientosCard(emprendimiento: Emprendimiento) {
 fun BuscarinverPreview() {
     Busquedaemprendeinver()
 }
+
