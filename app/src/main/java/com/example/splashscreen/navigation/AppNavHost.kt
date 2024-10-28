@@ -17,10 +17,10 @@ import com.example.splashscreen.screens.LoginScreen
 import com.example.splashscreen.screens.NavigationRoutes
 //import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.NotificacionesUsu
-import com.example.splashscreen.screens.PhoneRegistrationScreen
 //import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.ProfileEditScreen
 import com.example.splashscreen.screens.UserProfileMainView
+import com.example.splashscreen.screens.UserRegistrationCorreo
 import com.example.splashscreen.screens.UserRegistrationScreen
 
 @Composable
@@ -38,7 +38,7 @@ fun AppNavHost(
               UserRegistrationScreen(navController = navController)
         }
         composable("registroUsuarioCorreo"){
-            UserRegistrationScreen(navController = navController)
+            UserRegistrationCorreo(navController = navController)
         }
 
 

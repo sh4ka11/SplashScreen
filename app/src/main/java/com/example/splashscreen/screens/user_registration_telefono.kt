@@ -129,7 +129,7 @@ fun PhoneRegistrationView(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 TextButton(
-                    onClick = { navController.navigate(NavigationRoutes.EMAIL_REGISTRATION) }
+                    onClick = { navController.navigate("registroUsuarioCorreo") }
                 ) {
                     Text(
                         text = "Correo",
