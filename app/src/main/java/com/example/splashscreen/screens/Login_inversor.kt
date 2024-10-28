@@ -75,7 +75,7 @@ fun LoginInversor() {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = if (isPortrait) 150.dp else 0.dp)
+                    .padding(top = if (isPortrait) 180.dp else 0.dp)
             ) {
                 Surface(
                     modifier = Modifier
@@ -108,13 +108,20 @@ fun LoginInversor() {
                             .verticalScroll(rememberScrollState())
                             .padding(24.dp)
                     ) {
-                        Text(
-                            text = "Iniciar sesion en Emprede link",
+                        Box(
                             modifier = Modifier.fillMaxWidth(),
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontSize = 25.sp
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Iniciar sesión en EmprendeLink",
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.titleLarge.copy(
+                                    fontSize = 25.sp
+                                )
                             )
-                        )
+                        }
 
                         Spacer(modifier = Modifier.height(20.dp))
 
@@ -172,7 +179,7 @@ fun LoginInversor() {
                             onClick = { },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(37.dp),
+                                .height(40.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFF38352E)
                             ),
