@@ -27,24 +27,19 @@ import com.example.splashscreen.screens.UserRegistrationScreen
 fun AppNavHost(
 
 ) {
-
+//Lago
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "HomePrincipal") {
 
-    composable("HomePrincipal"){
-        HomePincipalScreen(navController = navController)
-    }
-          composable("registroUsuarioTelefono"){
-              UserRegistrationScreen(navController = navController)
+        composable("HomePrincipal"){
+            HomePincipalScreen(navController = navController)
+        }
+        composable("registroUsuarioTelefono"){
+            UserRegistrationScreen(navController = navController)
         }
         composable("registroUsuarioCorreo"){
             UserRegistrationCorreo(navController = navController)
         }
-
-
-
-
-
 
 
 
