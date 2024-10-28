@@ -3,7 +3,6 @@ package com.example.splashscreen.screens
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,49 +25,49 @@ import androidx.compose.ui.unit.sp
 import com.example.splashscreen.R
 import kotlinx.coroutines.launch
 
-data class Notificacion(
-    val titulo: String,
-    val mensaje: String,
-    val hora: String,
-    val imageResourceId: Int = R.drawable.image3_647598
+data class NotificacionInver(
+    val tituloInver: String,
+    val mensajeInver: String,
+    val horaInver: String,
+    val imageResourceIdInver: Int = R.drawable.image3_647598
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NotificacionesUsu(
-    onNavigateToScreen: (String) -> Unit = {}
+fun NotificacionesInver(
+    onNavigateToScreenInver: (String) -> Unit = {}
 ) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    val drawerStateInver = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scopeInver = rememberCoroutineScope()
+    var imageUriInver by remember { mutableStateOf<Uri?>(null) }
 
-    val notificaciones = remember {
+    val notificacionesInver = remember {
         listOf(
-            Notificacion(
+            NotificacionInver(
                 "\"Usuario\" te envió una solicitud de conexión",
-                "\"Usuario\" a solicitado unirte con tu emprendimiento, acepta la solicitud para poder crecer juntos",
+                "\"Usuario\" ha solicitado unirte con tu emprendimiento, acepta la solicitud para poder crecer juntos",
                 "2:15 P.M.",
                 R.drawable.image3_647598
             ),
-            Notificacion(
+            NotificacionInver(
                 "FANTA",
                 "A career in website design can involve the design, creation, and coding of a range of website types. Other tasks will typically...",
                 "3:15 P.M.",
                 R.drawable.image238
             ),
-            Notificacion(
+            NotificacionInver(
                 "Sprite",
                 "A career in website design can involve the design, creation, and coding of a range of website types. Other tasks will typically...",
                 "4:15 P.M.",
                 R.drawable.image241
             ),
-            Notificacion(
+            NotificacionInver(
                 "Sena",
                 "A career in website design can involve the design, creation, and coding of a range of website types. Other tasks will typically...",
                 "5:15 P.M.",
                 R.drawable.image240
             ),
-            Notificacion(
+            NotificacionInver(
                 "Sony",
                 "A career in website design can involve the design, creation, and coding of a range of website types. Other tasks will typically...",
                 "6:15 P.M.",
@@ -78,7 +77,7 @@ fun NotificacionesUsu(
     }
 
     ModalNavigationDrawer(
-        drawerState = drawerState,
+        drawerState = drawerStateInver,
         drawerContent = {
             ModalDrawerSheet(
                 modifier = Modifier.width(300.dp)
@@ -92,7 +91,7 @@ fun NotificacionesUsu(
                 ) {
                     Column {
                         Image(
-                            painter = if (imageUri != null) {
+                            painter = if (imageUriInver != null) {
                                 painterResource(id = R.drawable.image3_647598)
                             } else {
                                 painterResource(id = R.drawable.image3_647598)
@@ -121,22 +120,22 @@ fun NotificacionesUsu(
                 listOf(
                     "Mi Perfil" to Icons.Default.Person,
                     "Inicio" to Icons.Default.Home,
-                    "Busqueda por categoria" to Icons.Default.Search,
+                    "Buscar por categoría" to Icons.Default.Search,
                     "Consultar redes" to Icons.Default.Share,
                     "Lista de emprendimientos" to Icons.Default.List,
                     "Notificaciones" to Icons.Default.Notifications,
                     "Chat" to Icons.Default.Email,
                     "Cerrar Sesión" to Icons.Default.ExitToApp,
                     "Ayuda" to Icons.Default.Info
-                ).forEach { (texto, icono) ->
+                ).forEach { (textoInver, iconoInver) ->
                     NavigationDrawerItem(
-                        icon = { Icon(icono, contentDescription = texto) },
-                        label = { Text(texto) },
-                        selected = texto == "Notificaciones",
+                        icon = { Icon(iconoInver, contentDescription = textoInver) },
+                        label = { Text(textoInver) },
+                        selected = textoInver == "Notificaciones",
                         onClick = {
-                            scope.launch {
-                                drawerState.close()
-                                onNavigateToScreen(texto)
+                            scopeInver.launch {
+                                drawerStateInver.close()
+                                onNavigateToScreenInver(textoInver)
                             }
                         }
                     )
@@ -161,9 +160,9 @@ fun NotificacionesUsu(
                         navigationIcon = {
                             IconButton(
                                 onClick = {
-                                    scope.launch {
-                                        if (drawerState.isClosed) drawerState.open()
-                                        else drawerState.close()
+                                    scopeInver.launch {
+                                        if (drawerStateInver.isClosed) drawerStateInver.open()
+                                        else drawerStateInver.close()
                                     }
                                 }
                             ) {
@@ -180,21 +179,17 @@ fun NotificacionesUsu(
                     )
                 },
                 containerColor = Color.Transparent
-            ) { paddingValues ->
+            ) { paddingValuesInver ->
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(paddingValues)
+                        .padding(paddingValuesInver)
                 ) {
-                    items(notificaciones) { notificacion ->
+                    items(notificacionesInver) { notificacionInver ->
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 8.dp)
-                                .clickable {
-                                    // Navigate to notificaciones_screen when clicking any notification
-                                    onNavigateToScreen("notificaciones_screen")
-                                },
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
                             shape = RoundedCornerShape(12.dp),
                             colors = CardDefaults.cardColors(containerColor = Color.White)
                         ) {
@@ -205,7 +200,7 @@ fun NotificacionesUsu(
                                 verticalAlignment = Alignment.Top
                             ) {
                                 Image(
-                                    painter = painterResource(id = notificacion.imageResourceId),
+                                    painter = painterResource(id = notificacionInver.imageResourceIdInver),
                                     contentDescription = null,
                                     modifier = Modifier
                                         .size(40.dp)
@@ -225,13 +220,13 @@ fun NotificacionesUsu(
                                         verticalAlignment = Alignment.Top
                                     ) {
                                         Text(
-                                            text = notificacion.titulo,
+                                            text = notificacionInver.tituloInver,
                                             fontSize = 16.sp,
                                             color = Color.Black,
                                             modifier = Modifier.weight(1f)
                                         )
                                         Text(
-                                            text = notificacion.hora,
+                                            text = notificacionInver.horaInver,
                                             fontSize = 12.sp,
                                             color = Color.Gray
                                         )
@@ -240,7 +235,7 @@ fun NotificacionesUsu(
                                     Spacer(modifier = Modifier.height(4.dp))
 
                                     Text(
-                                        text = notificacion.mensaje,
+                                        text = notificacionInver.mensajeInver,
                                         fontSize = 14.sp,
                                         color = Color.Gray,
                                         maxLines = 2,
@@ -258,7 +253,6 @@ fun NotificacionesUsu(
 
 @Preview(showBackground = true, widthDp = 430, heightDp = 894)
 @Composable
-fun NotificacionesUsuPreview() {
-    NotificacionesUsu()
+fun NotificacionesInverPreview() {
+    NotificacionesInver()
 }
-
