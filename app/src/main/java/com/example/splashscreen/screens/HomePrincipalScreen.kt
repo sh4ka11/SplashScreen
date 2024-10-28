@@ -112,18 +112,6 @@ fun HomePrincipalaScreen(navController: NavController) {
             overflow = TextOverflow.Ellipsis,
         )
 
-//        Text(
-//            modifier = Modifier
-//                .align(Alignment.TopStart)
-//                .offset(x = 122.dp, y = 515.dp)
-//                .size(223.dp, 33.dp),
-//            text = "¿Listo para comenzar?",
-//            color = Color(0xb2000000),
-//            fontSize = 18.sp,
-//            fontWeight = FontWeight.Normal,
-//            textAlign = TextAlign.Center,
-//        )
-
         Button(
             onClick = { /* Navigate to login */ },
             colors = ButtonDefaults.buttonColors(
@@ -161,9 +149,10 @@ fun HomePrincipalaScreen(navController: NavController) {
                 textAlign = TextAlign.Center,
             )
         }
-
+            //Como colocar un link
+        //ah
         Button(
-            onClick = { /* Navigate to register */ },
+            onClick = { navController.navigate("registroUsuarioTelefono") },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xff38352e)
             ),

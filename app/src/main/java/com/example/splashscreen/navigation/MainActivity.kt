@@ -15,6 +15,7 @@ import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.ProfileEditScreen
 import com.example.splashscreen.ui.theme.SplashScreenTheme
 import com.example.splashscreen.data.UserProfile
+import com.example.splashscreen.navigation.AppNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,18 +25,8 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    val navController = rememberNavController()
 
-                    NavHost(
-                        navController = navController,
-                        startDestination = "userProfileMain"
-                    ) {
-                        composable("userProfileMain") {
-                            UserProfileMainView(
-                                navController = navController,
-                                onMenuClick = { /* Manejo del menú */ }
-                            )
-                        }
+                    AppNavHost()
 
 
                     }
@@ -43,5 +34,5 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
+
 
