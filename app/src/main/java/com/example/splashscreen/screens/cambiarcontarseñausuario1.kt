@@ -1,6 +1,5 @@
 package com.example.splashscreen.screens
 
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -39,7 +38,7 @@ fun Cambiar1() {
             contentDescription = "Background City",
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp),
+                .height(1000.dp),
             contentScale = ContentScale.Crop
         )
 
@@ -50,89 +49,98 @@ fun Cambiar1() {
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(16.dp)
-                .size(150.dp, 50.dp)
+                .size(160.dp, 60.dp)
         )
 
         // Contenedor principal
-        Column(
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
+                .align(Alignment.BottomCenter) // Cambiar alineación a la parte inferior
                 .padding(16.dp)
-                .align(Alignment.Center),
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Cambiar contraseña",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-
-            Text(
-                text = "¡La verificacion de identidad se ha realizado exitosamente!",
-                fontSize = 16.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = 24.dp)
-            )
-
-            Text(
-                text = "Por favor ingrese su nueva contraseña",
-                fontSize = 14.sp,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-
-            // Campo de nueva contraseña
-            TextField(
-                value = newPassword,
-                onValueChange = { newPassword = it },
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
-                    .clip(RoundedCornerShape(8.dp)),
-                visualTransformation = PasswordVisualTransformation(),
-                colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.White,
-                    focusedContainerColor = Color.White
-                )
-            )
-
-            Text(
-                text = "Confirmacion de Contraseña",
-                fontSize = 14.sp,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-
-            // Campo de confirmación de contraseña
-            TextField(
-                value = confirmPassword,
-                onValueChange = { confirmPassword = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 24.dp)
-                    .clip(RoundedCornerShape(8.dp)),
-                visualTransformation = PasswordVisualTransformation(),
-                colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.White,
-                    focusedContainerColor = Color.White
-                )
-            )
-
-            // Botón Siguiente
-            Button(
-                onClick = { showSuccessDialog = true },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF2C2C2C)
-                ),
-                shape = RoundedCornerShape(8.dp)
+                    .clip(RoundedCornerShape(16.dp)) // Bordes redondeados
+                    .background(Color.White) // Fondo blanco
+                    .padding(16.dp) // Espacio interno
+                    .width(500.dp) // Ancho fijo del cuadro
+                    .wrapContentHeight() // Ajustar altura automáticamente
+                    .imePadding(), // Ajuste automático al abrir el teclado
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Siguiente",
-                    color = Color.White,
-                    fontSize = 16.sp
+                    text = "Cambiar contraseña",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(bottom = 8.dp)
                 )
+
+                Text(
+                    text = "¡La verificación de identidad se ha realizado exitosamente!",
+                    fontSize = 16.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(bottom = 24.dp)
+                )
+
+                Text(
+                    text = "Por favor ingrese su nueva contraseña",
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                // Campo de nueva contraseña
+                TextField(
+                    value = newPassword,
+                    onValueChange = { newPassword = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp)
+                        .clip(RoundedCornerShape(8.dp)),
+                    visualTransformation = PasswordVisualTransformation(),
+                    colors = TextFieldDefaults.colors(
+                        unfocusedContainerColor = Color.White,
+                        focusedContainerColor = Color.White
+                    )
+                )
+
+                Text(
+                    text = "Confirmación de Contraseña",
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                // Campo de confirmación de contraseña
+                TextField(
+                    value = confirmPassword,
+                    onValueChange = { confirmPassword = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 24.dp)
+                        .clip(RoundedCornerShape(8.dp)),
+                    visualTransformation = PasswordVisualTransformation(),
+                    colors = TextFieldDefaults.colors(
+                        unfocusedContainerColor = Color.White,
+                        focusedContainerColor = Color.White
+                    )
+                )
+
+                // Botón Siguiente
+                Button(
+                    onClick = { showSuccessDialog = true },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF2C2C2C)
+                    ),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(
+                        text = "Siguiente",
+                        color = Color.White,
+                        fontSize = 16.sp
+                    )
+                }
             }
         }
 
@@ -194,9 +202,6 @@ fun Cambiar1() {
 @Composable
 fun Cambiaruno() {
     MaterialTheme {
-        Cambiar1(
-
-        )
+        Cambiar1()
     }
 }
-

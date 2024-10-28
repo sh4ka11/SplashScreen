@@ -9,8 +9,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-//import androidx.compose.material.OutlinedTextField
-//import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,6 +19,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,11 +28,12 @@ import androidx.compose.ui.unit.sp
 import com.example.splashscreen.R
 
 @Composable
-fun Olvidar3(
+fun Olvidarcorr(
     onNavigateToEmail: () -> Unit = {} // Función para navegación al correo
 ) {
-    var telefono by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf(TextFieldValue("")) }
     var showVerificationMessage by remember { mutableStateOf(false) }
+    var showErrorMessage by remember { mutableStateOf(false) }
 
     Box(
         contentAlignment = Alignment.TopStart,
@@ -63,14 +63,14 @@ fun Olvidar3(
                 .size(900.dp, 1000.dp),
         )
 
-        // Texto "Ingrese su teléfono"
+        // Texto "Ingrese su correo"
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .wrapContentHeight()
                 .offset(x = 98.dp, y = 556.dp)
                 .width(373.dp),
-            text = "Ingrese su telefono",
+            text = "Ingrese su correo",
             color = Color(0xff000000),
             fontSize = 25.sp,
             fontWeight = FontWeight.Normal,
@@ -99,8 +99,11 @@ fun Olvidar3(
         ) {
             Button(
                 onClick = {
-                    if (telefono.isNotEmpty()) {
+                    if (email.text.contains("@")) {
                         showVerificationMessage = true
+                        showErrorMessage = false
+                    } else {
+                        showErrorMessage = true
                     }
                 },
                 colors = ButtonDefaults.buttonColors(
@@ -118,12 +121,16 @@ fun Olvidar3(
                 )
             }
         }
-// este es el campo para telefono
+
+        // Campo para ingresar correo
         OutlinedTextField(
-            value = telefono,
-            onValueChange = { telefono = it },
-            label = { Text("Ingrese su teléfono") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+            value = email,
+            onValueChange = {
+                email = it
+                showErrorMessage = false // Ocultar el mensaje de error al escribir
+            },
+            label = { Text("Ingrese su correo") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
@@ -139,7 +146,19 @@ fun Olvidar3(
                 .width(342.dp) // Establece un ancho específico
         )
 
-
+        // Mensaje de error
+        if (showErrorMessage) {
+            Text(
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .offset(x = 44.dp, y = 844.dp),
+                text = "Ingrese un correo electronico valido",
+                color = Color.Red,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                textAlign = TextAlign.Left
+            )
+        }
 
         // Líneas decorativas
         Box(
@@ -153,23 +172,9 @@ fun Olvidar3(
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 226.dp, y = 661.dp)
+                .offset(x = 44.dp, y = 661.dp) // Ajusté el offset hacia la izquierda
                 .size(161.dp, 1.dp)
                 .border(1.dp, Color(0xff000000)),
-        )
-
-        // Texto "Teléfono"
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .wrapContentSize()
-                .offset(x = 251.dp, y = 612.dp),
-            text = "Telefono",
-            color = Color(0xff000000),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
         )
 
         // Texto "Correo" clickeable
@@ -187,13 +192,29 @@ fun Olvidar3(
             overflow = TextOverflow.Ellipsis,
         )
 
+        // Texto "Teléfono" a la derecha de "Correo"
+        Text(
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .wrapContentSize()
+                .offset(x = 270.dp, y = 612.dp) // Ajusté el offset hacia la izquierda
+                .clickable { /* Accion para el teléfono */ },
+            text = "Teléfono",
+            color = Color(0xb2000000),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Normal,
+            textAlign = TextAlign.Left,
+            overflow = TextOverflow.Ellipsis,
+        )
+
+
         // Mensaje de instrucciones
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 43.dp, y = 684.dp)
                 .size(341.dp, 50.dp),
-            text = "Ingrese su numero para poder enviar un codigo de confirmacion",
+            text = "Ingrese su correo para poder enviar un código de confirmación",
             color = Color(0xb2000000),
             fontSize = 20.sp,
             fontWeight = FontWeight.Normal,
@@ -216,7 +237,7 @@ fun Olvidar3(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Se ha enviado un código de verificación al número $telefono",
+                        text = "Se ha enviado un código de verificación al correo ${email.text}",
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
@@ -234,10 +255,8 @@ fun Olvidar3(
 
 @Preview(showBackground = true)
 @Composable
-fun Olvidartelefono() {
+fun Olvidarcorreo() {
     MaterialTheme {
-        Olvidar3(
-
-        )
+        Olvidarcorr()
     }
 }

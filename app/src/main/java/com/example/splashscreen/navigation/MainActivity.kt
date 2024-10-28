@@ -36,14 +36,3 @@ class MainActivity : ComponentActivity() {
     }
 
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    SplashScreenTheme {
-        val navController = rememberNavController()
-        UserProfileMainView(
-            navController = navController,
-            onMenuClick = {}
-        )
-    }
-}

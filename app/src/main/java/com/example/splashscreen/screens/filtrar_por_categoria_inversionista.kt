@@ -17,17 +17,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.screens.Busqueda1
 import com.example.splashscreen.R
 
-data class Categoria(
+data class Categorias(
     val nombre: String,
     val icono: Int
 )
 
 @Composable
 
-fun Busquedafil() {
+fun Busquedafilinver() {
     var searchText by remember { mutableStateOf("") }
 
     // Lista de categorías
@@ -188,9 +187,9 @@ fun Busquedafil() {
 
 @Preview(showBackground = true)
 @Composable
-fun Busquedafiltro() {
+fun categoriainverfiltro() {
     MaterialTheme {
-        Busquedafil(
+        Busquedafilinver(
 
         )
     }
