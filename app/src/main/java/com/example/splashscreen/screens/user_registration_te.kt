@@ -3,20 +3,13 @@ package com.example.splashscreen.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
@@ -24,8 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,205 +26,253 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 
-@Composable
-fun user_registration_te(navController: NavController) {
-    // Use a vertical scroll state for scrolling functionality
-    val scrollState = rememberScrollState()
+object NavigationRoutes {
+    const val PHONE_REGISTRATION = "phone_registration"
+    const val EMAIL_REGISTRATION = "email_registration"
+}
 
-    // Column layout with a vertical scroll modifier
-    Column(
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun UserRegistrationScreen(navController: NavController) {
+    var phoneNumber by remember { mutableStateOf("") }
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(scrollState), // Apply vertical scroll modifier here
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+            .background(Color.White)
     ) {
-        // Call to EmprendeMainView (if this is your main content)
-        userteView()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+            PhoneRegistrationView(
+                navController = navController,
+                phoneNumber = phoneNumber,
+                onPhoneNumberChange = { newNumber ->
+                    // Validar que solo se ingresen números y limitar a 10 dígitos
+                    if (newNumber.length <= 10 && newNumber.all { it.isDigit() }) {
+                        phoneNumber = newNumber
+                    }
+                }
+            )
+        }
     }
 }
 
-/**
- * Created by codia-figma
- */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun userteView() {
-    // Box-706:176-REGISTRO DE USUARIO 3
+fun PhoneRegistrationView(
+    navController: NavController,
+    phoneNumber: String,
+    onPhoneNumberChange: (String) -> Unit
+) {
     Box(
-        contentAlignment = Alignment.TopStart,
         modifier = Modifier
-            .background(Color(0xffffffff))
-            .size(430.dp, 960.dp)
-            .clipToBounds(),
+            .fillMaxWidth()
+            .height(960.dp)
     ) {
-        // Image-710:251-204736911-un-hombre-de-negocios-mirando-por-la-ventana-a-una-vista-de-la-ciudad-visión-empresarial-ideas-transformed 1
+        // Imagen de fondo
         Image(
             painter = painterResource(id = R.drawable.image4_751131),
-            contentDescription = null,
+            contentDescription = "Fondo",
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = -5.dp, y = -6.dp)
+                .offset(x = (-5).dp, y = (-6).dp)
                 .size(435.dp, 722.dp),
         )
-        // Empty-706:178-Rectangle 691
+
+        // Panel blanco inferior
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 0.dp, y = 527.dp)
-                .background(Color(0xfff5f5f3), RoundedCornerShape(20.dp))
-                .size(430.dp, 487.dp),
+                .background(Color(0xFFF5F5F3), RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+                .fillMaxWidth()
+                .height(487.dp),
         )
-        // Text-706:179-Resgistrarse en Emprede link
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .wrapContentHeight()
-                .offset(x = 45.dp, y = 556.dp)
-                .width(373.dp),
-            text = "Resgistrarse en Emprede link",
-            color = Color(0xff000000),
-            fontSize = 25.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
-        // Image-706:185-image 178
+
+        // Logo superior
         Image(
             painter = painterResource(id = R.drawable.image7_751144),
-            contentDescription = null,
+            contentDescription = "Logo",
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 5.dp, y = 25.dp)
                 .size(216.dp, 89.dp),
         )
-        // Empty-706:183-Rectangle 717
-        Box(
+
+        // Contenido del formulario
+        Column(
             modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 53.dp, y = 808.dp)
-                .background(Color(0xff38352e), RoundedCornerShape(10.dp))
-                .size(334.dp, 43.dp),
-        )
-        // Text-706:184-Siguiente
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 160.dp, y = 819.dp)
-                .size(111.dp, 20.dp),
-            text = "Siguiente",
-            color = Color(0xfff9f7f3),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Center,
-            overflow = TextOverflow.Ellipsis,
-        )
-        // Text-706:187-¿Necesitas Ayuda?
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 140.dp, y = 879.dp)
-                .size(148.dp, 25.dp),
-            text = "¿Necesitas Ayuda?",
-            color = Color(0xff000000),
-            fontSize = 15.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
-        // Empty-706:192-Rectangle 721
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 45.dp, y = 716.dp)
-                .background(Color(0xfffcfcfc), RoundedCornerShape(20.dp))
-                .size(342.dp, 54.dp)
-                .border(1.dp, Color(0xff000000), RoundedCornerShape(20.dp)),
-        )
-        // Empty-710:202-Line 5
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 39.dp, y = 661.dp)
-                .size(348.dp, 1.dp)
-                .border(1.dp, Color(0xffcec7c7)),
-        )
-        // Empty-710:204-Line 7
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 226.dp, y = 661.dp)
-                .size(161.dp, 1.dp)
-                .border(1.dp, Color(0xff000000)),
-        )
-        // Text-710:205-Telefono
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .wrapContentSize()
-                .offset(x = 251.dp, y = 612.dp),
-            text = "Telefono",
-            color = Color(0xff000000),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
-        // Text-710:309-+1
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .wrapContentSize()
-                .offset(x = 110.dp, y = 730.dp),
-            text = "+1",
-            color = Color(0xff000000),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
-        // Text-710:206-Correo
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .wrapContentSize()
-                .offset(x = 93.dp, y = 612.dp),
-            text = "Correo",
-            color = Color(0xb2000000),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
-        // Image-710:219-Line 10
-        Image(
-            painter = painterResource(id = R.drawable.banderagriga),
-            contentDescription = null,
-            contentScale = ContentScale.Fit,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 98.dp, y = 727.dp)
-                .size(1.dp, 33.dp)
-                .border(1.dp, Color(0x4c000000)),
-        )
-        // Image-710:308-image 398
-        Image(
-            painter = painterResource(id = R.drawable.banderagriga),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 53.dp, y = 727.dp)
-                .size(33.dp, 33.dp),
-        )
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .offset(y = 556.dp)
+        ) {
+            // Título
+            Text(
+                text = "Registrarse en Emprende link",
+                fontSize = 25.sp,
+                fontWeight = FontWeight.Normal,
+                modifier = Modifier.padding(horizontal = 29.dp)
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Pestañas de navegación
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 23.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                TextButton(
+                    onClick = { navController.navigate(NavigationRoutes.EMAIL_REGISTRATION) }
+                ) {
+                    Text(
+                        text = "Correo",
+                        color = Color(0xB2000000),
+                        fontSize = 20.sp
+                    )
+                }
+
+                TextButton(
+                    onClick = { /* Ya estamos en teléfono */ }
+                ) {
+                    Text(
+                        text = "Teléfono",
+                        color = Color(0xFF000000),
+                        fontSize = 20.sp
+                    )
+                }
+            }
+
+            // Líneas divisorias
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 23.dp)
+                    .height(1.dp)
+                    .background(Color(0xFFCEC7C7))
+            )
+
+            Box(
+                modifier = Modifier
+                    .offset(x = 187.dp)
+                    .width(161.dp)
+                    .height(1.dp)
+                    .background(Color(0xFF000000))
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Campo de teléfono mejorado
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 29.dp)
+                    .fillMaxWidth()
+                    .height(54.dp)
+                    .background(Color(0xFFFCFCFC), RoundedCornerShape(20.dp))
+                    .border(1.dp, Color(0xFF000000), RoundedCornerShape(20.dp))
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // Bandera y código de país
+                    Image(
+                        painter = painterResource(id = R.drawable.banderagriga),
+                        contentDescription = "Bandera",
+                        modifier = Modifier.size(33.dp)
+                    )
+                    Text(
+                        text = "+1",
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                        fontSize = 20.sp
+                    )
+
+                    // Separador vertical
+                    Box(
+                        modifier = Modifier
+                            .width(1.dp)
+                            .height(33.dp)
+                            .background(Color(0x4C000000))
+                    )
+
+                    // Campo de entrada del número
+                    TextField(
+                        value = phoneNumber,
+                        onValueChange = onPhoneNumberChange,
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = Color.Transparent,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
+                        ),
+                        placeholder = { Text("Ingresa tu número") },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number
+                        ),
+                        singleLine = true
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(38.dp))
+
+            // Botón Siguiente
+            Button(
+                onClick = {
+                    // Aquí puedes validar que el número tenga 10 dígitos antes de continuar
+                    if (phoneNumber.length == 10) {
+                        // Implementar lógica de registro
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (phoneNumber.length == 10) Color(0xFF38352E) else Color.Gray
+                ),
+                enabled = phoneNumber.length == 10,
+                shape = RoundedCornerShape(10.dp),
+                modifier = Modifier
+                    .padding(horizontal = 29.dp)
+                    .fillMaxWidth()
+                    .height(43.dp)
+            ) {
+                Text(
+                    text = "Siguiente",
+                    color = Color(0xFFF9F7F3),
+                    fontSize = 20.sp
+                )
+            }
+
+            Spacer(modifier = Modifier.height(28.dp))
+
+            // Botón de ayuda
+            TextButton(
+                onClick = { /* Implementar ayuda */ },
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(bottom = 16.dp)
+            ) {
+                Text(
+                    text = "¿Necesitas Ayuda?",
+                    color = Color(0xFF000000),
+                    fontSize = 18.sp
+                )
+            }
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun userteViewPreview() {
-    val navController = rememberNavController() // Create a NavController for preview
-    user_registration_te(navController = navController) // Pass it to HomeScreen
+fun PhoneRegistrationnPreview() {
+    val navController = rememberNavController()
+    UserRegistrationScreen(navController = navController)
 }
-
-

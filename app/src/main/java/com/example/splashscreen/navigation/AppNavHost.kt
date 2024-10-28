@@ -1,111 +1,52 @@
 package com.example.splashscreen.navigation
 
 import WineEditAppApp
+import ai.codia.x.composeui.demo.HomePincipalScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
 import com.example.splashscreen.screens.HomeScreen
 import com.example.splashscreen.screens.LoginScreen
+import com.example.splashscreen.screens.NavigationRoutes
 //import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.NotificacionesUsu
+import com.example.splashscreen.screens.PhoneRegistrationScreen
 //import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.ProfileEditScreen
 import com.example.splashscreen.screens.UserProfileMainView
+import com.example.splashscreen.screens.UserRegistrationScreen
 
 @Composable
 fun AppNavHost(
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
-    startDestination: String = NavigationItem.Login.route
+
 ) {
-    NavHost(
-        modifier = modifier,
-        navController = navController,
-        startDestination = startDestination
-    ) {
-        // Login Screen
-        composable(NavigationItem.Login.route) {
-            LoginScreen(navController)
-        }
 
-        // Home Screen
-        composable(NavigationItem.HomeUsuarios.route) {
-            HomeScreen(navController)
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "HomePrincipal") {
+
+    composable("HomePrincipal"){
+        HomePincipalScreen(navController = navController)
+    }
+          composable("registroUsuarioTelefono"){
+              UserRegistrationScreen(navController = navController)
         }
-        composable(NavigationItem.EditarEmpredimiento.route) {
-            WineEditAppApp(navController)
+        composable("registroUsuarioCorreo"){
+            UserRegistrationScreen(navController = navController)
         }
 
 
-        // User Profile Screens
-        composable("userProfileMain") {
-            UserProfileMainView(
-                navController = navController,
-                onMenuClick = { /* acción de menú aquí */ }
-            )
-        }
-
-        // Personal Profile Edit Screen kevin
-//        composable("personal_profile_edit") {
-//            PersonalProfileEditScreen(
-//                onMenuClick = { /* acción de menú aquí */ },
-//                onUpdateProfile = {
-//                    navController.navigateUp()
-//                }
-//            )
-//        }
-//  kevin
-        composable("notificaciones_screen") {
-            NotificacionesUsu(
-                onNavigateToScreen = { screenName ->
-                    navController.navigate(screenName)
-                }
-            )
-        }
-
-        // Profile Edit Screen (existing)
-        composable("profileEdit") {
-            ProfileEditScreen(
-                onMenuClick = { /* acción de menú aquí */ },
-                onUpdateProfile = {
-                    navController.navigateUp()
-                }
-            )
-        }
-
-        composable("Menu de Home") {
-            ProfileEditScreen(
-                onMenuClick = { /* acción de menú aquí */ },
-                onUpdateProfile = {
-                    navController.navigateUp()
-                }
-            )
-        }
-
-
-//
-//        composable(Screen.Catalog.route) {
-//            CatalogScreen(navController = navController)
-//        }
-//        composable(Screen.Contact.route) {
-//            ContactScreen(navController = navController)
-//        }
-//        composable(Screen.About.route) {
-//            AboutScreen(navController = navController)
-//        }
 
 
 
 
 
-
-        // Detail Screen
 
     }
 }
