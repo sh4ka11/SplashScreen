@@ -4,6 +4,7 @@ import WineEditAppApp
 import ai.codia.x.composeui.demo.HomePincipalScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -13,12 +14,15 @@ import androidx.navigation.navArgument
 import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
 import com.example.splashscreen.screens.HomeScreen
+import com.example.splashscreen.screens.LoginInversor
 import com.example.splashscreen.screens.LoginScreen
 import com.example.splashscreen.screens.NavigationRoutes
 //import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.NotificacionesUsu
 //import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.ProfileEditScreen
+import com.example.splashscreen.screens.RegisterInversor
+import com.example.splashscreen.screens.RegisterPhoneView
 import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.UserRegistrationCorreo
 import com.example.splashscreen.screens.UserRegistrationScreen
@@ -40,6 +44,18 @@ fun AppNavHost(
         composable("registroUsuarioCorreo"){
             UserRegistrationCorreo(navController = navController)
         }
+        composable("login_inversor") {
+            LoginInversor() // Esta es la vista de destino
+        }
+        composable("register_inversor") {
+            RegisterInversor(navController = navController)
+        }
+        composable("register_phone") {
+            RegisterPhoneView(navController = navController)
+        }
+
+
+
 
 
 
