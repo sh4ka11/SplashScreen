@@ -210,7 +210,7 @@ fun RegisterInversor(
                             contentAlignment = Alignment.Center // Centra el contenido dentro del Box
                         ) {
                             Button(
-                                onClick = { },
+                                onClick = { navController.navigate("confirmation_code") }, // Cambia "confirmation_code" a la ruta que hayas definido para tu pantalla de código de confirmación
                                 modifier = Modifier
                                     .fillMaxWidth(0.8f) // Ajusta el ancho al 80% del espacio disponible
                                     .height(48.dp),
@@ -240,16 +240,13 @@ fun RegisterInversor(
                             horizontalArrangement = Arrangement.Center
                         ) {
                             Text(
-                                text = "¿Ya tienes una cuenta? ",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = Color(0xB2000000)
-                            )
-                            Text(
-                                text = "Iniciar sesión",
-                                style = MaterialTheme.typography.bodyMedium.copy(
-                                    color = Color.Black
-                                ),
-                                modifier = Modifier.clickable { }
+                                text = "Ya tienes cuenta? Iniciar sesión",
+                                style = MaterialTheme.typography.bodyMedium.copy(color = Color.Black),
+                                modifier = Modifier.clickable {
+                                    navController.navigate("login_inversor") {
+                                        popUpTo("register_inversor") { inclusive = true } // Limpia la pila de navegación
+                                    }
+                                }
                             )
                         }
                     }

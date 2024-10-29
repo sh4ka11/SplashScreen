@@ -13,7 +13,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
+import com.example.splashscreen.screens.ConfirmationCodeScreen
 import com.example.splashscreen.screens.HomeScreen
+import com.example.splashscreen.screens.InformacionCredencialScreen
+import com.example.splashscreen.screens.InformacionObligatoriaScreen
 import com.example.splashscreen.screens.LoginInversor
 import com.example.splashscreen.screens.LoginScreen
 import com.example.splashscreen.screens.NavigationRoutes
@@ -53,6 +56,16 @@ fun AppNavHost(
         composable("register_phone") {
             RegisterPhoneView(navController = navController)
         }
+        composable("confirmation_code") {
+            ConfirmationCodeScreen(navController = navController) // Asegúrate de que esta es tu pantalla
+        }
+        composable("informacion_obligatoria") {
+            InformacionObligatoriaScreen(navController = navController) // Asegúrate de que esta es tu pantalla
+        }
+        composable("informacion_credencial") { InformacionCredencialScreen() }
+
+
+
 
 
 
