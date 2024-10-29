@@ -259,5 +259,5 @@ fun LoginInversor() {
 fun LoginInversorPreview() {
     MaterialTheme {
         LoginInversor()
-        }
+    }
 }
