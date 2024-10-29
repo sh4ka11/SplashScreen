@@ -3,7 +3,6 @@ package com.example.splashscreen.screens
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,7 +25,8 @@ import androidx.compose.ui.unit.sp
 import com.example.splashscreen.R
 import kotlinx.coroutines.launch
 
-data class Notificacion(
+// Cambiado a InversionNotificacionModel para evitar conflicto de nombres
+data class InversionNotificacionModel(
     val titulo: String,
     val mensaje: String,
     val hora: String,
@@ -35,44 +35,27 @@ data class Notificacion(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NotificacionesUsu(
+fun Notificaciones2Inver(
     onNavigateToScreen: (String) -> Unit = {}
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var imageUri by remember { mutableStateOf<Uri?>(null) }
 
-    val notificaciones = remember {
+    // Cambiado a InversionNotificacionModel
+    val notificacionesInver = remember {
         listOf(
-            Notificacion(
-                "\"Usuario\" te envió una solicitud de conexión",
-                "\"Usuario\" a solicitado unirte con tu emprendimiento, acepta la solicitud para poder crecer juntos",
-                "2:15 P.M.",
-                R.drawable.image3_647598
-            ),
-            Notificacion(
-                "FANTA",
-                "A career in website design can involve the design, creation, and coding of a range of website types. Other tasks will typically...",
-                "3:15 P.M.",
-                R.drawable.image238
-            ),
-            Notificacion(
+            InversionNotificacionModel(
                 "Sprite",
-                "A career in website design can involve the design, creation, and coding of a range of website types. Other tasks will typically...",
+                "Asunto: ¡Noticia emocionante! ¡Oportunidad de Inversión con Sprite para tu emprendimiento!\n\n" +
+                        "Hola [Nombre del destinatario],\n\n" +
+                        "¡Espero que estés teniendo un día excelente! Quería compartir contigo una noticia emocionante que podría ser un gran impulso para tu emprendimiento.\n\n" +
+                        "En Sprite, estamos siempre en búsqueda de nuevas y emocionantes oportunidades de colaboración con emprendedores como tú que están haciendo olas en el mundo empresarial. Después de revisar tu empresa, [Nombre de tu Empresa], quedamos impresionados por tu visión, tu dedicación y el impacto que estás teniendo en tu industria.\n\n" +
+                        "Nos complace informarte que estamos considerando patrocinar tu emprendimiento como parte de nuestra iniciativa para apoyar a empresarios prometedores.\n\n" +
+                        "Además, te ofrecemos acceso exclusivo a eventos de networking, sesiones de mentoría con expertos de la industria, y una campaña de marketing conjunta para potenciar tu marca en nuevos mercados. Creemos que esta colaboración puede ser muy fructífera tanto para Sprite como para [Nombre de tu Empresa], y estamos emocionados de explorar esta oportunidad contigo.\n\n" +
+                        "Quedamos a la espera de tu respuesta para coordinar una reunión en la que podamos discutir más detalles sobre esta propuesta.",
                 "4:15 P.M.",
                 R.drawable.image241
-            ),
-            Notificacion(
-                "Sena",
-                "A career in website design can involve the design, creation, and coding of a range of website types. Other tasks will typically...",
-                "5:15 P.M.",
-                R.drawable.image240
-            ),
-            Notificacion(
-                "Sony",
-                "A career in website design can involve the design, creation, and coding of a range of website types. Other tasks will typically...",
-                "6:15 P.M.",
-                R.drawable.image239
             )
         )
     }
@@ -145,7 +128,6 @@ fun NotificacionesUsu(
         }
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            // Imagen de fondo
             Image(
                 painter = painterResource(id = R.drawable.fondo),
                 contentDescription = "Fondo",
@@ -153,7 +135,6 @@ fun NotificacionesUsu(
                 contentScale = ContentScale.FillBounds
             )
 
-            // Contenido principal
             Scaffold(
                 topBar = {
                     CenterAlignedTopAppBar(
@@ -186,67 +167,56 @@ fun NotificacionesUsu(
                         .fillMaxSize()
                         .padding(paddingValues)
                 ) {
-                    items(notificaciones) { notificacion ->
+                    items(notificacionesInver) { notificacion ->
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 8.dp)
-                                .clickable {
-                                    // Navigate to notificaciones_screen when clicking any notification
-                                    onNavigateToScreen("notificaciones_screen")
-                                },
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
                             shape = RoundedCornerShape(12.dp),
                             colors = CardDefaults.cardColors(containerColor = Color.White)
                         ) {
-                            Row(
+                            Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(16.dp),
-                                verticalAlignment = Alignment.Top
+                                    .padding(16.dp)
                             ) {
-                                Image(
-                                    painter = painterResource(id = notificacion.imageResourceId),
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .size(40.dp)
-                                        .clip(CircleShape)
-                                        .background(Color.LightGray),
-                                    contentScale = ContentScale.Crop
-                                )
-
-                                Spacer(modifier = Modifier.width(16.dp))
-
-                                Column(
-                                    modifier = Modifier.weight(1f)
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween,
-                                        verticalAlignment = Alignment.Top
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.Start
                                     ) {
+                                        Image(
+                                            painter = painterResource(id = notificacion.imageResourceId),
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .size(40.dp)
+                                                .clip(CircleShape),
+                                            contentScale = ContentScale.Crop
+                                        )
+                                        Spacer(modifier = Modifier.width(12.dp))
                                         Text(
                                             text = notificacion.titulo,
                                             fontSize = 16.sp,
-                                            color = Color.Black,
-                                            modifier = Modifier.weight(1f)
-                                        )
-                                        Text(
-                                            text = notificacion.hora,
-                                            fontSize = 12.sp,
-                                            color = Color.Gray
+                                            color = Color.Black
                                         )
                                     }
-
-                                    Spacer(modifier = Modifier.height(4.dp))
-
                                     Text(
-                                        text = notificacion.mensaje,
-                                        fontSize = 14.sp,
-                                        color = Color.Gray,
-                                        maxLines = 2,
-                                        overflow = TextOverflow.Ellipsis
+                                        text = notificacion.hora,
+                                        fontSize = 12.sp,
+                                        color = Color.Gray
                                     )
                                 }
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = notificacion.mensaje,
+                                    fontSize = 14.sp,
+                                    color = Color.DarkGray,
+                                    lineHeight = 20.sp
+                                )
                             }
                         }
                     }
@@ -258,7 +228,6 @@ fun NotificacionesUsu(
 
 @Preview(showBackground = true, widthDp = 430, heightDp = 894)
 @Composable
-fun NotificacionesUsuPreview() {
-    NotificacionesUsu()
+fun Notificaciones2InverPreview() {
+    Notificaciones2Inver()
 }
-

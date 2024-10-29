@@ -116,6 +116,7 @@ fun PhoneRegistrationView(
                 text = "Registrarse en Emprende link",
                 fontSize = 25.sp,
                 fontWeight = FontWeight.Normal,
+                color = Color.Black,
                 modifier = Modifier.padding(horizontal = 29.dp)
             )
 
@@ -133,7 +134,7 @@ fun PhoneRegistrationView(
                 ) {
                     Text(
                         text = "Correo",
-                        color = Color(0xB2000000),
+                        color = Color.Black,
                         fontSize = 20.sp
                     )
                 }
@@ -229,25 +230,21 @@ fun PhoneRegistrationView(
             // Botón Siguiente
             Button(
                 onClick = {
-                    // Aquí puedes validar que el número tenga 10 dígitos antes de continuar
-                    if (phoneNumber.length == 10) {
-                        // Implementar lógica de registro
-                    }
+                    navController.navigate("RegistroDatosUsuario")
                 },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (phoneNumber.length == 10) Color(0xFF38352E) else Color.Gray
+                    containerColor = Color(0xFF38352E)
                 ),
-                enabled = phoneNumber.length == 10,
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier
-                    .padding(horizontal = 29.dp)
                     .fillMaxWidth()
-                    .height(43.dp)
+                    .height(68.dp)
+                    .padding(vertical = 13.dp)
             ) {
                 Text(
-                    text = "Siguiente",
-                    color = Color(0xFFF9F7F3),
-                    fontSize = 20.sp
+                    text = "Registrarse",
+                    color = Color.White,
+                    fontSize = 18.sp
                 )
             }
 

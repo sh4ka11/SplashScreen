@@ -25,11 +25,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.splashscreen.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginInversor() {
+fun LoginUser(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -176,7 +177,7 @@ fun LoginInversor() {
                         )
 
                         Button(
-                            onClick = { },
+                            onClick = { navController.navigate("HomeUsuario")},
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(40.dp),
@@ -256,8 +257,8 @@ fun LoginInversor() {
 
 @Preview(showBackground = true)
 @Composable
-fun LoginInversorPreview() {
+fun LoginUserPreview() {
     MaterialTheme {
         LoginInversor()
-    }
+        }
 }

@@ -7,13 +7,40 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,17 +52,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginInversor() {
+fun RegisterInversor(
+    navController: NavController,
+    onEmailClick: () -> Unit = { navController.navigate("register_email") },
+    onPhoneClick: () -> Unit = { navController.navigate("register_phone") }
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-
     val configuration = LocalConfiguration.current
     val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
+    // Animation state for the bounce effect
     var offsetY by remember { mutableStateOf(0f) }
     val animatedOffset by animateFloatAsState(
         targetValue = offsetY,
@@ -83,10 +116,7 @@ fun LoginInversor() {
                         .offset(y = animatedOffset.dp)
                         .pointerInput(Unit) {
                             detectDragGestures(
-                                onDragStart = { },
-                                onDragEnd = {
-                                    offsetY = 0f
-                                },
+                                onDragEnd = { offsetY = 0f },
                                 onDrag = { change, dragAmount ->
                                     change.consume()
                                     val newOffset = (offsetY + dragAmount.y).coerceIn(0f, 50f)
@@ -96,10 +126,7 @@ fun LoginInversor() {
                                 }
                             )
                         },
-                    shape = RoundedCornerShape(
-                        topStart = if (isPortrait) 20.dp else 0.dp,
-                        topEnd = if (isPortrait) 35.dp else 0.dp
-                    ),
+                    shape = RoundedCornerShape(topStart = 20.dp, topEnd = 35.dp),
                     color = Color(0xFFF5F5F3)
                 ) {
                     Column(
@@ -108,29 +135,40 @@ fun LoginInversor() {
                             .verticalScroll(rememberScrollState())
                             .padding(24.dp)
                     ) {
-                        Box(
+                        Text(
+                            text = "Resgístrarse en Emprede link",
                             modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontSize = 25.sp
+                            )
+                        )
+
+                        Spacer(modifier = Modifier.height(24.dp))
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp),
+                            horizontalArrangement = Arrangement.Center // Centra ambos textos
                         ) {
                             Text(
-                                text = "Iniciar sesión en EmprendeLink",
+                                text = "Correo",
                                 modifier = Modifier
-                                    .fillMaxWidth(),
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.titleLarge.copy(
-                                    fontSize = 25.sp
-                                )
+                                    .clickable { onEmailClick() }
+                                    .padding(horizontal = 8.dp, vertical = 8.dp),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            Spacer(modifier = Modifier.width(100.dp)) // Espacio pequeño entre los textos
+                            Text(
+                                text = "Teléfono",
+                                modifier = Modifier
+                                    .clickable { onPhoneClick() }
+                                    .padding(horizontal = 8.dp, vertical = 8.dp),
+                                style = MaterialTheme.typography.titleMedium
                             )
                         }
 
-                        Spacer(modifier = Modifier.height(20.dp))
-
-                        Text(
-                            text = "Correo",
-                            modifier = Modifier.fillMaxWidth(),
-                            style = MaterialTheme.typography.titleMedium,
-                            textAlign = TextAlign.Center
-                        )
 
                         Divider(
                             modifier = Modifier.padding(vertical = 8.dp),
@@ -144,7 +182,7 @@ fun LoginInversor() {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp),
-                            shape = RoundedCornerShape(20.dp),
+                            shape = RoundedCornerShape(12.dp),
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color.Black,
                                 unfocusedBorderColor = Color.Black
@@ -154,97 +192,61 @@ fun LoginInversor() {
                         OutlinedTextField(
                             value = password,
                             onValueChange = { password = it },
-                            label = { Text("Contraseña") },
+                            label = { Text("Crear contraseña") },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp),
-                            shape = RoundedCornerShape(20.dp),
+                            shape = RoundedCornerShape(12.dp),
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color.Black,
                                 unfocusedBorderColor = Color.Black
                             )
                         )
 
-                        Text(
-                            text = "¿Has olvidado tu contraseña?",
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 8.dp),
-                            style = MaterialTheme.typography.bodyLarge,
-                            textAlign = TextAlign.Center,
-                            color = Color(0xB2000000)
-                        )
-
-                        Button(
-                            onClick = { },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(40.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFF38352E)
-                            ),
-                            shape = RoundedCornerShape(10.dp)
-                        ) {
-                            Text("Iniciar sesion")
-                        }
-
-                        Text(
-                            text = "Continuar con",
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp),
-                            style = MaterialTheme.typography.titleMedium,
-                            textAlign = TextAlign.Center,
-                            color = Color(0xB2000000)
-                        )
+                        Spacer(modifier = Modifier.height(16.dp))
 
                         Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 32.dp)
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center // Centra el contenido dentro del Box
                         ) {
-                            Box(
+                            Button(
+                                onClick = { navController.navigate("confirmation_code") }, // Cambia "confirmation_code" a la ruta que hayas definido para tu pantalla de código de confirmación
                                 modifier = Modifier
-                                    .align(Alignment.Center)
-                                    .background(Color.White, RoundedCornerShape(180.dp))
-                                    .border(1.dp, Color.Black, RoundedCornerShape(180.dp))
-                                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                                    .fillMaxWidth(0.8f) // Ajusta el ancho al 80% del espacio disponible
+                                    .height(48.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFF38352E)
+                                ),
+                                shape = RoundedCornerShape(8.dp)
                             ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                                ) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.google),
-                                        contentDescription = "Google Logo",
-                                        modifier = Modifier.size(44.dp)
-                                    )
-                                    Text(
-                                        text = "Google",
-                                        style = MaterialTheme.typography.titleMedium
-                                    )
-                                }
+                                Text("Siguiente")
                             }
                         }
 
-                        Divider(
+
+
+                        Text(
+                            text = "Al proporcionar su número de teléfono a Emprede link, usted acepta recibir mensajes SMS con notificaciones relacionadas con su cuenta. Es posible que se apliquen mensajes estándar",
                             modifier = Modifier.padding(vertical = 16.dp),
-                            color = Color(0xFFCEC7C7)
+                            style = MaterialTheme.typography.bodySmall,
+                            textAlign = TextAlign.Center,
+                            color = Color(0xB2000000)
                         )
+
+                        Spacer(modifier = Modifier.height(16.dp))
 
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.Center
                         ) {
                             Text(
-                                text = "¿Ya tienes una cuenta?",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = Color(0xB2000000)
-                            )
-                            Text(
-                                text = " Iniciar sesión",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = Color.Black
+                                text = "Ya tienes cuenta? Iniciar sesión",
+                                style = MaterialTheme.typography.bodyMedium.copy(color = Color.Black),
+                                modifier = Modifier.clickable {
+                                    navController.navigate("login_inversor") {
+                                        popUpTo("register_inversor") { inclusive = true } // Limpia la pila de navegación
+                                    }
+                                }
                             )
                         }
                     }
@@ -256,8 +258,8 @@ fun LoginInversor() {
 
 @Preview(showBackground = true)
 @Composable
-fun LoginInversorPreview() {
+fun RegisterInversorPreview() {
     MaterialTheme {
-        LoginInversor()
+        RegisterInversor(navController = rememberNavController())
     }
 }

@@ -18,6 +18,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
     }
 
     buildTypes {
@@ -50,6 +51,7 @@ android {
 }
 
 dependencies {
+    implementation( "androidx.navigation:navigation-compose:2.7.5")
     implementation ("androidx.compose.ui:ui:1.5.0")
     implementation ("androidx.compose.material3:material3:1.1.0")
     implementation ("androidx.compose.ui:ui-tooling-preview:1.5.0")

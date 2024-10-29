@@ -1,4 +1,4 @@
-package com.example.splashscreen
+package com.example.splashscreen.screens
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -29,10 +29,8 @@ class MainActivity : ComponentActivity() {
                     AppNavHost()
 
 
-                    }
                 }
             }
         }
     }
-
-
+}

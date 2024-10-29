@@ -113,7 +113,7 @@ fun HomePrincipalaScreen(navController: NavController) {
         )
 
         Button(
-            onClick = { /* Navigate to login */ },
+            onClick = { navController.navigate("loginUsuario")},
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xfff5f5f3)
             ),
@@ -131,7 +131,7 @@ fun HomePrincipalaScreen(navController: NavController) {
         }
 
         Button(
-            onClick = { /* Navigate to login */ },
+            onClick = {navController.navigate("loginUsuario") },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.White
             ),
@@ -310,7 +310,7 @@ fun HomePrincipalaScreen(navController: NavController) {
         )
 
         Button(
-            onClick = { /* Navigate to investor login */ },
+            onClick = { navController.navigate("login_inversor") },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xffd9d9d9)
             ),
@@ -329,7 +329,7 @@ fun HomePrincipalaScreen(navController: NavController) {
         }
 
         Button(
-            onClick = { /* Navigate to investor register */ },
+            onClick = { navController.navigate("register_inversor") }, // Navega a RegisterInversor
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xff38352e)
             ),
