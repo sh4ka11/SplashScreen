@@ -259,6 +259,6 @@ fun LoginUser(navController: NavController) {
 @Composable
 fun LoginUserPreview() {
     MaterialTheme {
-        LoginInversor()
+      //  LoginInversor()
         }
 }

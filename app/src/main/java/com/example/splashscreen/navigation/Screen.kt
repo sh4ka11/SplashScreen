@@ -13,7 +13,8 @@ enum class Screen { // Names to identify the screens
     NOTIFICATIONS,
     CHAT,
     LOGOUT,
-    EDITAREMPREDIMIENTO
+    EDITAREMPREDIMIENTO,
+    USERPROFILE
 }
 
 

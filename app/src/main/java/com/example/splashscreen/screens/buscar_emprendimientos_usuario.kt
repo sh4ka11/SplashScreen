@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.splashscreen.R
 import kotlinx.coroutines.launch
 
@@ -32,7 +33,7 @@ data class Emprendimiento(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Busquedaemprendeusuario() {
+fun Busquedaemprendeusuario(navController: NavController) {
     var searchText by remember { mutableStateOf("") }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -292,6 +293,6 @@ fun EmprendimientosCards(emprendimiento: Emprendimiento) {
 @Preview(showBackground = true)
 @Composable
 fun BuscarusuarioPreview() {
-    Busquedaemprendeusuario()
+    //Busquedaemprendeusuario()
 }
 

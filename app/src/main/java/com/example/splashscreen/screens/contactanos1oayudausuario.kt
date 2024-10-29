@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.splashscreen.R
 import kotlinx.coroutines.launch
 
@@ -33,7 +34,7 @@ data class Question(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Contactanos() {
+fun Contactanosh(navController: NavController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -378,6 +379,6 @@ fun ExpandableQuestion(
 @Composable
 fun ContactanosPreview() {
     MaterialTheme {
-        Contactanos()
+        //Contactanos()
     }
 }

@@ -18,7 +18,7 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InformacionCredencialScreen() {
+fun InformacionCredencialScreen(navController: NavController) {
     var usuario by remember { mutableStateOf("") }
     var contrasena by remember { mutableStateOf("") }
     var confirmarContrasena by remember { mutableStateOf("") }
@@ -127,7 +127,7 @@ fun InformacionCredencialScreen() {
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
-                onClick = { /* TODO: Handle login */ },
+                onClick = { navController.navigate("HomeInversionista") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -152,6 +152,6 @@ fun InformacionCredencialScreen() {
 @Composable
 fun CredencialObligatoriaPreview() {
     MaterialTheme {
-        InformacionCredencialScreen()
+       // InformacionCredencialScreen()
     }
 }
