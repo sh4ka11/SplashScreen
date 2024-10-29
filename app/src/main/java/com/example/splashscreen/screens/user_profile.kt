@@ -115,26 +115,17 @@ fun UserProfileMainView(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Button(
-                                onClick = { navController.navigate("profileEdit")
-                                },
+                                onClick = { navController.navigate("profileEdit") },
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color(0xFF2C2C2C)
                                 )
-                                
                             ) {
                                 Text("Editar perfil")
                             }
 
 
 
-                            Button(
-                                onClick = { /* Compartir perfil action */ },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFF2C2C2C)
-                                )
-                            ) {
-                                Text("Compartir perfil")
-                            }
+
                         }
                     }
                 }

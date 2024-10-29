@@ -24,6 +24,7 @@ import com.example.splashscreen.screens.LoginUser
 import com.example.splashscreen.screens.NavigationRoutes
 //import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.NotificacionesUsu
+import com.example.splashscreen.screens.PersonalProfileEditScreen
 //import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.ProfileEditScreen
 import com.example.splashscreen.screens.RegisterInversor
@@ -90,6 +91,9 @@ fun AppNavHost(
             InformacionObligatoriaScreen(navController = navController) // Asegúrate de que esta es tu pantalla
         }
         composable("informacion_credencial") { InformacionCredencialScreen() }
+
+
+        composable("profileEdit") { PersonalProfileEditScreen() } // Aquí navegas a la vista de edición
 
 
 
