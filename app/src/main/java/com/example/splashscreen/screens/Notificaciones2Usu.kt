@@ -22,6 +22,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import kotlinx.coroutines.launch
 
@@ -36,6 +38,7 @@ data class NotificacionModel(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Notificaciones2Usu(
+    navController: NavController,
     onNavigateToScreen: (String) -> Unit = {}
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -229,5 +232,5 @@ fun Notificaciones2Usu(
 @Preview(showBackground = true, widthDp = 430, heightDp = 894)
 @Composable
 fun Notificaciones2UsuPreview() {
-    Notificaciones2Usu()
+    Notificaciones2Usu(navController = rememberNavController())
 }

@@ -2,17 +2,21 @@ package com.example.splashscreen.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -20,57 +24,152 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.layout.Measurable
-import androidx.compose.ui.layout.MeasureResult
-import androidx.compose.ui.layout.MeasureScope
-import androidx.compose.ui.layout.Placeable
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController) {
-    // Use a vertical scroll state for scrolling functionality
     val scrollState = rememberScrollState()
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
 
-    // Column layout with a vertical scroll modifier
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState), // Apply vertical scroll modifier here
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet(
+                modifier = Modifier.width(300.dp)
+            ) {
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Profile section in drawer
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Column {
+                        Image(
+                            painter = painterResource(id = R.drawable.image3_647598),
+                            contentDescription = "Foto de perfil",
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Usuario",
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = "usuario@email.com",
+                            fontSize = 14.sp,
+                            color = Color.Gray
+                        )
+                    }
+                }
+
+                Divider()
+
+                // Drawer menu items
+                listOf(
+                    "Mi Perfil" to Icons.Default.Person,
+                    "Inicio" to Icons.Default.Home,
+                    "Busqueda por categoria" to Icons.Default.Search,
+                    "Consultar redes" to Icons.Default.Share,
+                    "Lista de emprendimientos" to Icons.Default.List,
+                    "Notificaciones" to Icons.Default.Notifications,
+                    "Chat" to Icons.Default.Email,
+                    "Cerrar Sesión" to Icons.Default.ExitToApp,
+                    "Ayuda" to Icons.Default.Info
+                ).forEach { (texto, icono) ->
+                    NavigationDrawerItem(
+                        icon = { Icon(icono, contentDescription = texto) },
+                        label = { Text(texto) },
+                        selected = false,
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                            }
+                        }
+                    )
+                }
+            }
+        }
     ) {
-        // Call to EmprendeMainView (if this is your main content)
-        HamburgerMenu(navController = navController)
-        EmprendeMainView()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+        ) {
+            // Top App Bar
+            CenterAlignedTopAppBar(
+                title = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // Profile Image
+                        Image(
+                            painter = painterResource(id = R.drawable.image3_647598),
+                            contentDescription = "Profile picture",
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
 
-        // Add the HamburgerMenu below the CenterAlignedTopAppBar
+                        Spacer(modifier = Modifier.width(12.dp))
 
+                        // User Info
+                        Column {
+                            Text(
+                                text = "Usuario",
+                                color = Color.Black,
+                                fontSize = 16.sp
+                            )
+                            Text(
+                                text = "usuario@email.com",
+                                color = Color.Gray,
+                                fontSize = 12.sp
+                            )
+                        }
+                    }
+                },
+                navigationIcon = {
+                    IconButton(
+                        onClick = {
+                            scope.launch {
+                                if (drawerState.isClosed) drawerState.open()
+                                else drawerState.close()
+                            }
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Menu,
+                            contentDescription = "Menú",
+                            tint = Color.Black
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color.White
+                )
+            )
+
+            // Main content
+            EmprendeMainView()
+        }
     }
 }
 
-
 @Composable
 fun EmprendeMainView() {
-    // Box-751:114-Home inicio sesion
     Box(
         contentAlignment = Alignment.TopStart,
         modifier = Modifier
@@ -78,7 +177,7 @@ fun EmprendeMainView() {
             .size(430.dp, 2536.dp)
             .clipToBounds(),
     ) {
-        // Image-751:115-204736911-un-hombre-de-negocios-mirando-por-la-ventana-a-una-vista-de-la-ciudad-visión-empresarial-ideas-transformed 2
+        // Image-751:115
         Image(
             painter = painterResource(id = R.drawable.image1_751115),
             contentDescription = null,
@@ -87,19 +186,20 @@ fun EmprendeMainView() {
                 .align(Alignment.TopStart)
                 .size(438.dp, 633.dp),
         )
-        // Empty-751:116-image 338
+
+        // Empty boxes
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .size(430.dp, 960.dp),
         )
-        // Empty-751:117-image 339
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .size(430.dp, 960.dp),
         )
-        // Empty-751:118-Rectangle 738
+
+        // Rectangle 738
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -107,7 +207,8 @@ fun EmprendeMainView() {
                 .background(Color(0xfff5f5f3))
                 .size(430.dp, 451.dp),
         )
-        // Text-751:119-¡El enlace de emprendedores con inversionistas!
+
+        // Main title text
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -120,7 +221,8 @@ fun EmprendeMainView() {
             textAlign = TextAlign.Center,
             overflow = TextOverflow.Ellipsis,
         )
-        // Text-751:120-Emprende Link busca facilitar la colaboración y el crecimiento empresarial al conectar de manera eficiente a emprendedores con grandes empresas, creando oportunidades para el desarrollo conjunto de soluciones innovadoras.
+
+        // Description text
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -133,7 +235,8 @@ fun EmprendeMainView() {
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
-        // Empty-751:121-Rectangle 720
+
+        // Button background
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -141,7 +244,8 @@ fun EmprendeMainView() {
                 .background(Color(0xff38352e), RoundedCornerShape(10.dp))
                 .size(222.dp, 46.dp),
         )
-        // Text-751:122-Crea tu empredimiento
+
+        // Button text
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -154,7 +258,8 @@ fun EmprendeMainView() {
             textAlign = TextAlign.Center,
             overflow = TextOverflow.Ellipsis,
         )
-        // Text-751:125-¿Listo para comenzar?
+
+        // Ready to start text
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -167,7 +272,8 @@ fun EmprendeMainView() {
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
-        // Empty-751:126-Rectangle 745
+
+        // Black rectangle
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -175,7 +281,8 @@ fun EmprendeMainView() {
                 .background(Color(0xff000000))
                 .size(435.dp, 171.dp),
         )
-        // Text-751:127-Crea tu propio emprendimiento
+
+        // Create your venture text
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -188,7 +295,8 @@ fun EmprendeMainView() {
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
-        // Lgo
+
+        // Logo
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = null,
@@ -198,7 +306,8 @@ fun EmprendeMainView() {
                 .offset(x = 69.dp, y = 14.dp)
                 .size(361.dp, 155.dp),
         )
-        // Empty-751:129-Rectangle 746
+
+        // Gray rectangle
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -206,7 +315,8 @@ fun EmprendeMainView() {
                 .background(Color(0xffd9d9d9), RoundedCornerShape(20.dp))
                 .size(430.dp, 211.dp),
         )
-        // Image-751:130-204736911-un-hombre-de-negocios-mirando-por-la-ventana-a-una-vista-de-la-ciudad-visión-empresarial-ideas-transformed 1
+
+        // Various images
         Image(
             painter = painterResource(id = R.drawable.image3_751130),
             contentDescription = null,
@@ -216,7 +326,7 @@ fun EmprendeMainView() {
                 .offset(x = 0.dp, y = 798.dp)
                 .size(430.dp, 211.dp),
         )
-        // Image-751:131-204736911-un-hombre-de-negocios-mirando-por-la-ventana-a-una-vista-de-la-ciudad-visión-empresarial-ideas-transformed 2
+
         Image(
             painter = painterResource(id = R.drawable.image4_751131),
             contentDescription = null,
@@ -226,7 +336,8 @@ fun EmprendeMainView() {
                 .offset(x = 1.dp, y = 2323.dp)
                 .size(430.dp, 915.dp),
         )
-        // Text-751:132-Emprende
+
+        // Emprende text
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -239,7 +350,8 @@ fun EmprendeMainView() {
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
-        // Image-751:133-Rectangle 747
+
+        // More images
         Image(
             painter = painterResource(id = R.drawable.image5_751133),
             contentDescription = null,
@@ -249,7 +361,8 @@ fun EmprendeMainView() {
                 .offset(x = 0.dp, y = 1014.dp)
                 .size(430.dp, 211.dp),
         )
-        // Text-751:134-Invierte
+
+        // Invierte text
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -262,7 +375,8 @@ fun EmprendeMainView() {
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
-        // Image-751:135-Rectangle 748
+
+        // More images and content
         Image(
             painter = painterResource(id = R.drawable.image6_751135),
             contentDescription = null,
@@ -272,7 +386,8 @@ fun EmprendeMainView() {
                 .offset(x = 0.dp, y = 1230.dp)
                 .size(434.dp, 211.dp),
         )
-        // Text-751:136-Crear contactos
+
+        // Create contacts text
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -285,19 +400,12 @@ fun EmprendeMainView() {
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
-        // Text-751:137-Emprende Link busca facilitar la colaboración y el crecimiento empresarial al conectar de manera eficiente a emprendedores con grandes empresas, creando oportunidades para el desarrollo conjunto de soluciones innovadoras.
+
+        // Description text
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 25.dp, y = 1465.dp)
-                .advancedShadow(
-                    color = Color(0x3f000000),
-                    alpha = 0.25f,
-                    cornersRadius = 0.dp,
-                    shadowBlurRadius = 4.dp,
-                    offsetX = 0.dp,
-                    offsetY = 4.dp
-                )
                 .size(392.dp, 205.dp),
             text = "Emprende Link busca facilitar la colaboración y el crecimiento empresarial al conectar de manera  eficiente a emprendedores con grandes empresas, creando oportunidades para el desarrollo  conjunto de soluciones innovadoras.",
             color = Color(0xffffffff),
@@ -412,85 +520,7 @@ fun EmprendeMainView() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun HamburgerMenu(
-    navController: NavController,
-    modifier: Modifier = Modifier
-) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet(
-                modifier = Modifier.width(300.dp),
 
-            ) {
-                Spacer(modifier = Modifier.height(16.dp))
-                // Menu items
-                listOf(
-                    "Mi Perfil" to Icons.Default.Person,
-                    "Inicio" to Icons.Default.Home,
-                    "Busqueda por categoria" to Icons.Default.Search,
-                    "Consultar redes" to Icons.Default.Share,
-                    "Lista de emprendimientos" to Icons.Default.List,
-                    "Notificaciones" to Icons.Default.Notifications,
-                    "Chat" to Icons.Default.Email,
-                    "Cerrar Sesión" to Icons.Default.ExitToApp,
-                    "Ayuda" to Icons.Default.Info
-                ).forEach { (texto, icono) ->
-                    NavigationDrawerItem(
-                        icon = { Icon(icono, contentDescription = texto) },
-                        label = { Text(texto) },
-                        selected = false,
-                        onClick = {
-                            scope.launch {
-                                drawerState.close()
-                            }
-                        }
-                    )
-                }
-            }
-        }
-    ) {
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .background(Color.White)
-        ) {
-            // Top App Bar
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        "Hamburger Menu",
-                        color = Color.Black,
-                        fontSize = 20.sp
-                    )
-                },
-                navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            scope.launch {
-                                if (drawerState.isClosed) drawerState.open()
-                                else drawerState.close()
-                            }
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = "Menú",
-                            tint = Color.Black
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color.White
-                )
-            )
-        }
-    }
-}
 
 @Preview(showBackground = true)
 @Composable

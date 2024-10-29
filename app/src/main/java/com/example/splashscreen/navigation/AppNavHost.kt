@@ -19,6 +19,7 @@ import com.example.splashscreen.screens.LoginInversor
 import com.example.splashscreen.screens.LoginScreen
 import com.example.splashscreen.screens.LoginUser
 import com.example.splashscreen.screens.NavigationRoutes
+import com.example.splashscreen.screens.Notificaciones2Usu
 //import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.NotificacionesUsu
 //import com.example.splashscreen.screens.PersonalProfileEditScreen
@@ -85,6 +86,8 @@ fun AppNavHost(
 
 
 
-
+        composable("notificacionesusu") {
+            Notificaciones2Usu(navController = navController)
+        }
     }
 }
