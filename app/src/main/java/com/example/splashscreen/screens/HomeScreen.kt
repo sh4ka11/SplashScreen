@@ -16,23 +16,35 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.offset
+import androidx.compose.ui.layout.Measurable
+import androidx.compose.ui.layout.MeasureResult
+import androidx.compose.ui.layout.MeasureScope
+import androidx.compose.ui.layout.Placeable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
-
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -47,7 +59,11 @@ fun HomeScreen(navController: NavController) {
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         // Call to EmprendeMainView (if this is your main content)
+        HamburgerMenu(navController = navController)
         EmprendeMainView()
+
+        // Add the HamburgerMenu below the CenterAlignedTopAppBar
+
     }
 }
 
@@ -172,9 +188,9 @@ fun EmprendeMainView() {
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
-        // Image-751:128-image 178
+        // Lgo
         Image(
-            painter = painterResource(id = R.drawable.image2_751128),
+            painter = painterResource(id = R.drawable.logo),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
@@ -345,7 +361,7 @@ fun EmprendeMainView() {
             textAlign = TextAlign.Center,
             overflow = TextOverflow.Ellipsis,
         )
-        // Text-751:143-chat de emprendedores
+// Text-751:143-chat de emprendedores
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -358,9 +374,9 @@ fun EmprendeMainView() {
             textAlign = TextAlign.Center,
             overflow = TextOverflow.Ellipsis,
         )
-        // Image-751:144-image 406
+// logo
         Image(
-            painter = painterResource(id = R.drawable.image7_751144),
+            painter = painterResource(id = R.drawable.logo),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
@@ -368,7 +384,7 @@ fun EmprendeMainView() {
                 .offset(x = 40.dp, y = 2335.dp)
                 .size(374.dp, 132.dp),
         )
-        // Text-751:145-2024 Emprende Link l Acerca de l politaca de privaciadad
+// Text-751:145-2024 Emprende Link l Acerca de l politaca de privaciadad
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -381,7 +397,7 @@ fun EmprendeMainView() {
             textAlign = TextAlign.Center,
             overflow = TextOverflow.Ellipsis,
         )
-        // Image-751:146-image 415
+// Image-751:146-image 415
         Image(
             painter = painterResource(id = R.drawable.image8_751146),
             contentDescription = null,
@@ -391,16 +407,88 @@ fun EmprendeMainView() {
                 .offset(x = 0.dp, y = 1656.dp)
                 .size(430.dp, 256.dp),
         )
-        // Image-751:147-588a6507d06f6719692a2d15 3
-        Image(
-            painter = painterResource(id = R.drawable.image9_751147),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 14.dp, y = 36.dp)
-                .size(55.dp, 55.dp),
-        )
+// Image-751:147-588a6507d06f6719692a2d15 3
+
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HamburgerMenu(
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet(
+                modifier = Modifier.width(300.dp),
+
+            ) {
+                Spacer(modifier = Modifier.height(16.dp))
+                // Menu items
+                listOf(
+                    "Mi Perfil" to Icons.Default.Person,
+                    "Inicio" to Icons.Default.Home,
+                    "Busqueda por categoria" to Icons.Default.Search,
+                    "Consultar redes" to Icons.Default.Share,
+                    "Lista de emprendimientos" to Icons.Default.List,
+                    "Notificaciones" to Icons.Default.Notifications,
+                    "Chat" to Icons.Default.Email,
+                    "Cerrar Sesión" to Icons.Default.ExitToApp,
+                    "Ayuda" to Icons.Default.Info
+                ).forEach { (texto, icono) ->
+                    NavigationDrawerItem(
+                        icon = { Icon(icono, contentDescription = texto) },
+                        label = { Text(texto) },
+                        selected = false,
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                            }
+                        }
+                    )
+                }
+            }
+        }
+    ) {
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .background(Color.White)
+        ) {
+            // Top App Bar
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        "Hamburger Menu",
+                        color = Color.Black,
+                        fontSize = 20.sp
+                    )
+                },
+                navigationIcon = {
+                    IconButton(
+                        onClick = {
+                            scope.launch {
+                                if (drawerState.isClosed) drawerState.open()
+                                else drawerState.close()
+                            }
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Menu,
+                            contentDescription = "Menú",
+                            tint = Color.Black
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color.White
+                )
+            )
+        }
     }
 }
 

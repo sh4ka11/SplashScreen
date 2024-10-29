@@ -153,39 +153,6 @@ fun UserRegistrationCorreo(navController: NavController) {
                     keyboardType = KeyboardType.Email
                 )
 
-                // Phone field with country code (similar to your original)
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(54.dp)
-                        .background(Color(0xFFFCFCFC), RoundedCornerShape(20.dp))
-                        .border(1.dp, Color(0xFF000000), RoundedCornerShape(20.dp))
-                        .padding(vertical = 8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(horizontal = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.banderagriga),
-                            contentDescription = "Flag",
-                            modifier = Modifier.size(33.dp)
-                        )
-                        Text(
-                            text = "+1",
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
-                        Divider(
-                            modifier = Modifier
-                                .width(1.dp)
-                                .height(33.dp)
-                                .background(Color(0x4C000000))
-                        )
-
-                    }
-                }
 
                 CustomTextField(
                     value = password,
@@ -204,7 +171,7 @@ fun UserRegistrationCorreo(navController: NavController) {
                 // Register Button
                 Button(
                     onClick = {
-                        // Implement registration logic
+                        navController.navigate("RegistroDatosUsuario")
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF38352E)
@@ -212,7 +179,7 @@ fun UserRegistrationCorreo(navController: NavController) {
                     shape = RoundedCornerShape(10.dp),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(48.dp)
+                        .height(68.dp)
                         .padding(vertical = 16.dp)
                 ) {
                     Text(
@@ -230,7 +197,7 @@ fun UserRegistrationCorreo(navController: NavController) {
                     Text(
                         text = "¿Necesitas Ayuda?",
                         color = Color(0xFF000000),
-                        fontSize = 16.sp
+                        fontSize = 20.sp
                     )
                 }
             }

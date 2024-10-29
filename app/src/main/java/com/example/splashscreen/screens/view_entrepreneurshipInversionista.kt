@@ -32,8 +32,8 @@ import com.example.splashscreen.navigation.NavigationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WineShopApp(navController: NavController) {
-    var showContactInfo by remember { mutableStateOf(true) } // Cambiado a true para mostrar por defecto
+fun VinotecaEcstasyApp(navController: NavController) {
+    var mostrarInfoContacto by remember { mutableStateOf(true) }
 
     Scaffold(
         topBar = {
@@ -43,28 +43,14 @@ fun WineShopApp(navController: NavController) {
                     containerColor = Color.Black
                 ),
                 actions = {
-                    IconButton(onClick = { showContactInfo = !showContactInfo }) {
+                    IconButton(onClick = { mostrarInfoContacto = !mostrarInfoContacto }) {
                         Icon(
-                            imageVector = if (showContactInfo) Icons.Filled.Person else Icons.Filled.Warning, // Adjust this line
-                            contentDescription = "Toggle Contact Info",
+                            imageVector = if (mostrarInfoContacto) Icons.Filled.Person else Icons.Filled.Warning,
+                            contentDescription = "Alternar Info Contacto",
                             tint = Color.White
                         )
                     }
-                    IconButton(
-
-                        onClick ={  navController.navigate("EditarEmpredimientoUsuario")
-                        },
-                        modifier = Modifier
-                            .size(32.dp)
-                            .fillMaxWidth()
-                            .padding(start = 8.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Edit,
-                            contentDescription = "Editar",
-                            tint = Color.White
-                        )
-                    }
+                    
                 },
                 modifier = Modifier.shadow(4.dp)
             )
@@ -76,20 +62,16 @@ fun WineShopApp(navController: NavController) {
                 .background(Color(0xFFF5F5F5))
                 .padding(padding)
         ) {
-            // Header Section
-
-            // Contact Info Card con animación
             item {
                 AnimatedVisibility(
-                    visible = showContactInfo,
+                    visible = mostrarInfoContacto,
                     enter = expandVertically() + fadeIn(),
                     exit = shrinkVertically() + fadeOut()
                 ) {
-                    ContactInfoCard()
+                    TarjetaContacto()
                 }
             }
 
-            // Wine Categories
             item {
                 Column(
                     modifier = Modifier
@@ -113,37 +95,38 @@ fun WineShopApp(navController: NavController) {
             }
 
             item {
-                ProductCard(
-                    title = "Vino tinto Malbec argentino",
-                    description = "Sumérgete en un torbellino de sensaciones con este vino tinto Malbec argentino, una oda a la intensidad y la expresión.",
-                    imageRes = R.drawable.vino1,
-                    price = "$29.99" // Price added here
+                TarjetaProducto(
+                    titulo = "Vino tinto Malbec argentino",
+                    descripcion = "Sumérgete en un torbellino de sensaciones con este vino tinto Malbec argentino, una oda a la intensidad y la expresión.",
+                    imagenRecurso = R.drawable.vino1,
+                    precio = "$29.99"
                 )
             }
 
             item {
-                ProductCard(
-                    title = "Vino rosado Pinot Noir de Francia",
-                    description = "Deléitate con la delicadeza y el encanto de este vino rosado Pinot Noir francés...",
-                    imageRes = R.drawable.vino2,
-                    price = "$25.99" // Price added here
+                TarjetaProducto(
+                    titulo = "Vino rosado Pinot Noir de Francia",
+                    descripcion = "Deléitate con la delicadeza y el encanto de este vino rosado Pinot Noir francés...",
+                    imagenRecurso = R.drawable.vino2,
+                    precio = "$25.99"
                 )
             }
 
             item {
-                ProductCard(
-                    title = "Vino blanco Chardonnay de California",
-                    description = "Disfruta de la frescura y la elegancia de este vino blanco Chardonnay californiano...",
-                    imageRes = R.drawable.vino3,
-                    price = "$32.99" // Price added here
+                TarjetaProducto(
+                    titulo = "Vino blanco Chardonnay de California",
+                    descripcion = "Disfruta de la frescura y la elegancia de este vino blanco Chardonnay californiano...",
+                    imagenRecurso = R.drawable.vino3,
+                    precio = "$32.99"
                 )
             }
+
             item {
-                ProductCard(
-                    title = "Vino espumoso Prosecco italiano",
-                    description = "Celebra con cada burbuja de este Prosecco italiano, ideal para acompañar momentos especiales.",
-                    imageRes = R.drawable.vino4,
-                    price = "$38.99" // Price added here
+                TarjetaProducto(
+                    titulo = "Vino espumoso Prosecco italiano",
+                    descripcion = "Celebra con cada burbuja de este Prosecco italiano, ideal para acompañar momentos especiales.",
+                    imagenRecurso = R.drawable.vino4,
+                    precio = "$38.99"
                 )
             }
 
@@ -152,19 +135,18 @@ fun WineShopApp(navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
-                        .background(Color(0xFFEFEFEF)) // Light background for contrast
-                        .border(2.dp, Color.Black, shape = RoundedCornerShape(8.dp)) // Border around the entire column
-                        .padding(16.dp) // Additional padding inside the column
+                        .background(Color(0xFFEFEFEF))
+                        .border(2.dp, Color.Black, shape = RoundedCornerShape(8.dp))
+                        .padding(16.dp)
                 ) {
                     Text(
                         text = "Experimenta la magia del vino: Un viaje sensorial único",
-                        fontSize = 18.sp, // Increased font size for the title
-                        fontWeight = FontWeight.Bold, // Bold for emphasis
-                        color = Color.DarkGray, // Darker color for the title
-                        modifier = Modifier.padding(bottom = 8.dp) // Spacing below the title
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.DarkGray,
+                        modifier = Modifier.padding(bottom = 8.dp)
                     )
 
-                    // Body text with improved formatting
                     Text(
                         text = buildAnnotatedString {
                             withStyle(style = SpanStyle(color = Color.DarkGray)) {
@@ -201,9 +183,8 @@ fun WineShopApp(navController: NavController) {
     }
 }
 
-
 @Composable
-fun ContactInfoCard() {
+fun TarjetaContacto() {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -219,15 +200,13 @@ fun ContactInfoCard() {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            // Encabezado con imagen y nombre
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Imagen del emprendedor
                 Image(
                     painter = painterResource(id = R.drawable.imagenrealdesebas),
-                    contentDescription = "Profile Image",
+                    contentDescription = "Imagen de Perfil",
                     modifier = Modifier
                         .size(80.dp)
                         .clip(CircleShape)
@@ -236,7 +215,6 @@ fun ContactInfoCard() {
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                // Nombre y título
                 Column {
                     Text(
                         text = "CRISTIAN SEBASTIAN DELGADO",
@@ -256,46 +234,44 @@ fun ContactInfoCard() {
             Divider(color = Color(0xFFEEEEEE), thickness = 1.dp)
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Información de contacto
-            ContactInfoRow(
-                icon = Icons.Filled.Email,
-                text = "Cristiansdp@gmail.com",
-                onClick = { /* TODO: Implementar acción de email */ }
+            FilaInfoContacto(
+                icono = Icons.Filled.Email,
+                texto = "Cristiansdp@gmail.com",
+                onClick = { }
             )
-            ContactInfoRow(
-                icon = Icons.Filled.Phone,
-                text = "320-898-7646",
-                onClick = { /* TODO: Implementar acción de teléfono */ }
+            FilaInfoContacto(
+                icono = Icons.Filled.Phone,
+                texto = "320-898-7646",
+                onClick = { }
             )
-            ContactInfoRow(
-                icon = Icons.Filled.LocationOn,
-                text = "Subida Lucía, 40 - Jersey City, Gal / 86551",
-                onClick = { /* TODO: Implementar acción de ubicación */ }
+            FilaInfoContacto(
+                icono = Icons.Filled.LocationOn,
+                texto = "Subida Lucía, 40 - Jersey City, Gal / 86551",
+                onClick = { }
             )
-            ContactInfoRow(
-                icon = Icons.Filled.Place,
-                text = "POPAYÁN",
-                onClick = { /* TODO: Implementar acción de ciudad */ }
+            FilaInfoContacto(
+                icono = Icons.Filled.Place,
+                texto = "POPAYÁN",
+                onClick = { }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Botones de redes sociales
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                SocialMediaButton(icon = Icons.Filled.Favorite)
-                SocialMediaButton(icon = Icons.Filled.Send)
-                SocialMediaButton(icon = Icons.Filled.Person)
-                SocialMediaButton(icon = Icons.Filled.Email)
+                BotonRedSocial(icono = Icons.Filled.Favorite)
+                BotonRedSocial(icono = Icons.Filled.Send)
+                BotonRedSocial(icono = Icons.Filled.Person)
+                BotonRedSocial(icono = Icons.Filled.Email)
             }
         }
     }
 }
 
 @Composable
-fun ContactInfoRow(icon: ImageVector, text: String, onClick: () -> Unit) {
+fun FilaInfoContacto(icono: ImageVector, texto: String, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -304,14 +280,14 @@ fun ContactInfoRow(icon: ImageVector, text: String, onClick: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            imageVector = icon,
+            imageVector = icono,
             contentDescription = null,
             modifier = Modifier.size(24.dp),
             tint = Color(0xFF2B0000)
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-            text = text,
+            text = texto,
             fontSize = 14.sp,
             color = Color.Gray
         )
@@ -319,10 +295,10 @@ fun ContactInfoRow(icon: ImageVector, text: String, onClick: () -> Unit) {
 }
 
 @Composable
-fun SocialMediaButton(icon: ImageVector) {
-    IconButton(onClick = { /* TODO: Implementar acción de redes sociales */ }) {
+fun BotonRedSocial(icono: ImageVector) {
+    IconButton(onClick = { }) {
         Icon(
-            imageVector = icon,
+            imageVector = icono,
             contentDescription = null,
             modifier = Modifier.size(24.dp),
             tint = Color(0xFF2B0000)
@@ -331,7 +307,7 @@ fun SocialMediaButton(icon: ImageVector) {
 }
 
 @Composable
-fun ProductCard(title: String, description: String, imageRes: Int, price: String) {
+fun TarjetaProducto(titulo: String, descripcion: String, imagenRecurso: Int, precio: String) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -342,7 +318,7 @@ fun ProductCard(title: String, description: String, imageRes: Int, price: String
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Image(
-                painter = painterResource(id = imageRes),
+                painter = painterResource(id = imagenRecurso),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -351,17 +327,17 @@ fun ProductCard(title: String, description: String, imageRes: Int, price: String
                 contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = title, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+            Text(text = titulo, fontWeight = FontWeight.Bold, fontSize = 16.sp)
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = description, fontSize = 14.sp, color = Color.Gray)
+            Text(text = descripcion, fontSize = 14.sp, color = Color.Gray)
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = price, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = Color(0xFF2B0000)) // Price display
+            Text(text = precio, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = Color(0xFF2B0000))
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewWineShopApp() {
-    WineShopApp(navController = rememberNavController())
+fun VistaPreviewVinotecaApp() {
+    VinotecaEcstasyApp(navController = rememberNavController())
 }

@@ -1,6 +1,7 @@
 package com.example.splashscreen.navigation
 
 import WineEditAppApp
+import WineShopApp
 import ai.codia.x.composeui.demo.HomePincipalScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,6 +20,7 @@ import com.example.splashscreen.screens.InformacionCredencialScreen
 import com.example.splashscreen.screens.InformacionObligatoriaScreen
 import com.example.splashscreen.screens.LoginInversor
 import com.example.splashscreen.screens.LoginScreen
+import com.example.splashscreen.screens.LoginUser
 import com.example.splashscreen.screens.NavigationRoutes
 //import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.NotificacionesUsu
@@ -26,6 +28,7 @@ import com.example.splashscreen.screens.NotificacionesUsu
 import com.example.splashscreen.screens.ProfileEditScreen
 import com.example.splashscreen.screens.RegisterInversor
 import com.example.splashscreen.screens.RegisterPhoneView
+import com.example.splashscreen.screens.UserAdditionalInfoScreen
 import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.UserRegistrationCorreo
 import com.example.splashscreen.screens.UserRegistrationScreen
@@ -41,10 +44,34 @@ fun AppNavHost(
         composable("HomePrincipal"){
             HomePincipalScreen(navController = navController)
         }
+        composable("HomeUsuario"){
+            HomeScreen(navController = navController)
+        }
+
+
         composable("registroUsuarioTelefono"){
             UserRegistrationScreen(navController = navController)
         }
         composable("registroUsuarioCorreo"){
+            UserRegistrationCorreo(navController = navController)
+        }
+        composable("RegistroDatosUsuario"){
+            UserAdditionalInfoScreen(navController = navController)
+        }
+
+
+        composable("MirarEmpredimientoUsuario"){
+            WineShopApp(navController = navController)
+        }
+        composable("EditarEmpredimientoUsuario"){
+            WineEditAppApp(navController = navController)
+        }
+
+
+        composable("loginUsuario"){
+            LoginUser(navController = navController)
+        }
+        composable("loginInversinista"){
             UserRegistrationCorreo(navController = navController)
         }
         composable("login_inversor") {
