@@ -113,7 +113,7 @@ fun HomePrincipalaScreen(navController: NavController) {
         )
 
         Button(
-            onClick = { /* Navigate to login */ },
+            onClick = { navController.navigate("loginUsuario")},
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xfff5f5f3)
             ),
@@ -131,7 +131,7 @@ fun HomePrincipalaScreen(navController: NavController) {
         }
 
         Button(
-            onClick = { /* Navigate to login */ },
+            onClick = {navController.navigate("loginUsuario") },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.White
             ),
