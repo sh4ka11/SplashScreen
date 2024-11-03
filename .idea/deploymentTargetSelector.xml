@@ -20,6 +20,9 @@
       <SelectionState runConfigName="HomeScreenInversorPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="VistaPreviewVinotecaApp">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>
