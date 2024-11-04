@@ -51,7 +51,6 @@ import com.example.splashscreen.screens.UserAdditionalInfoScreen
 import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.UserRegistrationCorreo
 import com.example.splashscreen.screens.UserRegistrationScreen
-import com.example.splashsreen.screens.Busquedaemprendeusuario
 
 @Composable
 fun AppNavHost(
@@ -72,8 +71,6 @@ fun AppNavHost(
             HomeInversorScreen(navController = navController)
         }
 
-
-
         composable("registroUsuarioTelefono"){
             UserRegistrationScreen(navController = navController)
         }
@@ -84,14 +81,12 @@ fun AppNavHost(
             UserAdditionalInfoScreen(navController = navController)
         }
 
-
         composable("MirarEmpredimientoUsuario"){
             WineShopApp(navController = navController)
         }
         composable("EditarEmpredimientoUsuario"){
             WineEditAppApp(navController = navController)
         }
-
 
         composable("loginUsuario"){
             LoginUser(navController = navController)
@@ -118,9 +113,6 @@ fun AppNavHost(
 
         composable("user_profile_main_view") {
             UserProfileMainView(navController = navController)
-        }
-        composable("busqueda") {
-            Busquedaemprendeusuario(navController = navController)
         }
 
 

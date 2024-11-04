@@ -81,7 +81,6 @@ fun Busquedaemprendeinver(navController: NavHostController) {
                     // Línea divisoria
                     Divider(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp), color = Color.LightGray)
                 }
-
                 // Opciones del menú
                 val menuItems = listOf(
                     Pair(Icons.Default.Person, "Mi Perfil"),
