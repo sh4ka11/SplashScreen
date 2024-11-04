@@ -23,6 +23,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import kotlinx.coroutines.launch
 
@@ -36,6 +38,7 @@ data class Notificacion(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotificacionesUsu(
+    navController: NavController,
     onNavigateToScreen: (String) -> Unit = {}
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -84,63 +87,7 @@ fun NotificacionesUsu(
                 modifier = Modifier.width(300.dp)
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    Column {
-                        Image(
-                            painter = if (imageUri != null) {
-                                painterResource(id = R.drawable.image3_647598)
-                            } else {
-                                painterResource(id = R.drawable.image3_647598)
-                            },
-                            contentDescription = "Foto de perfil",
-                            modifier = Modifier
-                                .size(64.dp)
-                                .clip(CircleShape),
-                            contentScale = ContentScale.Crop
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = "Usuario",
-                            fontSize = 16.sp
-                        )
-                        Text(
-                            text = "usuario@email.com",
-                            fontSize = 14.sp,
-                            color = Color.Gray
-                        )
-                    }
-                }
-
-                Divider()
-
-                listOf(
-                    "Mi Perfil" to Icons.Default.Person,
-                    "Inicio" to Icons.Default.Home,
-                    "Busqueda por categoria" to Icons.Default.Search,
-                    "Consultar redes" to Icons.Default.Share,
-                    "Lista de emprendimientos" to Icons.Default.List,
-                    "Notificaciones" to Icons.Default.Notifications,
-                    "Chat" to Icons.Default.Email,
-                    "Cerrar Sesión" to Icons.Default.ExitToApp,
-                    "Ayuda" to Icons.Default.Info
-                ).forEach { (texto, icono) ->
-                    NavigationDrawerItem(
-                        icon = { Icon(icono, contentDescription = texto) },
-                        label = { Text(texto) },
-                        selected = texto == "Notificaciones",
-                        onClick = {
-                            scope.launch {
-                                drawerState.close()
-                                onNavigateToScreen(texto)
-                            }
-                        }
-                    )
-                }
+                // Perfil y otros items de navegación...
             }
         }
     ) {
@@ -192,60 +139,67 @@ fun NotificacionesUsu(
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp, vertical = 8.dp)
                                 .clickable {
-                                    // Navigate to notificaciones_screen when clicking any notification
                                     onNavigateToScreen("notificaciones_screen")
                                 },
                             shape = RoundedCornerShape(12.dp),
                             colors = CardDefaults.cardColors(containerColor = Color.White)
                         ) {
-                            Row(
+                            Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(16.dp),
-                                verticalAlignment = Alignment.Top
+                                    .padding(16.dp)
                             ) {
-                                Image(
-                                    painter = painterResource(id = notificacion.imageResourceId),
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .size(40.dp)
-                                        .clip(CircleShape)
-                                        .background(Color.LightGray),
-                                    contentScale = ContentScale.Crop
-                                )
-
-                                Spacer(modifier = Modifier.width(16.dp))
-
-                                Column(
-                                    modifier = Modifier.weight(1f)
+                                Row(
+                                    verticalAlignment = Alignment.Top
                                 ) {
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween,
-                                        verticalAlignment = Alignment.Top
-                                    ) {
+                                    Image(
+                                        painter = painterResource(id = notificacion.imageResourceId),
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .size(40.dp)
+                                            .clip(CircleShape)
+                                            .background(Color.LightGray),
+                                        contentScale = ContentScale.Crop
+                                    )
+                                    Spacer(modifier = Modifier.width(16.dp))
+                                    Column(modifier = Modifier.weight(1f)) {
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            horizontalArrangement = Arrangement.SpaceBetween,
+                                            verticalAlignment = Alignment.Top
+                                        ) {
+                                            Text(
+                                                text = notificacion.titulo,
+                                                fontSize = 16.sp,
+                                                color = Color.Black,
+                                                modifier = Modifier.weight(1f)
+                                            )
+                                            Text(
+                                                text = notificacion.hora,
+                                                fontSize = 12.sp,
+                                                color = Color.Gray
+                                            )
+                                        }
+                                        Spacer(modifier = Modifier.height(4.dp))
                                         Text(
-                                            text = notificacion.titulo,
-                                            fontSize = 16.sp,
-                                            color = Color.Black,
-                                            modifier = Modifier.weight(1f)
-                                        )
-                                        Text(
-                                            text = notificacion.hora,
-                                            fontSize = 12.sp,
-                                            color = Color.Gray
+                                            text = notificacion.mensaje,
+                                            fontSize = 14.sp,
+                                            color = Color.Gray,
+                                            maxLines = 2,
+                                            overflow = TextOverflow.Ellipsis
                                         )
                                     }
-
-                                    Spacer(modifier = Modifier.height(4.dp))
-
-                                    Text(
-                                        text = notificacion.mensaje,
-                                        fontSize = 14.sp,
-                                        color = Color.Gray,
-                                        maxLines = 2,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
+                                }
+                                Spacer(modifier = Modifier.height(8.dp))
+                                // Botón para navegar
+                                Button(
+                                    onClick = { navController.navigate("notificacionesusu") },
+                                    modifier = Modifier
+                                        .align(Alignment.End)
+                                        .padding(top = 8.dp),
+                                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1C1B1F))
+                                ) {
+                                    Text(text = "Ver más", color = Color.White)
                                 }
                             }
                         }
@@ -259,6 +213,5 @@ fun NotificacionesUsu(
 @Preview(showBackground = true, widthDp = 430, heightDp = 894)
 @Composable
 fun NotificacionesUsuPreview() {
-    NotificacionesUsu()
+    NotificacionesUsu(navController = rememberNavController())
 }
-

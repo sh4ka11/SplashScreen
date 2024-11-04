@@ -1,5 +1,7 @@
 package com.example.splashscreen.screens
 
+import Menu
+import MenuItem
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -30,11 +32,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.graphics.vector.ImageVector
 import kotlinx.coroutines.launch
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeInversorScreen(navController: NavController) {
     val scrollState = rememberScrollState()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -77,29 +79,43 @@ fun HomeScreen(navController: NavController) {
 
                 Divider()
 
-                // Drawer menu items
-                listOf(
-                    "Mi Perfil" to Icons.Default.Person,
-                    "Inicio" to Icons.Default.Home,
-                    "Busqueda por categoria" to Icons.Default.Search,
-                    "Consultar redes" to Icons.Default.Share,
-                    "Lista de emprendimientos" to Icons.Default.List,
-                    "Notificaciones" to Icons.Default.Notifications,
-                    "Chat" to Icons.Default.Email,
-                    "Cerrar Sesión" to Icons.Default.ExitToApp,
-                    "Ayuda" to Icons.Default.Info
-                ).forEach { (texto, icono) ->
+                // Drawer menu items with navigation
+                val menuItems = listOf(
+                    MenuItem("Mi Perfil", Icons.Default.Person, "user_profile_main_view"),
+                    MenuItem("Inicio", Icons.Default.Home, "HomeUsuario"),
+                    MenuItem("Búsqueda por categoría", Icons.Default.Search, "busqueda"),
+                    MenuItem("Lista de emprendimientos", Icons.Default.List, "emprendimientos"),
+                    MenuItem("Notificaciones", Icons.Default.Notifications, "notificaciones"),
+                    MenuItem("Chat", Icons.Default.Email, "chat"),
+                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar-sesion"),
+                    MenuItem("Ayuda", Icons.Default.Info, "ayuda")
+                )
+
+                menuItems.forEach { menuItem ->
                     NavigationDrawerItem(
-                        icon = { Icon(icono, contentDescription = texto) },
-                        label = { Text(texto) },
+                        icon = { Icon(menuItem.icono, contentDescription = menuItem.texto) },
+                        label = { Text(menuItem.texto) },
                         selected = false,
                         onClick = {
                             scope.launch {
                                 drawerState.close()
+                                // Manejo especial para cerrar sesión
+                                if (menuItem.ruta == "cerrar-sesion") {
+                                    // Aquí puedes agregar la lógica para cerrar sesión
+                                    navController.navigate("login") {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            inclusive = true
+                                        }
+                                    }
+                                } else {
+                                    navController.navigate(menuItem.ruta)
+                                }
                             }
                         }
                     )
                 }
+
+
             }
         }
     ) {
@@ -114,7 +130,6 @@ fun HomeScreen(navController: NavController) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        // Profile Image
                         Image(
                             painter = painterResource(id = R.drawable.image3_647598),
                             contentDescription = "Profile picture",
@@ -126,10 +141,9 @@ fun HomeScreen(navController: NavController) {
 
                         Spacer(modifier = Modifier.width(12.dp))
 
-                        // User Info
                         Column {
                             Text(
-                                text = "Usuario",
+                                text = "Inversor",
                                 color = Color.Black,
                                 fontSize = 16.sp
                             )
@@ -163,13 +177,14 @@ fun HomeScreen(navController: NavController) {
             )
 
             // Main content
-            EmprendeMainView()
+            EmprendeInversorMainView()
         }
     }
 }
 
+
 @Composable
-fun EmprendeMainView() {
+fun EmprendeInversorMainView() {
     Box(
         contentAlignment = Alignment.TopStart,
         modifier = Modifier
@@ -251,7 +266,7 @@ fun EmprendeMainView() {
                 .align(Alignment.TopStart)
                 .offset(x = 59.dp, y = 553.dp)
                 .size(292.dp, 26.dp),
-            text = "Crea tu empredimiento",
+            text = "Busca empredimientos",
             color = Color(0xffffffff),
             fontSize = 18.sp,
             fontWeight = FontWeight.Normal,
@@ -518,13 +533,12 @@ fun EmprendeMainView() {
 // Image-751:147-588a6507d06f6719692a2d15 3
 
     }
+
 }
-
-
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
+fun HomeScreenInversorPreview() {
     val navController = rememberNavController() // Create a NavController for preview
     HomeScreen(navController = navController) // Pass it to HomeScreen
 }

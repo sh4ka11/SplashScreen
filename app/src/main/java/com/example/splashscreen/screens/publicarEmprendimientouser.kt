@@ -95,7 +95,7 @@ import coil.compose.AsyncImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PublicarEmprendimientoView() {
+fun PublicarEmprendimientoView(navController: NavController) {
     var fondoUri by remember { mutableStateOf<Uri?>(null) }
     var logoUri by remember { mutableStateOf<Uri?>(null) }
     var productoUris by remember { mutableStateOf(List(3) { null as Uri? }) }
@@ -484,7 +484,7 @@ fun PreviewPublicarEmprendimientoView() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            PublicarEmprendimientoView()
+      //      PublicarEmprendimientoView()
         }
     }
 }
