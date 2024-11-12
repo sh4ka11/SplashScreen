@@ -26,6 +26,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.myapplication.screens.Olvidarcorr
 import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
 import com.example.splashscreen.screens.ChatScreen
@@ -51,11 +52,10 @@ import com.example.splashscreen.screens.UserAdditionalInfoScreen
 import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.UserRegistrationCorreo
 import com.example.splashscreen.screens.UserRegistrationScreen
+import com.example.splashscreen.screens.VinotecaEcstasyApp
 
 @Composable
-fun AppNavHost(
-
-) {
+fun AppNavHost() {
 //Lago
 
     val navController = rememberNavController()
@@ -114,6 +114,18 @@ fun AppNavHost(
         composable("user_profile_main_view") {
             UserProfileMainView(navController = navController)
         }
+
+        composable("visitar_emprendimiento_inversionista") {
+            VinotecaEcstasyApp(navController = navController)
+        }
+
+        composable("ingrese_correo_usuario") {
+            Olvidarcorr(navController = navController)
+        }
+
+
+
+
 
 
 //        composable("profileEdit") { PersonalProfileEditScreen() } // Aquí navegas a la vista de edición

@@ -1,4 +1,4 @@
-package com.example.myapplication.screens
+package com.example.SplashScreen.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,12 +26,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 
 @Composable
-fun Olvidar3(
-    onNavigateToEmail: () -> Unit = {} // Función para navegación al correo
-) {
+fun Olvidar3(navController: NavHostController)
+{
     var telefono by remember { mutableStateOf("") }
     var showVerificationMessage by remember { mutableStateOf(false) }
 
@@ -178,7 +179,9 @@ fun Olvidar3(
                 .align(Alignment.TopStart)
                 .wrapContentSize()
                 .offset(x = 93.dp, y = 612.dp)
-                .clickable { onNavigateToEmail() },
+                .clickable {
+                    navController.navigate("mandar_correo_usuario")
+                },
             text = "Correo",
             color = Color(0xb2000000),
             fontSize = 20.sp,
@@ -186,6 +189,8 @@ fun Olvidar3(
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
+
+
 
         // Mensaje de instrucciones
         Text(
@@ -234,10 +239,8 @@ fun Olvidar3(
 
 @Preview(showBackground = true)
 @Composable
-fun Olvidartelefono() {
+fun Olvidar3() {
     MaterialTheme {
-        Olvidar3(
-
-        )
+       Olvidar3(navController = rememberNavController())
     }
 }

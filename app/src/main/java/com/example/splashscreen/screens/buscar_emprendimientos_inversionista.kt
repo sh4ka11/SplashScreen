@@ -205,7 +205,7 @@ fun EmprendimientosCard(emprendimiento: Emprendimiento, navController: NavHostCo
                 horizontalArrangement = Arrangement.Start
             ) {
                 Button(
-                    onClick = { navController.navigate("visitarEmprendimientoVino") },
+                    onClick = { navController.navigate("visitar_emprendimiento_inversionista") }, // Esta es la ruta
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White),
                     modifier = Modifier
                         .padding(4.dp)
@@ -214,6 +214,8 @@ fun EmprendimientosCard(emprendimiento: Emprendimiento, navController: NavHostCo
                 ) {
                     Text("Visitar", fontSize = 12.sp)
                 }
+
+
             }
         }
     }
