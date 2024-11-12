@@ -22,13 +22,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import kotlinx.coroutines.launch
 
-// Cambiado a NotificacionModel para evitar conflicto de nombres
-data class NotificacionModel(
+// Cambiado a InversionNotificacionModel para evitar conflicto de nombres
+data class InversionNotificacionModel(
     val titulo: String,
     val mensaje: String,
     val hora: String,
@@ -37,18 +35,17 @@ data class NotificacionModel(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Notificaciones2Usu(
-    navController: NavController,
+fun Notificaciones2Inver(
     onNavigateToScreen: (String) -> Unit = {}
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var imageUri by remember { mutableStateOf<Uri?>(null) }
 
-    // Cambiado a NotificacionModel
-    val notificaciones = remember {
+    // Cambiado a InversionNotificacionModel
+    val notificacionesInver = remember {
         listOf(
-            NotificacionModel(
+            InversionNotificacionModel(
                 "Sprite",
                 "Asunto: ¡Noticia emocionante! ¡Oportunidad de Inversión con Sprite para tu emprendimiento!\n\n" +
                         "Hola [Nombre del destinatario],\n\n" +
@@ -170,7 +167,7 @@ fun Notificaciones2Usu(
                         .fillMaxSize()
                         .padding(paddingValues)
                 ) {
-                    items(notificaciones) { notificacion ->
+                    items(notificacionesInver) { notificacion ->
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -231,6 +228,6 @@ fun Notificaciones2Usu(
 
 @Preview(showBackground = true, widthDp = 430, heightDp = 894)
 @Composable
-fun Notificaciones2UsuPreview() {
-    Notificaciones2Usu(navController = rememberNavController())
+fun Notificaciones2InverPreview() {
+    Notificaciones2Inver()
 }

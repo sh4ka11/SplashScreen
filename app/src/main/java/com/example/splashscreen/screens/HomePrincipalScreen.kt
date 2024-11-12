@@ -6,35 +6,19 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -48,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
-import com.example.splashscreen.screens.EmprendeMainView
 
 @Composable
 fun HomePincipalScreen(navController: NavController) {
@@ -60,12 +43,12 @@ fun HomePincipalScreen(navController: NavController) {
             .verticalScroll(scrollState),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        HomePrincipalaScreen()
+        HomePrincipalaScreen(navController)
     }
 }
 
 @Composable
-fun HomePrincipalaScreen() {
+fun HomePrincipalaScreen(navController: NavController) {
     Box(
         contentAlignment = Alignment.TopStart,
         modifier = Modifier
@@ -80,7 +63,7 @@ fun HomePrincipalaScreen() {
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 5.dp, y = 0.dp)
-                .size(438.dp, 633.dp),
+                .size(400.dp, 350.dp),
         )
 
         Box(
@@ -108,7 +91,7 @@ fun HomePrincipalaScreen() {
                 .align(Alignment.TopStart)
                 .offset(x = 16.dp, y = 241.dp)
                 .size(417.dp, 82.dp),
-            text = "¡El enlace de emprendedores\n con \n inversionistas!",
+            text = "¡El enlace de emprendedores\n con  inversionistas!",
             color = Color(0xff000000),
             fontSize = 25.sp,
             fontWeight = FontWeight.Normal,
@@ -129,75 +112,84 @@ fun HomePrincipalaScreen() {
             overflow = TextOverflow.Ellipsis,
         )
 
-        // Botón "Iniciar Sesión"
         Button(
-            onClick = { /* Add navigation logic here */ },
+            onClick = { navController.navigate("loginUsuario")},
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xfff5f5f3)
+            ),
+            shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 45.dp, y = 565.dp)
-                .size(154.dp, 33.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFFFFF)),
-            shape = RoundedCornerShape(10.dp)
+                .offset(x = 112.dp, y = 480.dp)
+                .size(223.dp, 34.dp),
         ) {
             Text(
-                text = "Iniciar \n Sesion",
-                color = Color(0xFF000000),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Normal
+                text = "¿Listo  para comenzar?",
+                color = Color.Black,
+                fontSize = 15.sp
             )
         }
 
-        // Botón "Crear Cuenta"
         Button(
-            onClick = { /* Add navigation logic here */ },
+            onClick = {navController.navigate("loginUsuario") },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.White
+            ),
+            shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 238.dp, y = 565.dp)
-                .size(154.dp, 33.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF38352E)),
-            shape = RoundedCornerShape(10.dp)
+                .offset(x = 45.dp, y = 535.dp)
+                .size(158.dp, 55.dp)
+
+        ) {
+            Text(
+                text = "Iniciar \n Sesión",
+                color = Color.Black,
+                fontSize = 18.sp,
+                textAlign = TextAlign.Center,
+            )
+        }
+            //Como colocar un link
+        //ah
+        Button(
+            onClick = { navController.navigate("registroUsuarioTelefono") },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xff38352e)
+            ),
+            shape = RoundedCornerShape(10.dp),
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .offset(x = 235.dp, y = 535.dp)
+                .size(158.dp, 55.dp)
+
         ) {
             Text(
                 text = "Crear Cuenta",
-                color = Color(0xFFFFFFFF),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Normal
+                color = Color.White,
+                fontSize = 18.sp
             )
         }
 
-        Button(
-            onClick = { /* Add navigation or action here */ },
+        Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 122.dp, y = 515.dp)
-                .size(223.dp, 33.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-            contentPadding = PaddingValues(0.dp)
-        ) {
-            Text(
-                text = "¿Listo para comenzar?",
-                color = Color(0xB2000000),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Normal,
-            )
-        }
+                .offset(x = -5.dp, y = 627.dp)
+                .background(Color(0xff000000))
+                .size(435.dp, 171.dp),
+        )
 
-        Button(
-            onClick = { /* Add navigation or action here */ },
+        Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 104.dp, y = 670.dp)
                 .size(263.dp, 105.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-            contentPadding = PaddingValues(0.dp)
-        ) {
-            Text(
-                text = "Crea tu propio emprendimiento",
-                color = Color(0xFFFFFFFF),
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Normal,
-            )
-        }
+            text = "Crea tu propio emprendimiento",
+            color = Color(0xffffffff),
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Normal,
+            textAlign = TextAlign.Left,
+            overflow = TextOverflow.Ellipsis,
+        )
 
         Image(
             painter = painterResource(id = R.drawable.logo),
@@ -205,8 +197,8 @@ fun HomePrincipalaScreen() {
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 70.dp, y = 21.dp)
-                .size(320.dp, 110.dp),
+                .offset(x = 67.dp, y = 21.dp)
+                .size(300.dp, 145.dp),
         )
 
         Box(
@@ -251,7 +243,7 @@ fun HomePrincipalaScreen() {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.platasubida),
+            painter = painterResource(id = R.drawable.manos),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
@@ -266,7 +258,7 @@ fun HomePrincipalaScreen() {
                 .offset(x = 158.dp, y = 1088.dp)
                 .size(263.dp, 105.dp),
             text = "Invierte",
-            color = Color(0xff000000),
+            color = Color.White,
             fontSize = 30.sp,
             fontWeight = FontWeight.Normal,
             textAlign = TextAlign.Left,
@@ -274,7 +266,7 @@ fun HomePrincipalaScreen() {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.manos),
+            painter = painterResource(id = R.drawable.platasubida),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
@@ -289,7 +281,7 @@ fun HomePrincipalaScreen() {
                 .offset(x = 97.dp, y = 1320.dp)
                 .size(263.dp, 105.dp),
             text = "Crear contactos",
-            color = Color(0xffffffff),
+            color = Color.Black,
             fontSize = 30.sp,
             fontWeight = FontWeight.Normal,
             textAlign = TextAlign.Left,
@@ -317,40 +309,40 @@ fun HomePrincipalaScreen() {
                 .size(430.dp, 415.dp),
         )
 
-        // Botón "Iniciar Sesión Como Inversor"
         Button(
-            onClick = { /* Add navigation logic here */ },
+            onClick = { navController.navigate("login_inversor") },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xffd9d9d9)
+            ),
+            shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 54.dp, y = 2212.dp)
-                .size(154.dp, 52.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9D9D9)),
-            shape = RoundedCornerShape(10.dp)
+                .offset(x = 50.dp, y = 2212.dp)
+                .size(154.dp, 55.dp)
         ) {
             Text(
-                text = "Iniciar Sesion\nComo Inversor",
-                color = Color(0xFF000000),
+                text = "Iniciar Sesión\nComo Inversor",
+                color = Color.Black,
                 fontSize = 18.sp,
-                fontWeight = FontWeight.Normal,
                 textAlign = TextAlign.Center
             )
         }
 
-        // Botón "Crear Cuenta Como Inversor"
         Button(
-            onClick = { /* Add navigation logic here */ },
+            onClick = { navController.navigate("register_inversor") }, // Navega a RegisterInversor
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xff38352e)
+            ),
+            shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 227.dp, y = 2212.dp)
-                .size(170.dp, 52.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF38352E)),
-            shape = RoundedCornerShape(10.dp)
+                .offset(x = 225.dp, y = 2212.dp)
+                .size(170.dp, 55.dp)
         ) {
             Text(
                 text = "Crear Cuenta\nComo Inversor",
-                color = Color(0xFFFFFFFF),
+                color = Color.White,
                 fontSize = 18.sp,
-                fontWeight = FontWeight.Normal,
                 textAlign = TextAlign.Center
             )
         }
@@ -358,9 +350,9 @@ fun HomePrincipalaScreen() {
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 54.dp, y = 1963.dp)
+                .offset(x = 50.dp, y = 1963.dp)
                 .size(323.dp, 88.dp),
-            text = "Crear Cuenta\nComo Inversor",
+            text = "Crear Cuenta \nComo Inversor",
             color = Color(0xff000000),
             fontSize = 30.sp,
             fontWeight = FontWeight.Normal,
@@ -373,7 +365,7 @@ fun HomePrincipalaScreen() {
                 .align(Alignment.TopStart)
                 .offset(x = 40.dp, y = 2037.dp)
                 .size(340.dp, 168.dp),
-            text = "Asociese con mas emprendedores para poder hacer progresar a tu negocio, o encuentra proveedores de diferentes productos",
+            text = "Asociese con mas emprededores para poder hacer progresar a tu negocio,o encuentra provedores de difenrentes productos",
             color = Color(0xb2000000),
             fontSize = 20.sp,
             fontWeight = FontWeight.Normal,
@@ -388,7 +380,7 @@ fun HomePrincipalaScreen() {
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 40.dp, y = 2335.dp)
-                .size(350.dp, 125.dp),
+                .size(340.dp, 132.dp),
         )
 
         Text(
@@ -396,7 +388,7 @@ fun HomePrincipalaScreen() {
                 .align(Alignment.TopStart)
                 .offset(x = 66.dp, y = 2471.dp)
                 .size(311.dp, 45.dp),
-            text = "2024 Emprende Link l Acerca de l politica de privacidad",
+            text = "2024 Emprende Link l Acerca de l politaca de privaciadad",
             color = Color(0xff000000),
             fontSize = 18.sp,
             fontWeight = FontWeight.Normal,
@@ -410,8 +402,8 @@ fun HomePrincipalaScreen() {
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 0.dp, y = 1656.dp)
-                .size(430.dp, 256.dp),
+                .offset(x = 5.dp, y = 1656.dp)
+                .size(450.dp, 256.dp),
         )
 
         Image(

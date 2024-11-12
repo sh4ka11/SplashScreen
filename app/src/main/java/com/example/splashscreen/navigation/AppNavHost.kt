@@ -1,111 +1,148 @@
 package com.example.splashscreen.navigation
 
 import WineEditAppApp
+import WineShopApp
+import ai.codia.x.composeui.demo.HomePincipalScreen
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.myapplication.screens.Olvidarcorr
 import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
+import com.example.splashscreen.screens.ChatScreen
+import com.example.splashscreen.screens.ConfirmationCodeScreen
+import com.example.splashscreen.screens.HomeInversorScreen
 import com.example.splashscreen.screens.HomeScreen
+import com.example.splashscreen.screens.InformacionCredencialScreen
+import com.example.splashscreen.screens.InformacionObligatoriaScreen
+import com.example.splashscreen.screens.LoginInversor
 import com.example.splashscreen.screens.LoginScreen
-import com.example.splashscreen.screens.PersonalProfileEditScreen
+import com.example.splashscreen.screens.LoginUser
+import com.example.splashscreen.screens.NavigationRoutes
+import com.example.splashscreen.screens.Notificaciones2Usu
+//import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.NotificacionesUsu
 import com.example.splashscreen.screens.PersonalProfileEditScreen
+//import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.ProfileEditScreen
+import com.example.splashscreen.screens.PublicarEmprendimientoView
+import com.example.splashscreen.screens.RegisterInversor
+import com.example.splashscreen.screens.RegisterPhoneView
+import com.example.splashscreen.screens.UserAdditionalInfoScreen
 import com.example.splashscreen.screens.UserProfileMainView
+import com.example.splashscreen.screens.UserRegistrationCorreo
+import com.example.splashscreen.screens.UserRegistrationScreen
+import com.example.splashscreen.screens.VinotecaEcstasyApp
 
 @Composable
-fun AppNavHost(
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
-    startDestination: String = NavigationItem.Login.route
-) {
-    NavHost(
-        modifier = modifier,
-        navController = navController,
-        startDestination = startDestination
-    ) {
-        // Login Screen
-        composable(NavigationItem.Login.route) {
-            LoginScreen(navController)
+fun AppNavHost() {
+//Lago
+
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "HomePrincipal") {
+
+        composable("HomePrincipal"){
+            HomePincipalScreen(navController = navController)
+        }
+        composable("HomeUsuario"){
+            HomeScreen(navController = navController)
+        }
+        composable("HomeInversionista"){
+            HomeInversorScreen(navController = navController)
         }
 
-        // Home Screen
-        composable(NavigationItem.HomeUsuarios.route) {
-            HomeScreen(navController)
+        composable("registroUsuarioTelefono"){
+            UserRegistrationScreen(navController = navController)
         }
-        composable(NavigationItem.EditarEmpredimiento.route) {
-            WineEditAppApp(navController)
+        composable("registroUsuarioCorreo"){
+            UserRegistrationCorreo(navController = navController)
         }
-
-
-        // User Profile Screens
-        composable("userProfileMain") {
-            UserProfileMainView(
-                navController = navController,
-                onMenuClick = { /* acción de menú aquí */ }
-            )
+        composable("RegistroDatosUsuario"){
+            UserAdditionalInfoScreen(navController = navController)
         }
 
-        // Personal Profile Edit Screen kevin
-        composable("personal_profile_edit") {
-            PersonalProfileEditScreen(
-                onMenuClick = { /* acción de menú aquí */ },
-                onUpdateProfile = {
-                    navController.navigateUp()
-                }
-            )
+        composable("MirarEmpredimientoUsuario"){
+            WineShopApp(navController = navController)
         }
-//  kevin
-        composable("notificaciones_screen") {
-            NotificacionesUsu(
-                onNavigateToScreen = { screenName ->
-                    navController.navigate(screenName)
-                }
-            )
+        composable("EditarEmpredimientoUsuario"){
+            WineEditAppApp(navController = navController)
         }
 
-        // Profile Edit Screen (existing)
-        composable("profileEdit") {
-            ProfileEditScreen(
-                onMenuClick = { /* acción de menú aquí */ },
-                onUpdateProfile = {
-                    navController.navigateUp()
-                }
-            )
+        composable("loginUsuario"){
+            LoginUser(navController = navController)
+        }
+        composable("loginInversinista"){
+            UserRegistrationCorreo(navController = navController)
+        }
+        composable("login_inversor") {
+            LoginInversor(navController = navController) // Esta es la vista de destino
+        }
+        composable("register_inversor") {
+            RegisterInversor(navController = navController)
+        }
+        composable("register_phone") {
+            RegisterPhoneView(navController = navController)
+        }
+        composable("confirmation_code") {
+            ConfirmationCodeScreen(navController = navController) // Asegúrate de que esta es tu pantalla
+        }
+        composable("informacion_obligatoria") {
+            InformacionObligatoriaScreen(navController = navController) // Asegúrate de que esta es tu pantalla
+        }
+        composable("informacion_credencial") { InformacionCredencialScreen(navController = navController) }
+
+        composable("user_profile_main_view") {
+            UserProfileMainView(navController = navController)
         }
 
-        composable("Menu de Home") {
-            ProfileEditScreen(
-                onMenuClick = { /* acción de menú aquí */ },
-                onUpdateProfile = {
-                    navController.navigateUp()
-                }
-            )
+        composable("visitar_emprendimiento_inversionista") {
+            VinotecaEcstasyApp(navController = navController)
+        }
+
+        composable("ingrese_correo_usuario") {
+            Olvidarcorr(navController = navController)
         }
 
 
+
+
+
+
+//        composable("profileEdit") { PersonalProfileEditScreen() } // Aquí navegas a la vista de edición
 //
-//        composable(Screen.Catalog.route) {
-//            CatalogScreen(navController = navController)
+//            composable("Mi Perfil") { HomeInversorScreen(navController) }
+//           composable("UserProfileMainView") { UserProfileMainView(navController) }
+//            composable("busquedadeEmpredimientos") { Busquedaemprendeusuario(navController) }
+//           composable(" Miemprendimientos") { WineShopApp(navController) }
+//        composable("publicarempredimiento") { PublicarEmprendimientoView(navController = navController) }
+//        composable("notificaciones") { NotificacionesUsu(navController) }
+//           composable("chat") { ChatScreen(navController) }
+         //  composable("ayuda") { Contactanosh(navController) }
+
+
+//        composable("notificacionesusu") {
+//            Notificaciones2Usu(navController = navController)
 //        }
-//        composable(Screen.Contact.route) {
-//            ContactScreen(navController = navController)
-//        }
-//        composable(Screen.About.route) {
-//            AboutScreen(navController = navController)
-//        }
-
-
-
-
-
-
-        // Detail Screen
-
     }
+
 }

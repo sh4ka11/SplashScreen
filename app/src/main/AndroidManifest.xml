@@ -4,28 +4,33 @@
 
     <!-- Declaración de permisos -->
     <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
+
+
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:usesCleartextTraffic="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/logocir"
-        android:label="EmprendeLink"
+        android:label="Emprende Link"
         android:roundIcon="@drawable/logocir"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplicationSplashScreen"
         tools:targetApi="31">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".screens.MainActivity"
             android:exported="true"
-            android:label="EmprendeLink"
+            android:label="Emprende Link"
             android:theme="@style/Theme.MyApplicationSplashScreen">
 
             <intent-filter>

@@ -12,7 +12,8 @@ enum class Screen {
     NOTIFICATIONS,
     CHAT,
     LOGOUT,
-    EDITAREMPREDIMIENTO
+    EDITAREMPREDIMIENTO,
+    USERPROFILE
 }
 
 // NavigationItem.kt

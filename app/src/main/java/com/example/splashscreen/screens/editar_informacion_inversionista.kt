@@ -1,8 +1,5 @@
 package com.example.splashscreen.screens
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -22,8 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -31,13 +26,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import com.example.splashscreen.R
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 
-data class PersonalProfile(
+data class PersonalProfiles(
     val name: String = "",
     val birthDate: String = "",
     val email: String = "",
@@ -50,18 +41,20 @@ data class PersonalProfile(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PersonalProfileEditScreen(
+fun Editinfoinver(
     onMenuClick: () -> Unit = {},
     onUpdateProfile: () -> Unit = {}
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    var showImageMenu by remember { mutableStateOf(false) }
+    var showUpdateDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
-    // State for temporary edits
-    var tempProfile by remember {
+    var personalProfile by remember {
         mutableStateOf(
-            PersonalProfile(
+            PersonalProfiles(
                 name = "Cristian Sebastian Delgado Calvache",
                 birthDate = "Nacido(a) el 05 de septiembre de 2002",
                 email = "sdp402@gmail.com",
@@ -74,30 +67,16 @@ fun PersonalProfileEditScreen(
         )
     }
 
-    // State for actual profile data
-    var personalProfile by remember { mutableStateOf(tempProfile) }
-
-    var imageUri by remember { mutableStateOf<Uri?>(loadProfileImageUri(context)) }
-    var showImageMenu by remember { mutableStateOf(false) }
-    var showUpdateDialog by remember { mutableStateOf(false) }
-
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
-        uri?.let {
-            imageUri = it
-            saveProfileImage(context, it)
-        }
+        imageUri = uri
     }
 
     val cameraLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.TakePicturePreview()
     ) { bitmap ->
-        bitmap?.let {
-            val uri = saveBitmapToFile(context, it)
-            imageUri = uri
-            saveProfileImage(context, uri)
-        }
+        // Handle camera image here
     }
 
     val scrollState = rememberScrollState()
@@ -121,7 +100,7 @@ fun PersonalProfileEditScreen(
                         painter = if (imageUri != null) {
                             rememberAsyncImagePainter(imageUri)
                         } else {
-                            painterResource(id = R.drawable.image3_647598)
+                            painterResource(id = android.R.drawable.ic_menu_gallery)
                         },
                         contentDescription = "Profile Picture",
                         modifier = Modifier
@@ -143,37 +122,92 @@ fun PersonalProfileEditScreen(
                 }
 
                 Divider()
-                listOf(
-                    "Mi Perfil" to Icons.Default.Person,
-                "Inicio" to Icons.Default.Home,
-                "Busqueda por categoria" to Icons.Default.Search,
-                "Consultar redes" to Icons.Default.Share,
-                "Lista de emprendimientos" to Icons.Default.List,
-                "Notificaciones" to Icons.Default.Notifications,
-                "Chat" to Icons.Default.Email,
-                "Cerrar Sesión" to Icons.Default.ExitToApp,
-                "Ayuda" to Icons.Default.Info
-                ).forEach { (texto, icono) ->
+
                 NavigationDrawerItem(
-                    icon = { Icon(icono, contentDescription = texto) },
-                    label = { Text(texto) },
-                    selected = texto == "Mi Perfil",
+                    icon = { Icon(Icons.Default.Person, contentDescription = "Mi Perfil") },
+                    label = { Text("Mi Perfil") },
+                    selected = true,
                     onClick = {
-                        scope.launch {
-                            drawerState.close()
-                        }
+                        scope.launch { drawerState.close() }
+                    }
+                )
+
+                NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.Home, contentDescription = "Inicio") },
+                    label = { Text("Inicio") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                    }
+                )
+
+                NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.Search, contentDescription = "Busqueda por categoria") },
+                    label = { Text("Busqueda por categoria") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                    }
+                )
+
+                NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.Share, contentDescription = "Consultar redes") },
+                    label = { Text("Consultar redes") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                    }
+                )
+
+                NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.List, contentDescription = "Lista de empredimientos") },
+                    label = { Text("Lista de empredimientos") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                    }
+                )
+
+                NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.Notifications, contentDescription = "Notificaciones") },
+                    label = { Text("Notificaciones") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                    }
+                )
+
+                NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.Email, contentDescription = "Chat") },
+                    label = { Text("Chat") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                    }
+                )
+
+                NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.ExitToApp, contentDescription = "Cerrar Sesión") },
+                    label = { Text("Cerrar Sesión") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                    }
+                )
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.Info, contentDescription = "Ayuda") },
+                    label = { Text("Ayuda") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
                     }
                 )
             }
-            }
         }
-    )
-
-                // Navigation items remain the same...
-                // (Previous navigation drawer items code remains unchanged)
-
-
-     {
+    ) {
         Scaffold(
             topBar = {
                 CenterAlignedTopAppBar(
@@ -265,7 +299,6 @@ fun PersonalProfileEditScreen(
                             text = { Text("Eliminar Foto") },
                             onClick = {
                                 imageUri = null
-                                deleteProfileImage(context)
                                 showImageMenu = false
                             }
                         )
@@ -283,14 +316,14 @@ fun PersonalProfileEditScreen(
                     Column(
                         modifier = Modifier.padding(16.dp)
                     ) {
-                        EditableField("Nombre", tempProfile.name) { tempProfile = tempProfile.copy(name = it) }
-                        EditableField("Fecha de nacimiento", tempProfile.birthDate) { tempProfile = tempProfile.copy(birthDate = it) }
-                        EditableField("Correo", tempProfile.email) { tempProfile = tempProfile.copy(email = it) }
-                        EditableField("Ubicacion", tempProfile.location) { tempProfile = tempProfile.copy(location = it) }
-                        EditableField("Celular", tempProfile.phone) { tempProfile = tempProfile.copy(phone = it) }
-                        EditableField("Documento", tempProfile.document) { tempProfile = tempProfile.copy(document = it) }
-                        EditableField("Género", tempProfile.gender) { tempProfile = tempProfile.copy(gender = it) }
-                        EditableField("Etapa", tempProfile.stage) { tempProfile = tempProfile.copy(stage = it) }
+                        EditableField("Nombre", personalProfile.name) { personalProfile = personalProfile.copy(name = it) }
+                        EditableField("Fecha de nacimiento", personalProfile.birthDate) { personalProfile = personalProfile.copy(birthDate = it) }
+                        EditableField("Correo", personalProfile.email) { personalProfile = personalProfile.copy(email = it) }
+                        EditableField("Ubicacion", personalProfile.location) { personalProfile = personalProfile.copy(location = it) }
+                        EditableField("Celular", personalProfile.phone) { personalProfile = personalProfile.copy(phone = it) }
+                        EditableField("Documento", personalProfile.document) { personalProfile = personalProfile.copy(document = it) }
+                        EditableField("Experiencia", personalProfile.gender) { personalProfile = personalProfile.copy(gender = it) }
+                        EditableField("Certificado", personalProfile.stage) { personalProfile = personalProfile.copy(stage = it) }
 
                         Button(
                             onClick = { showUpdateDialog = true },
@@ -321,7 +354,6 @@ fun PersonalProfileEditScreen(
                 confirmButton = {
                     Button(
                         onClick = {
-                            personalProfile = tempProfile
                             onUpdateProfile()
                             showUpdateDialog = false
                             Toast.makeText(context, "Cambios guardados", Toast.LENGTH_SHORT).show()
@@ -372,12 +404,7 @@ private fun EditableField(
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White
-                ),
-                trailingIcon = {
-                    IconButton(onClick = { isEditing = false }) {
-                        Icon(Icons.Default.Done, "Guardar")
-                    }
-                }
+                )
             )
         } else {
             Card(
@@ -431,53 +458,8 @@ private fun EditableField(
         }
     }
 }
-
-// Utility functions for image handling
-private fun saveProfileImage(context: Context, uri: Uri) {
-    try {
-        val inputStream = context.contentResolver.openInputStream(uri)
-        val outputFile = File(context.filesDir, "profile_image.jpg")
-        val outputStream = FileOutputStream(outputFile)
-        inputStream?.use { input ->
-            outputStream.use { output ->
-                input.copyTo(output)
-            }
-        }
-    } catch (e: IOException) {
-        e.printStackTrace()
-    }
-}
-
-private fun loadProfileImageUri(context: Context): Uri? {
-    val file = File(context.filesDir, "profile_image.jpg")
-    return if (file.exists()) {
-        Uri.fromFile(file)
-    } else {
-        null
-    }
-}
-
-private fun deleteProfileImage(context: Context) {
-    val file = File(context.filesDir, "profile_image.jpg")
-    if (file.exists()) {
-        file.delete()
-    }
-}
-
-private fun saveBitmapToFile(context: Context, bitmap: Bitmap): Uri {
-    val file = File(context.filesDir, "profile_image.jpg")
-    try {
-        FileOutputStream(file).use { out ->
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
-        }
-    } catch (e: IOException) {
-        e.printStackTrace()
-    }
-    return Uri.fromFile(file)
-}
-
 @Preview(showBackground = true, widthDp = 430, heightDp = 894)
 @Composable
-fun PersonalProfileEditScreenPreview() {
-    PersonalProfileEditScreen()
+fun infoinverPreview() {
+    Editinfoinver()
 }

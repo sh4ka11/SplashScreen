@@ -49,9 +49,7 @@ fun user_registration_codeve_correo(navController: NavController) {
     }
 }
 
-/**
- * Created by codia-figma
- */
+
 @Composable
 fun usertecodevView() {
 

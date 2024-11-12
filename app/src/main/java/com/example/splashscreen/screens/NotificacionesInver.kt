@@ -22,49 +22,62 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import kotlinx.coroutines.launch
 
-// Cambiado a NotificacionModel para evitar conflicto de nombres
-data class NotificacionModel(
-    val titulo: String,
-    val mensaje: String,
-    val hora: String,
-    val imageResourceId: Int = R.drawable.image3_647598
+data class NotificacionInver(
+    val tituloInver: String,
+    val mensajeInver: String,
+    val horaInver: String,
+    val imageResourceIdInver: Int = R.drawable.image3_647598
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Notificaciones2Usu(
-    navController: NavController,
-    onNavigateToScreen: (String) -> Unit = {}
+fun NotificacionesInver(
+    onNavigateToScreenInver: (String) -> Unit = {}
 ) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    val drawerStateInver = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scopeInver = rememberCoroutineScope()
+    var imageUriInver by remember { mutableStateOf<Uri?>(null) }
 
-    // Cambiado a NotificacionModel
-    val notificaciones = remember {
+    val notificacionesInver = remember {
         listOf(
-            NotificacionModel(
+            NotificacionInver(
+                "\"Usuario\" te envió una solicitud de conexión",
+                "\"Usuario\" ha solicitado unirte con tu emprendimiento, acepta la solicitud para poder crecer juntos",
+                "2:15 P.M.",
+                R.drawable.image3_647598
+            ),
+            NotificacionInver(
+                "FANTA",
+                "A career in website design can involve the design, creation, and coding of a range of website types. Other tasks will typically...",
+                "3:15 P.M.",
+                R.drawable.image238
+            ),
+            NotificacionInver(
                 "Sprite",
-                "Asunto: ¡Noticia emocionante! ¡Oportunidad de Inversión con Sprite para tu emprendimiento!\n\n" +
-                        "Hola [Nombre del destinatario],\n\n" +
-                        "¡Espero que estés teniendo un día excelente! Quería compartir contigo una noticia emocionante que podría ser un gran impulso para tu emprendimiento.\n\n" +
-                        "En Sprite, estamos siempre en búsqueda de nuevas y emocionantes oportunidades de colaboración con emprendedores como tú que están haciendo olas en el mundo empresarial. Después de revisar tu empresa, [Nombre de tu Empresa], quedamos impresionados por tu visión, tu dedicación y el impacto que estás teniendo en tu industria.\n\n" +
-                        "Nos complace informarte que estamos considerando patrocinar tu emprendimiento como parte de nuestra iniciativa para apoyar a empresarios prometedores.\n\n" +
-                        "Además, te ofrecemos acceso exclusivo a eventos de networking, sesiones de mentoría con expertos de la industria, y una campaña de marketing conjunta para potenciar tu marca en nuevos mercados. Creemos que esta colaboración puede ser muy fructífera tanto para Sprite como para [Nombre de tu Empresa], y estamos emocionados de explorar esta oportunidad contigo.\n\n" +
-                        "Quedamos a la espera de tu respuesta para coordinar una reunión en la que podamos discutir más detalles sobre esta propuesta.",
+                "A career in website design can involve the design, creation, and coding of a range of website types. Other tasks will typically...",
                 "4:15 P.M.",
                 R.drawable.image241
+            ),
+            NotificacionInver(
+                "Sena",
+                "A career in website design can involve the design, creation, and coding of a range of website types. Other tasks will typically...",
+                "5:15 P.M.",
+                R.drawable.image240
+            ),
+            NotificacionInver(
+                "Sony",
+                "A career in website design can involve the design, creation, and coding of a range of website types. Other tasks will typically...",
+                "6:15 P.M.",
+                R.drawable.image239
             )
         )
     }
 
     ModalNavigationDrawer(
-        drawerState = drawerState,
+        drawerState = drawerStateInver,
         drawerContent = {
             ModalDrawerSheet(
                 modifier = Modifier.width(300.dp)
@@ -78,7 +91,7 @@ fun Notificaciones2Usu(
                 ) {
                     Column {
                         Image(
-                            painter = if (imageUri != null) {
+                            painter = if (imageUriInver != null) {
                                 painterResource(id = R.drawable.image3_647598)
                             } else {
                                 painterResource(id = R.drawable.image3_647598)
@@ -107,22 +120,22 @@ fun Notificaciones2Usu(
                 listOf(
                     "Mi Perfil" to Icons.Default.Person,
                     "Inicio" to Icons.Default.Home,
-                    "Busqueda por categoria" to Icons.Default.Search,
+                    "Buscar por categoría" to Icons.Default.Search,
                     "Consultar redes" to Icons.Default.Share,
                     "Lista de emprendimientos" to Icons.Default.List,
                     "Notificaciones" to Icons.Default.Notifications,
                     "Chat" to Icons.Default.Email,
                     "Cerrar Sesión" to Icons.Default.ExitToApp,
                     "Ayuda" to Icons.Default.Info
-                ).forEach { (texto, icono) ->
+                ).forEach { (textoInver, iconoInver) ->
                     NavigationDrawerItem(
-                        icon = { Icon(icono, contentDescription = texto) },
-                        label = { Text(texto) },
-                        selected = texto == "Notificaciones",
+                        icon = { Icon(iconoInver, contentDescription = textoInver) },
+                        label = { Text(textoInver) },
+                        selected = textoInver == "Notificaciones",
                         onClick = {
-                            scope.launch {
-                                drawerState.close()
-                                onNavigateToScreen(texto)
+                            scopeInver.launch {
+                                drawerStateInver.close()
+                                onNavigateToScreenInver(textoInver)
                             }
                         }
                     )
@@ -131,6 +144,7 @@ fun Notificaciones2Usu(
         }
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
+            // Imagen de fondo
             Image(
                 painter = painterResource(id = R.drawable.fondo),
                 contentDescription = "Fondo",
@@ -138,6 +152,7 @@ fun Notificaciones2Usu(
                 contentScale = ContentScale.FillBounds
             )
 
+            // Contenido principal
             Scaffold(
                 topBar = {
                     CenterAlignedTopAppBar(
@@ -145,9 +160,9 @@ fun Notificaciones2Usu(
                         navigationIcon = {
                             IconButton(
                                 onClick = {
-                                    scope.launch {
-                                        if (drawerState.isClosed) drawerState.open()
-                                        else drawerState.close()
+                                    scopeInver.launch {
+                                        if (drawerStateInver.isClosed) drawerStateInver.open()
+                                        else drawerStateInver.close()
                                     }
                                 }
                             ) {
@@ -164,13 +179,13 @@ fun Notificaciones2Usu(
                     )
                 },
                 containerColor = Color.Transparent
-            ) { paddingValues ->
+            ) { paddingValuesInver ->
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(paddingValues)
+                        .padding(paddingValuesInver)
                 ) {
-                    items(notificaciones) { notificacion ->
+                    items(notificacionesInver) { notificacionInver ->
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -178,48 +193,55 @@ fun Notificaciones2Usu(
                             shape = RoundedCornerShape(12.dp),
                             colors = CardDefaults.cardColors(containerColor = Color.White)
                         ) {
-                            Column(
+                            Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(16.dp)
+                                    .padding(16.dp),
+                                verticalAlignment = Alignment.Top
                             ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically
+                                Image(
+                                    painter = painterResource(id = notificacionInver.imageResourceIdInver),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .clip(CircleShape)
+                                        .background(Color.LightGray),
+                                    contentScale = ContentScale.Crop
+                                )
+
+                                Spacer(modifier = Modifier.width(16.dp))
+
+                                Column(
+                                    modifier = Modifier.weight(1f)
                                 ) {
                                     Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.Start
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.Top
                                     ) {
-                                        Image(
-                                            painter = painterResource(id = notificacion.imageResourceId),
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .size(40.dp)
-                                                .clip(CircleShape),
-                                            contentScale = ContentScale.Crop
-                                        )
-                                        Spacer(modifier = Modifier.width(12.dp))
                                         Text(
-                                            text = notificacion.titulo,
+                                            text = notificacionInver.tituloInver,
                                             fontSize = 16.sp,
-                                            color = Color.Black
+                                            color = Color.Black,
+                                            modifier = Modifier.weight(1f)
+                                        )
+                                        Text(
+                                            text = notificacionInver.horaInver,
+                                            fontSize = 12.sp,
+                                            color = Color.Gray
                                         )
                                     }
+
+                                    Spacer(modifier = Modifier.height(4.dp))
+
                                     Text(
-                                        text = notificacion.hora,
-                                        fontSize = 12.sp,
-                                        color = Color.Gray
+                                        text = notificacionInver.mensajeInver,
+                                        fontSize = 14.sp,
+                                        color = Color.Gray,
+                                        maxLines = 2,
+                                        overflow = TextOverflow.Ellipsis
                                     )
                                 }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Text(
-                                    text = notificacion.mensaje,
-                                    fontSize = 14.sp,
-                                    color = Color.DarkGray,
-                                    lineHeight = 20.sp
-                                )
                             }
                         }
                     }
@@ -231,6 +253,6 @@ fun Notificaciones2Usu(
 
 @Preview(showBackground = true, widthDp = 430, heightDp = 894)
 @Composable
-fun Notificaciones2UsuPreview() {
-    Notificaciones2Usu(navController = rememberNavController())
+fun NotificacionesInverPreview() {
+    NotificacionesInver()
 }

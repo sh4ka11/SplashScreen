@@ -41,6 +41,7 @@ data class WineProduct(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WineEditAppApp(navController: NavController) {
+
     var showContactInfo by remember { mutableStateOf(true) }
     var showEditDialog by remember { mutableStateOf(false) }
     var selectedProduct by remember { mutableStateOf<WineProduct?>(null) }
