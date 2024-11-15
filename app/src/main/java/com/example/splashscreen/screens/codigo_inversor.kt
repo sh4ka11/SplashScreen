@@ -1,184 +1,257 @@
-package com.example.splashscreen.screens
+package com.example.splasscreen.screens
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
+import kotlinx.coroutines.launch
 
-
-
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun ConfirmationCodeScreen(navController: NavController) {
-    var code by remember { mutableStateOf(arrayOf("", "", "", "", "", "")) }
+fun ConfirmationCodeScreen(navController: NavController? = null) {
+    var showDialog by remember { mutableStateOf(false) }
+    val code = remember { List(6) { mutableStateOf("") } }
+    val focusRequesters = remember { List(6) { FocusRequester() } }
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val scope = rememberCoroutineScope()
 
-    val configuration = LocalConfiguration.current
-    val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+    // Estado de desplazamiento
+    val scrollState = rememberScrollState()
 
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color(0xFF1C1B1F)
-                )
-            )
-        }
-    ) { paddingValues ->
+    Box(
+        contentAlignment = Alignment.TopStart,
+        modifier = Modifier
+            .background(Color(0xffffffff))
+            .fillMaxSize()
+            .clipToBounds(),
+    ) {
+        // Imagen de fondo existente
+        Image(
+            painter = painterResource(id = R.drawable.fondoolvidar),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .offset(x = -5.dp, y = 0.dp)
+                .size(500.dp, 700.dp),
+        )
+
+        // Caja blanca de fondo
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
+                .align(Alignment.TopStart)
+                .offset(x = 0.dp, y = 250.dp)
+                .background(Color(0xfff5f5f3), RoundedCornerShape(20.dp))
+                .fillMaxSize(),
         ) {
-            if (isPortrait) {
-                Image(
-                    painter = painterResource(id = R.drawable.hom),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .offset(y = (-73).dp)
-                        .size(800.dp, 600.dp)
-                )
-            }
-
-            Box(
+            // Columna con contenido desplazable
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = if (isPortrait) 200.dp else 0.dp)
+                    .verticalScroll(scrollState) // Permite el desplazamiento vertical
+                    .padding(16.dp) // Añade un poco de padding
             ) {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    shape = RoundedCornerShape(
-                        topStart = if (isPortrait) 20.dp else 0.dp,
-                        topEnd = if (isPortrait) 35.dp else 0.dp
-                    ),
-                    color = Color(0xFFF5F5F3)
+                // Título
+                Text(
+                    modifier = Modifier
+                        .wrapContentHeight()
+                        .padding(start = 30.dp, top = 10.dp), // Aquí agregamos padding a la izquierda
+                    text = "Código de confirmación",
+                    color = Color(0xff000000),
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Left,
+                    overflow = TextOverflow.Ellipsis,
+                )
+
+                // Texto de instrucciones
+                Text(
+                    modifier = Modifier
+                        .size(387.dp, 92.dp)
+                        .padding(top = 12.dp), // Añadir padding arriba para separar
+                    text = "Le enviamos un correo electrónico con el código de confirmación al número ingresado",
+                    color = Color(0xb2000000),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center,
+                    overflow = TextOverflow.Ellipsis,
+                )
+
+                // Cajas de entrada del código
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(9.dp)
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(24.dp),
-                        verticalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = "Código de confirmación",
-                                style = MaterialTheme.typography.titleLarge.copy(
-                                    fontSize = 25.sp
-                                ),
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-
-                            Spacer(modifier = Modifier.height(30.dp))
-
-                            Text(
-                                text = "Le enviamos un correo electrónico con el código de confirmación a gustavo@gmail.com",
-                                style = MaterialTheme.typography.bodyMedium,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-
-                            Spacer(modifier = Modifier.height(50.dp))
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                for (i in code.indices) {
-                                    TextField(
-                                        value = code[i],
-                                        onValueChange = { newValue ->
-                                            val newCode = code.toMutableList()
-                                            newCode[i] = newValue
-                                            code = newCode.toTypedArray()
-                                        },
-                                        modifier = Modifier
-                                            .width(40.dp)
-                                            .height(70.dp)
-                                            .border(1.dp, Color.Black, RoundedCornerShape(8.dp)),
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                        singleLine = true,
-                                        textStyle = MaterialTheme.typography.titleLarge.copy(
-                                            fontSize = 18.sp
-                                        )
-                                    )
-                                    if (i < code.lastIndex) {
-                                        Spacer(modifier = Modifier.width(8.dp))
+                    code.forEachIndexed { index, state ->
+                        TextField(
+                            value = state.value,
+                            onValueChange = { newValue ->
+                                if (newValue.length <= 1 && newValue.all { it.isDigit() }) {
+                                    state.value = newValue
+                                    if (newValue.isNotEmpty() && index < 5) {
+                                        scope.launch {
+                                            focusRequesters[index + 1].requestFocus()
+                                        }
                                     }
                                 }
-                            }
+                            },
+                            modifier = Modifier
+                                .size(54.dp, 84.dp)
+                                .focusRequester(focusRequesters[index])
+                                .border(1.dp, Color(0xff000000), RoundedCornerShape(20.dp)),
+                            textStyle = androidx.compose.ui.text.TextStyle(
+                                textAlign = TextAlign.Center,
+                                fontSize = 24.sp
+                            ),
+                            colors = TextFieldDefaults.colors(
+                                unfocusedContainerColor = Color(0xfffcfcfc),
+                                focusedContainerColor = Color(0xfffcfcfc),
+                                unfocusedIndicatorColor = Color.Transparent,
+                                focusedIndicatorColor = Color.Transparent
+                            ),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            singleLine = true
+                        )
+                    }
+                }
+
+                // Botón Siguiente
+                Button(
+                    onClick = {
+                        if (code.all { it.value.isNotEmpty() }) {
+                            showDialog = true
                         }
+                    },
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 40.dp) // Ajustar el padding hacia arriba
+                        .size(300.dp, 50.dp), // Ajustar el tamaño del botón
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+                ) {
+                    Text(
+                        text = "Siguiente",
+                        color = Color.White,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Normal,
+                    )
+                }
 
-                        // Aquí está el cambio para centrar el botón
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Bottom // Asegura que el contenido esté en la parte inferior
+                // Espacio entre el botón y la línea separadora
+                Spacer(modifier = Modifier.height(40.dp)) // Espacio adicional
+
+                // Nueva línea separadora
+                Image(
+                    painter = painterResource(id = R.drawable.fondo),
+                    contentDescription = null,
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier
+                        .size(365.dp, 2.dp)
+                        .border(1.dp, Color(0xffcec7c7))
+                        .padding(vertical = 10.dp)
+                        .align(Alignment.CenterHorizontally) // Alinear al centro
+                )
+
+                // Añadir más espacio antes del texto "¿No recibiste un correo?"
+                Spacer(modifier = Modifier.height(30.dp)) // Espacio adicional
+
+                // Texto "No recibiste un correo"
+                Text(
+                    modifier = Modifier
+                        .wrapContentHeight()
+                        .padding(start = 40.dp, top = 20.dp), // Agrega padding en el lado izquierdo
+                    text = "¿No recibiste un correo electrónico?",
+                    color = Color(0xb2000000),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center,
+                    overflow = TextOverflow.Ellipsis,
+                )
+
+                // Botón de Reenviar código
+                Button(
+                    onClick = { /* Acción del botón */ },
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 10.dp)
+                        .size(300.dp, 50.dp), // Mantener el mismo tamaño que el botón "Siguiente"
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+                ) {
+                    Text(
+                        text = "Reenviar código",
+                        color = Color.White,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Normal,
+                    )
+                }
+            }
+        }
+
+        // Mover la imagen sin fondo a la parte superior izquierda
+        Image(
+            painter = painterResource(id = R.drawable.sinfondo),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier
+                .align(Alignment.TopStart) // Alinear en la parte superior izquierda
+                .size(170.dp, 95.dp)
+                .padding(16.dp) // Añadir padding si es necesario
+        )
+
+        // Diálogo de verificación
+        if (showDialog) {
+            Dialog(onDismissRequest = { showDialog = false }) {
+                Card(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    shape = RoundedCornerShape(16.dp),
+                ) {
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = "Se verificó correctamente",
+                            modifier = Modifier.padding(bottom = 16.dp),
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Button(
+                            onClick = {
+                                showDialog = false
+                                // Aquí puedes agregar la navegación a la siguiente vista
+                                // navigator.navigate("siguiente_ruta")
+                            },
+                            modifier = Modifier.size(300.dp, 50.dp), // Igualar tamaño al resto de los botones
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
                         ) {
-                            Button(
-                                onClick = { navController.navigate("informacion_obligatoria") }, // Cambia "informacion_obligatoria" a la ruta que hayas definido para tu pantalla de información obligatoria
-                                modifier = Modifier
-                                    .width(300.dp) // Cambia esto al ancho que desees
-                                    .height(50.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFF38352E)
-                                ),
-                                shape = RoundedCornerShape(10.dp)
-                            ) {
-                                Text(
-                                    text = "Siguiente", // Asegúrate de corregir "Siguente" a "Siguiente"
-                                    fontSize = 18.sp // Cambia este valor al tamaño de letra que desees
-                                )
-                            }
-
-
-                            Spacer(modifier = Modifier.height(16.dp)) // Espaciado opcional entre el botón y el texto
-
-                            Text(
-                                text = "No recibiste un código?",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = Color(0xB2000000)
-                            )
-
-                            Spacer(modifier = Modifier.height(8.dp))
-
-                            Button(
-                                onClick = { /*TODO: Handle resend code*/ },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(40.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFF38352E)
-                                ),
-                                shape = RoundedCornerShape(10.dp)
-                            ) {
-                                Text("Enviar")
-                            }
+                            Text("Aceptar", color = Color.White)
                         }
                     }
                 }
@@ -187,12 +260,11 @@ fun ConfirmationCodeScreen(navController: NavController) {
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun CoodigoInversorPreview() {
-    val navController = rememberNavController() // Crea un NavController simulado
+@Preview(showBackground = true)
+fun codigoPreviewInversor() {
+    val navController = rememberNavController() // Crear un navController de prueba
     MaterialTheme {
-        ConfirmationCodeScreen(navController) // Pasa el NavController a la pantalla
+        ConfirmationCodeScreen(navController = navController)
     }
 }
-

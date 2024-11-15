@@ -22,8 +22,9 @@ import com.example.splashscreen.navigation.AppNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        val viewModel:EmprendedorViewModel by viewModels   ()
+       // val viewModel:EmprendedorViewModel by viewModels   ()
         setContent {
             SplashScreenTheme {
                 Surface(
