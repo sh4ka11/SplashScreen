@@ -1,4 +1,3 @@
-package com.example.splashscreen
 
  class Entrepreneurs(
    val id: Int = 0,
