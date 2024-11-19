@@ -30,7 +30,6 @@ import com.example.myapplication.screens.Olvidarcorr
 import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
 import com.example.splashscreen.screens.ChatScreen
-import com.example.splashscreen.screens.ConfirmationCodeScreen
 import com.example.splashscreen.screens.HomeInversorScreen
 import com.example.splashscreen.screens.HomeScreen
 import com.example.splashscreen.screens.InformacionCredencialScreen
@@ -53,6 +52,7 @@ import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.UserRegistrationCorreo
 import com.example.splashscreen.screens.UserRegistrationScreen
 import com.example.splashscreen.screens.VinotecaEcstasyApp
+import com.example.splasscreen.screens.ConfirmationCodeScreen
 
 @Composable
 fun AppNavHost() {
@@ -95,14 +95,12 @@ fun AppNavHost() {
             UserRegistrationCorreo(navController = navController)
         }
         composable("login_inversor") {
-            LoginInversor(navController = navController) // Esta es la vista de destino
+            LoginInversor(navController = navController)
         }
         composable("register_inversor") {
             RegisterInversor(navController = navController)
         }
-        composable("register_phone") {
-            RegisterPhoneView(navController = navController)
-        }
+
         composable("confirmation_code") {
             ConfirmationCodeScreen(navController = navController) // Asegúrate de que esta es tu pantalla
         }
