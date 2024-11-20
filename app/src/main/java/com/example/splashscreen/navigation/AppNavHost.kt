@@ -120,6 +120,9 @@ fun AppNavHost() {
         composable("ingrese_correo_usuario") {
             Olvidarcorr(navController = navController)
         }
+        composable("infoObligatoria") {
+            InformacionObligatoriaScreen(navController = navController)
+        }
 
 
 

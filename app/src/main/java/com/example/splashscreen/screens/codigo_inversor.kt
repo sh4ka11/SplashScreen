@@ -224,6 +224,7 @@ fun ConfirmationCodeScreen(navController: NavController? = null) {
         )
 
         // Diálogo de verificación
+        // Dentro del código de ConfirmationCodeScreen
         if (showDialog) {
             Dialog(onDismissRequest = { showDialog = false }) {
                 Card(
@@ -245,10 +246,9 @@ fun ConfirmationCodeScreen(navController: NavController? = null) {
                         Button(
                             onClick = {
                                 showDialog = false
-                                // Aquí puedes agregar la navegación a la siguiente vista
-                                // navigator.navigate("siguiente_ruta")
+                                navController!!.navigate("infoObligatoria") // Navega a la vista deseada
                             },
-                            modifier = Modifier.size(300.dp, 50.dp), // Igualar tamaño al resto de los botones
+                            modifier = Modifier.size(300.dp, 50.dp), // Tamaño del botón
                             colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
                         ) {
                             Text("Aceptar", color = Color.White)
