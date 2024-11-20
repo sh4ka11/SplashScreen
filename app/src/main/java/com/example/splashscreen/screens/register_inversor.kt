@@ -155,7 +155,7 @@ fun RegisterInversor(
                             Text(
                                 text = "Correo",
                                 modifier = Modifier
-                                    .clickable { onEmailClick() }
+
                                     .padding(horizontal = 8.dp, vertical = 8.dp),
                                 style = MaterialTheme.typography.titleMedium
                             )
