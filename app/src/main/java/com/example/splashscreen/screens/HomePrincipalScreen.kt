@@ -406,15 +406,7 @@ fun HomePrincipalaScreen(navController: NavController) {
                 .size(450.dp, 256.dp),
         )
 
-        Image(
-            painter = painterResource(id = R.drawable.image9_751147),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 12.dp, y = 43.dp)
-                .size(55.dp, 55.dp),
-        )
+
     }
 }
 

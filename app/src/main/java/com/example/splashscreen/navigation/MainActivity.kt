@@ -22,20 +22,24 @@ import com.example.splashscreen.navigation.AppNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-       // val viewModel:EmprendedorViewModel by viewModels   ()
         setContent {
             SplashScreenTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
+                Surface(modifier = Modifier.fillMaxSize(),
                 ) {
 
                     AppNavHost()
-//                EmprendedorScreen(viewModel)
 
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview(){
+    SplashScreenTheme {
+        AppNavHost()
     }
 }
