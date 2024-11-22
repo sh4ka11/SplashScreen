@@ -1,4 +1,8 @@
- import androidx.compose.animation.*
+package com.example.splashscreen.screens
+
+
+
+import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn

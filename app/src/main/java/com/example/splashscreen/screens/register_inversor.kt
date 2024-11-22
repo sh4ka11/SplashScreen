@@ -155,18 +155,11 @@ fun RegisterInversor(
                             Text(
                                 text = "Correo",
                                 modifier = Modifier
-                                    .clickable { onEmailClick() }
+
                                     .padding(horizontal = 8.dp, vertical = 8.dp),
                                 style = MaterialTheme.typography.titleMedium
                             )
-                            Spacer(modifier = Modifier.width(100.dp)) // Espacio pequeño entre los textos
-                            Text(
-                                text = "Teléfono",
-                                modifier = Modifier
-                                    .clickable { onPhoneClick() }
-                                    .padding(horizontal = 8.dp, vertical = 8.dp),
-                                style = MaterialTheme.typography.titleMedium
-                            )
+
                         }
 
 
@@ -210,9 +203,9 @@ fun RegisterInversor(
                             contentAlignment = Alignment.Center // Centra el contenido dentro del Box
                         ) {
                             Button(
-                                onClick = { navController.navigate("confirmation_code") }, // Cambia "confirmation_code" a la ruta que hayas definido para tu pantalla de código de confirmación
+                                onClick = { navController.navigate("confirmation_code") },
                                 modifier = Modifier
-                                    .fillMaxWidth(0.8f) // Ajusta el ancho al 80% del espacio disponible
+                                    .fillMaxWidth(0.8f)
                                     .height(48.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color(0xFF38352E)
@@ -221,10 +214,9 @@ fun RegisterInversor(
                             ) {
                                 Text("Siguiente")
                             }
+
+
                         }
-
-
-
                         Text(
                             text = "Al proporcionar su número de teléfono a Emprede link, usted acepta recibir mensajes SMS con notificaciones relacionadas con su cuenta. Es posible que se apliquen mensajes estándar",
                             modifier = Modifier.padding(vertical = 16.dp),
@@ -244,11 +236,12 @@ fun RegisterInversor(
                                 style = MaterialTheme.typography.bodyMedium.copy(color = Color.Black),
                                 modifier = Modifier.clickable {
                                     navController.navigate("login_inversor") {
-                                        popUpTo("register_inversor") { inclusive = true } // Limpia la pila de navegación
+                                        popUpTo("register_inversor") { inclusive = true }
                                     }
                                 }
                             )
                         }
+
                     }
                 }
             }
@@ -258,7 +251,7 @@ fun RegisterInversor(
 
 @Preview(showBackground = true)
 @Composable
-fun RegisterInversorPreview() {
+fun RegisterScreenPreview() {
     MaterialTheme {
         RegisterInversor(navController = rememberNavController())
     }

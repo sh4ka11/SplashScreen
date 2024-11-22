@@ -25,12 +25,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.splashscreen.R
 
 @Composable
-fun Olvidarcorr(
-    onNavigateToEmail: () -> Unit = {} // Función para navegación al correo
-) {
+fun Olvidarcorr(navController: NavHostController)
+{
     var email by remember { mutableStateOf(TextFieldValue("")) }
     var showVerificationMessage by remember { mutableStateOf(false) }
     var showErrorMessage by remember { mutableStateOf(false) }
@@ -183,7 +183,7 @@ fun Olvidarcorr(
                 .align(Alignment.TopStart)
                 .wrapContentSize()
                 .offset(x = 93.dp, y = 612.dp)
-                .clickable { onNavigateToEmail() },
+                .clickable {},
             text = "Correo",
             color = Color(0xb2000000),
             fontSize = 20.sp,
@@ -257,6 +257,6 @@ fun Olvidarcorr(
 @Composable
 fun Olvidarcorreo() {
     MaterialTheme {
-        Olvidarcorr()
+//        Olvidarcorr()
     }
 }
