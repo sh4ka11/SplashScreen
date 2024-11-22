@@ -1,5 +1,6 @@
 package com.example.splashscreen.navigation
 
+import BusinessListView
 import WineEditAppApp
 import WineShopApp
 import ai.codia.x.composeui.demo.HomePincipalScreen
@@ -29,6 +30,7 @@ import androidx.navigation.navArgument
 import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
 import com.example.splashscreen.screens.ChatScreen
+import com.example.splashscreen.screens.ChatUsu2
 import com.example.splashscreen.screens.ConfirmationCodeScreen
 import com.example.splashscreen.screens.HomeInversorScreen
 import com.example.splashscreen.screens.HomeScreen
@@ -52,6 +54,7 @@ import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.UserRegistrationCorreo
 import com.example.splashscreen.screens.UserRegistrationScreen
 import com.example.splashsreen.screens.Busquedaemprendeusuario
+import com.example.splashsreen.screens.Contactanosh
 
 @Composable
 fun AppNavHost(
@@ -65,15 +68,55 @@ fun AppNavHost(
         composable("HomePrincipal"){
             HomePincipalScreen(navController = navController)
         }
+        composable("user_profile_main_view") {
+            UserProfileMainView(navController = navController)
+        }
+        composable("busqueda") {
+            Busquedaemprendeusuario(navController = navController)
+        }
+        composable("Lista de emprendimientos") {
+            BusinessListView(navController = navController)
+        }
+        composable("NotificacionesUsu") {
+            NotificacionesUsu(navController = navController)
+        }
+        composable("chatUsu") {
+            ChatScreen(navController = navController)
+        }
+        composable("cerrar cesion") {
+            HomePincipalScreen(navController = navController)
+        }
+        composable("ayuda") {
+            Contactanosh(navController = navController)
+        }
+
+
+
+
+        // Añadir rutas dummy para evitar errores al navegar a rutas inexistentes
+        composable("redes_route") {
+            // Pantalla para "Consultar redes" o mensaje de "En construcción"
+        }
+        composable("notificacionesUsu") {
+            // Pantalla para "Notificaciones" o mensaje de "En construcción"
+        }
+        composable("chat_route") {
+            // Pantalla para "Chat" o mensaje de "En construcción"
+        }
+        composable("cerrar_sesion_route") {
+            // Implementación de cierre de sesión
+        }
+        composable("ayuda_route") {
+            // Pantalla de ayuda o mensaje de "En construcción"
+        }
+
+        // Resto de tus rutas
         composable("HomeUsuario"){
             HomeScreen(navController = navController)
         }
         composable("HomeInversionista"){
             HomeInversorScreen(navController = navController)
         }
-
-
-
         composable("registroUsuarioTelefono"){
             UserRegistrationScreen(navController = navController)
         }
@@ -83,16 +126,9 @@ fun AppNavHost(
         composable("RegistroDatosUsuario"){
             UserAdditionalInfoScreen(navController = navController)
         }
-
-
-        composable("MirarEmpredimientoUsuario"){
-            WineShopApp(navController = navController)
-        }
         composable("EditarEmpredimientoUsuario"){
             WineEditAppApp(navController = navController)
         }
-
-
         composable("loginUsuario"){
             LoginUser(navController = navController)
         }
@@ -100,7 +136,7 @@ fun AppNavHost(
             UserRegistrationCorreo(navController = navController)
         }
         composable("login_inversor") {
-            LoginInversor(navController = navController) // Esta es la vista de destino
+            LoginInversor(navController = navController)
         }
         composable("register_inversor") {
             RegisterInversor(navController = navController)
@@ -109,36 +145,24 @@ fun AppNavHost(
             RegisterPhoneView(navController = navController)
         }
         composable("confirmation_code") {
-            ConfirmationCodeScreen(navController = navController) // Asegúrate de que esta es tu pantalla
+            ConfirmationCodeScreen(navController = navController)
         }
         composable("informacion_obligatoria") {
-            InformacionObligatoriaScreen(navController = navController) // Asegúrate de que esta es tu pantalla
+            InformacionObligatoriaScreen(navController = navController)
         }
-        composable("informacion_credencial") { InformacionCredencialScreen(navController = navController) }
-
-        composable("user_profile_main_view") {
-            UserProfileMainView(navController = navController)
-        }
-        composable("busqueda") {
-            Busquedaemprendeusuario(navController = navController)
+        composable("informacion_credencial") {
+            InformacionCredencialScreen(navController = navController)
         }
 
+        //rutas ensayo
+        composable(Screen.HOMEPRINCIPAL.name) {
+            HomePincipalScreen(navController)
+        }
 
-//        composable("profileEdit") { PersonalProfileEditScreen() } // Aquí navegas a la vista de edición
-//
-//            composable("Mi Perfil") { HomeInversorScreen(navController) }
-//           composable("UserProfileMainView") { UserProfileMainView(navController) }
-//            composable("busquedadeEmpredimientos") { Busquedaemprendeusuario(navController) }
-//           composable(" Miemprendimientos") { WineShopApp(navController) }
-//        composable("publicarempredimiento") { PublicarEmprendimientoView(navController = navController) }
-//        composable("notificaciones") { NotificacionesUsu(navController) }
-//           composable("chat") { ChatScreen(navController) }
-         //  composable("ayuda") { Contactanosh(navController) }
+        composable(Screen.NOTIFICATIONS.name) {
+            NotificacionesUsu(navController)
+        }
 
-
-//        composable("notificacionesusu") {
-//            Notificaciones2Usu(navController = navController)
-//        }
     }
 
 }
