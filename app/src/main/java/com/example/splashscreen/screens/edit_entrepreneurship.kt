@@ -1,3 +1,6 @@
+package com.example.splashscreen.navigation
+
+
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*

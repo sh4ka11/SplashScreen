@@ -29,29 +29,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SplashScreenTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
+                Surface(modifier = Modifier.fillMaxSize(),
                 ) {
 
                     AppNavHost()
 
-//                    val scaffoldState = rememberScaffoldState()
-//                    Scaffold (
-//                        scaffoldState = scaffoldState,
-//                        topBar={
-//                            TopBar {
-//                                scaffoldState.drawerState.open()
-//                            }
-//                        }
-//                    ){
-//
-//                    }
-//                    HomeScreennk()
-//
-//
-
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview(){
+    SplashScreenTheme {
+        AppNavHost()
     }
 }

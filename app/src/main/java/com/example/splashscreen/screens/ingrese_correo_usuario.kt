@@ -1,4 +1,4 @@
-package com.example.myapplication.screens
+package com.example.splashscreen.navigation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,11 +25,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.splashscreen.R
+import com.example.splashscreen.navigation.AppScreens
 
 @Composable
-fun Olvidarcorr(navController: NavHostController)
+fun Olvidarcorr(navController: NavController)
 {
     var email by remember { mutableStateOf(TextFieldValue("")) }
     var showVerificationMessage by remember { mutableStateOf(false) }
@@ -177,35 +179,26 @@ fun Olvidarcorr(navController: NavHostController)
                 .border(1.dp, Color(0xff000000)),
         )
 
-        // Texto "Correo" clickeable
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .wrapContentSize()
-                .offset(x = 93.dp, y = 612.dp)
-                .clickable {},
-            text = "Correo",
-            color = Color(0xb2000000),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
+
 
         // Texto "Teléfono" a la derecha de "Correo"
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .wrapContentSize()
-                .offset(x = 270.dp, y = 612.dp) // Ajusté el offset hacia la izquierda
-                .clickable { /* Accion para el teléfono */ },
-            text = "Teléfono",
-            color = Color(0xb2000000),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
+                .offset(x = 260.dp, y = 612.dp) // Aumenta el valor de x para moverlo más a la derecha
+                .clickable {
+                    navController.navigate(route = AppScreens.Olvidar3.route) // Navegar a la ruta deseada
+                },
+            text = "Telefono", // El texto a mostrar
+            color = Color(0xb2000000), // Color del texto
+            fontSize = 20.sp, // Tamaño de fuente
+            fontWeight = FontWeight.Normal, // Peso de la fuente
+            textAlign = TextAlign.Left, // Alineación del texto
+            overflow = TextOverflow.Ellipsis, // Control de desbordamiento del texto
         )
+
+
 
 
         // Mensaje de instrucciones
@@ -253,10 +246,4 @@ fun Olvidarcorr(navController: NavHostController)
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun Olvidarcorreo() {
-    MaterialTheme {
-//        Olvidarcorr()
-    }
-}
+
