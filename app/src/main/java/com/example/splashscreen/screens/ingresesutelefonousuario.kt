@@ -176,6 +176,17 @@ fun Olvidar3(navController: NavController)
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
+
+
+
+
+
+
+
+
+
+
+
         // Texto "Teléfono"
         Text(
             modifier = Modifier
@@ -192,6 +203,14 @@ fun Olvidar3(navController: NavController)
             textAlign = TextAlign.Left, // Alineación del texto
             overflow = TextOverflow.Ellipsis, // Control de desbordamiento del texto
         )
+
+
+
+
+
+
+
+
 
 
 

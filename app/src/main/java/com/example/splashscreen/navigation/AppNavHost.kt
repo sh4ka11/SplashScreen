@@ -1,7 +1,8 @@
 package com.example.splashscreen.navigation
 
-import WineEditAppApp
-import WineShopApp
+import BusinessListView
+//import WineEditAppApp
+//import WineShopApp
 import ai.codia.x.composeui.demo.HomePincipalScreen
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,12 +27,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.myapplication.screens.Olvidarcorr
 import com.example.splashscreen.R
 import com.example.splashscreen.data.Movie
+import com.example.splashscreen.screens.Busquedaemprendeinver
+import com.example.splashscreen.screens.Busquedaemprendeusuario
 import com.example.splashscreen.screens.ChatScreen
 import com.example.splashscreen.screens.ChatUsu2
-import com.example.splashscreen.screens.ConfirmationCodeScreen
 import com.example.splashscreen.screens.HomeInversorScreen
 import com.example.splashscreen.screens.HomeScreen
 import com.example.splashscreen.screens.InformacionCredencialScreen
@@ -53,16 +54,18 @@ import com.example.splashscreen.screens.UserAdditionalInfoScreen
 import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.UserRegistrationCorreo
 import com.example.splashscreen.screens.UserRegistrationScreen
-import com.example.splashsreen.screens.Busquedaemprendeusuario
+import com.example.splashscreen.screens.VinotecaEcstasyApp
+import com.example.splashsreen.screens.Contactanosh
+import com.example.splasscreen.screens.ConfirmationCodeScreen
 
 @Composable
 fun AppNavHost() {
 //Lago
 
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "HomePrincipal") {
+    NavHost(navController = navController, startDestination = "Busquedaemprendeinver") {
 
-        composable("HomePrincipal"){
+        composable("HomePrincipal") {
             HomePincipalScreen(navController = navController)
         }
         composable("user_profile_main_view") {
@@ -90,6 +93,38 @@ fun AppNavHost() {
 
 
 
+
+        //Rutas Sebas coecciones
+
+        composable(AppScreens.Olvidarcorr.route) {
+            Olvidarcorr(navController)
+        }
+
+        composable(AppScreens.Olvidar3.route) {
+            Olvidar3(navController)
+        }
+
+
+
+composable(AppScreens.Busquedaemprendeusuario.route){
+    Busquedaemprendeusuario(navController)
+}
+        composable(AppScreens.WineShopApp.route){
+            WineShopApp(navController)
+        }
+
+
+        composable(AppScreens.Busquedaemprendeinver.route) {
+            Busquedaemprendeinver(navController)
+        }
+
+        composable(AppScreens.VinotecaEcstasyApp.route) {
+            VinotecaEcstasyApp(navController)
+        }
+
+
+
+
         // Añadir rutas dummy para evitar errores al navegar a rutas inexistentes
         composable("redes_route") {
             // Pantalla para "Consultar redes" o mensaje de "En construcción"
@@ -108,30 +143,30 @@ fun AppNavHost() {
         }
 
         // Resto de tus rutas
-        composable("HomeUsuario"){
+        composable("HomeUsuario") {
             HomeScreen(navController = navController)
         }
-        composable("HomeInversionista"){
+        composable("HomeInversionista") {
             HomeInversorScreen(navController = navController)
         }
 
-        composable("registroUsuarioTelefono"){
+        composable("registroUsuarioTelefono") {
             UserRegistrationScreen(navController = navController)
         }
-        composable("registroUsuarioCorreo"){
+        composable("registroUsuarioCorreo") {
             UserRegistrationCorreo(navController = navController)
         }
-        composable("RegistroDatosUsuario"){
+        composable("RegistroDatosUsuario") {
             UserAdditionalInfoScreen(navController = navController)
         }
-        composable("EditarEmpredimientoUsuario"){
+        composable("EditarEmpredimientoUsuario") {
             WineEditAppApp(navController = navController)
         }
 
-        composable("loginUsuario"){
+        composable("loginUsuario") {
             LoginUser(navController = navController)
         }
-        composable("loginInversinista"){
+        composable("loginInversinista") {
             UserRegistrationCorreo(navController = navController)
         }
         composable("login_inversor") {
@@ -159,14 +194,17 @@ fun AppNavHost() {
 
         composable(Screen.NOTIFICATIONS.name) {
             NotificacionesUsu(navController)
-
-        composable("visitar_emprendimiento_inversionista") {
-            VinotecaEcstasyApp(navController = navController)
         }
 
-        composable("ingrese_correo_usuario") {
-            Olvidarcorr(navController = navController)
-        }
+
+
+            composable("visitar_emprendimiento_inversionista") {
+                VinotecaEcstasyApp(navController = navController)
+            }
+
+            composable("ingrese_correo_usuario") {
+                Olvidarcorr(navController = navController)
+            }
 
 
 //        composable("profileEdit") { PersonalProfileEditScreen() } // Aquí navegas a la vista de edición
@@ -178,12 +216,13 @@ fun AppNavHost() {
 //        composable("publicarempredimiento") { PublicarEmprendimientoView(navController = navController) }
 //        composable("notificaciones") { NotificacionesUsu(navController) }
 //           composable("chat") { ChatScreen(navController) }
-         //  composable("ayuda") { Contactanosh(navController) }
+            //  composable("ayuda") { Contactanosh(navController) }
 
 
 //        composable("notificacionesusu") {
 //            Notificaciones2Usu(navController = navController)
 //        }
+        }
+
     }
 
-}

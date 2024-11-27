@@ -225,7 +225,7 @@ fun EmprendimientosCards(emprendimiento: Emprendimiento, navController: NavHostC
                     .padding(16.dp) // Espaciado para no estar pegado al borde
             ) {
                 Button(
-                    onClick = { navController.navigate(AppScreens.WineShopApp.route) }, // Navegación
+                    onClick = {navController.navigate(AppScreens.WineShopApp.route)}, // Navegación
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Black,
                         contentColor = Color.White
@@ -240,4 +240,3 @@ fun EmprendimientosCards(emprendimiento: Emprendimiento, navController: NavHostC
         }
     }
 }
-

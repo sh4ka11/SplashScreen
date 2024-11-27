@@ -21,10 +21,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import com.example.splashscreen.R
+import com.example.splashscreen.navigation.AppScreens
 
 data class Emprendimiento(
     val nombre: String,
@@ -34,16 +35,16 @@ data class Emprendimiento(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Busquedaemprendeinver(navController: NavHostController) {
+fun Busquedaemprendeinver(navController: NavController) {
     var searchText by remember { mutableStateOf("") }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
     val emprendimientos = listOf(
-        Emprendimiento("Vinos el éxtasis", "Empresa procesadora de vino con productos artesanales de calidad", R.drawable.vino),
-        Emprendimiento("Arepas", "Empresa de arepas frescas y caseras que trae el sabor auténtico de Colombia", R.drawable.arepas),
-        Emprendimiento("Escritorios", "Fabricante de escritorios ergonómicos para espacios de trabajo cómodos", R.drawable.escritorios),
-        Emprendimiento("Artesanías", "Venta de artesanías locales hechas a mano con materiales sostenibles", R.drawable.artesanias)
+        Emprendimientos("Vinos el éxtasis", "Empresa procesadora de vino con productos artesanales de calidad", R.drawable.vino),
+        Emprendimientos("Arepas", "Empresa de arepas frescas y caseras que trae el sabor auténtico de Colombia", R.drawable.arepas),
+        Emprendimientos("Escritorios", "Fabricante de escritorios ergonómicos para espacios de trabajo cómodos", R.drawable.escritorios),
+        Emprendimientos("Artesanías", "Venta de artesanías locales hechas a mano con materiales sostenibles", R.drawable.artesanias)
     )
 
     val filteredEmprendimientos = emprendimientos.filter {
@@ -59,7 +60,9 @@ fun Busquedaemprendeinver(navController: NavHostController) {
                     Image(
                         painter = painterResource(id = R.drawable.imagenrealdesebas),
                         contentDescription = "Perfil",
-                        modifier = Modifier.fillMaxWidth().height(100.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp)
                     )
 
                     // Nombre de usuario
@@ -79,8 +82,11 @@ fun Busquedaemprendeinver(navController: NavHostController) {
                     )
 
                     // Línea divisoria
-                    Divider(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp), color = Color.LightGray)
+                    Divider(modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp), color = Color.LightGray)
                 }
+
                 // Opciones del menú
                 val menuItems = listOf(
                     Pair(Icons.Default.Person, "Mi Perfil"),
@@ -122,9 +128,14 @@ fun Busquedaemprendeinver(navController: NavHostController) {
             }
         }
     ) {
-        Column(modifier = Modifier.fillMaxSize().background(Color(0xFFD9D9D9)).padding(16.dp)) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFD9D9D9))
+            .padding(16.dp)) {
             // Header con menú y logo
-            Row(modifier = Modifier.fillMaxWidth().height(70.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .height(70.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { scope.launch { if (drawerState.isClosed) drawerState.open() else drawerState.close() } }) {
                     Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu", tint = Color.Black)
                 }
@@ -139,91 +150,93 @@ fun Busquedaemprendeinver(navController: NavHostController) {
                 onValueChange = { searchText = it },
                 placeholder = { Text("Buscar...") },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp).background(Color.White)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp)
+                    .background(Color.White)
             )
 
-            // Lista de cards agrupadas en filas
+            // Lista de Cards
             LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                items(filteredEmprendimientos.chunked(2)) { rowItems ->
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        rowItems.forEach { emprendimiento ->
-                            EmprendimientosCard(emprendimiento, navController)
-                        }
-                    }
+                items(filteredEmprendimientos) { emprendimiento ->
+                    EmprendimientoCards(emprendimiento, navController)
                 }
             }
         }
     }
 }
-
 @Composable
-fun EmprendimientosCard(emprendimiento: Emprendimiento, navController: NavHostController) {
+fun EmprendimientoCards(emprendimiento: Emprendimientos, navController: NavController) {
     var isExpanded by remember { mutableStateOf(false) }
 
     Card(
-        modifier = Modifier.width(180.dp).height(250.dp).padding(8.dp).border(1.dp, Color.Black),
+        modifier = Modifier
+            .fillMaxWidth() // Se adapta al ancho completo de la pantalla
+            .height(300.dp) // Ajusta la altura para hacerlo más grande
+            .padding(8.dp)
+            .border(1.dp, Color.Black),
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
-        Column(modifier = Modifier.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Image(
-                painter = painterResource(id = emprendimiento.imagen),
-                contentDescription = emprendimiento.nombre,
-                modifier = Modifier.fillMaxWidth().height(100.dp)
-            )
-            Text(
-                text = emprendimiento.nombre,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(top = 4.dp)
-            )
-
-            Column(modifier = Modifier.fillMaxWidth()) {
-                val description = if (isExpanded) emprendimiento.descripcion else emprendimiento.descripcion.take(40) + if (emprendimiento.descripcion.length > 40) "..." else ""
-                Text(
-                    text = description,
-                    fontSize = 12.sp,
-                    maxLines = if (isExpanded) Int.MAX_VALUE else 2,
-                    overflow = TextOverflow.Ellipsis
+        // Usamos un Box para permitir la colocación flexible de los elementos
+        Box(modifier = Modifier.fillMaxSize()) {
+            // Contenedor de imagen y texto
+            Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                Image(
+                    painter = painterResource(id = emprendimiento.imagen),
+                    contentDescription = emprendimiento.nombre,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.dp) // Aumenta el tamaño de la imagen
                 )
-                if (emprendimiento.descripcion.length > 40) {
+
+                Text(
+                    text = emprendimiento.nombre,
+                    fontSize = 20.sp, // Aumenta el tamaño de la fuente
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    val description = if (isExpanded) emprendimiento.descripcion else emprendimiento.descripcion.take(60) + if (emprendimiento.descripcion.length > 60) "..." else ""
                     Text(
-                        text = if (isExpanded) "Ver menos" else "Ver más",
-                        color = Color.Black,
-                        fontSize = 12.sp,
-                        modifier = Modifier
-                            .clickable { isExpanded = !isExpanded }
-                            .padding(top = 4.dp)
+                        text = description,
+                        fontSize = 14.sp, // Ajuste de tamaño de texto
+                        maxLines = if (isExpanded) Int.MAX_VALUE else 3,
+                        overflow = TextOverflow.Ellipsis
                     )
+                    if (emprendimiento.descripcion.length > 60) {
+                        Text(
+                            text = if (isExpanded) "Ver menos" else "Ver más",
+                            color = Color.Black,
+                            fontSize = 12.sp,
+                            modifier = Modifier
+                                .clickable { isExpanded = !isExpanded }
+                                .padding(top = 4.dp)
+                        )
+                    }
                 }
             }
 
+            // Aquí colocamos el botón en la parte inferior derecha
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 4.dp),
-                horizontalArrangement = Arrangement.Start
+                    .align(Alignment.BottomEnd) // Alineación en la parte inferior derecha
+                    .padding(16.dp) // Espaciado para no estar pegado al borde
             ) {
                 Button(
-                    onClick = { navController.navigate("visitar_emprendimiento_inversionista") }, // Esta es la ruta
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White),
+                    onClick = {navController.navigate(AppScreens.WineShopApp.route)}, // Navegación
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Black,
+                        contentColor = Color.White
+                    ),
                     modifier = Modifier
-                        .padding(4.dp)
-                        .width(90.dp)
-                        .height(30.dp)
+                        .height(40.dp) // Ajusta la altura del botón
+                        .width(120.dp) // Ajusta el ancho del botón
                 ) {
-                    Text("Visitar", fontSize = 12.sp)
+                    Text("Visitar", fontSize = 14.sp) // Texto del botón
                 }
-
-
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewBusquedaEmprendimientos() {
-    // Aquí puedes agregar un NavHostController si lo necesitas para pruebas.
-    Busquedaemprendeinver(navController = rememberNavController())
 }
