@@ -4,7 +4,6 @@
     import androidx.compose.foundation.layout.*
     import androidx.compose.foundation.shape.CircleShape
     import androidx.compose.foundation.shape.RoundedCornerShape
-    import androidx.compose.foundation.text.ClickableText
     import androidx.compose.material3.*
     import androidx.compose.runtime.*
     import androidx.compose.ui.Alignment
@@ -13,14 +12,12 @@
     import androidx.compose.ui.draw.clip
     import androidx.compose.ui.layout.ContentScale
     import androidx.compose.ui.res.painterResource
-    import androidx.compose.ui.text.AnnotatedString
     import androidx.compose.ui.text.font.FontWeight
     import androidx.compose.ui.text.style.TextAlign
     import androidx.compose.ui.text.style.TextOverflow
     import androidx.compose.ui.tooling.preview.Preview
     import androidx.compose.ui.unit.dp
     import androidx.compose.ui.unit.sp
-    import androidx.navigation.NavController
     import androidx.navigation.compose.rememberNavController
     import com.example.splashscreen.R
     import androidx.compose.ui.draw.clipToBounds
@@ -30,12 +27,14 @@
     import androidx.compose.material.icons.Icons
     import androidx.compose.material.icons.filled.*
     import androidx.compose.runtime.rememberCoroutineScope
+    import androidx.navigation.NavHostController
+    import com.example.splashscreen.navigation.AppScreens
     import kotlinx.coroutines.launch
-    import kotlin.Pair
-    
+
+
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun HomeScreen(navController: NavController) {
+    fun HomeScreen(navController: NavHostController) {
         val scrollState = rememberScrollState()
         val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
         val scope = rememberCoroutineScope()
@@ -164,13 +163,13 @@
                 )
     
                 // Main content
-                EmprendeMainView()
+                EmprendeMainView(navController)
             }
         }
     }
     
     @Composable
-    fun EmprendeMainView() {
+    fun EmprendeMainView(navController: NavHostController) {
         Box(
             contentAlignment = Alignment.TopStart,
             modifier = Modifier
@@ -238,28 +237,29 @@
             )
     
             // Button background
-            Box(
-                modifier = Modifier
+            Button(
+                onClick = { navController.navigate(AppScreens.PublicarEmprendimientoView.route) },                modifier = Modifier
                     .align(Alignment.TopStart)
                     .offset(x = 94.dp, y = 545.dp)
-                    .background(Color(0xff38352e), RoundedCornerShape(10.dp))
-                    .size(222.dp, 46.dp),
-            )
-    
-            // Button text
-            Text(
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .offset(x = 59.dp, y = 553.dp)
-                    .size(292.dp, 26.dp),
-                text = "Crea tu empredimiento",
-                color = Color(0xffffffff),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Normal,
-                textAlign = TextAlign.Center,
-                overflow = TextOverflow.Ellipsis,
-            )
-    
+                    .size(222.dp, 46.dp)
+                    .background(Color(0xff38352e), RoundedCornerShape(10.dp)),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xff38352e), // Fondo del botón
+                    contentColor = Color(0xffffffff)    // Color del texto
+                ),
+                shape = RoundedCornerShape(10.dp),
+                contentPadding = PaddingValues(0.dp)
+            ) {
+                Text(
+                    text = "Crea tu emprendimiento",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+
+
             // Ready to start text
             Text(
                 modifier = Modifier

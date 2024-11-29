@@ -84,6 +84,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 
 
@@ -349,7 +350,7 @@ fun PublicarEmprendimientoView(navController: NavController) {
                     )
 
                     Button(
-                        onClick = { /* TODO */ },
+                        onClick = {  },
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                             .padding(vertical = 32.dp)
@@ -479,12 +480,13 @@ private fun ProductSectionInput(
 @Preview(showBackground = true)
 @Composable
 fun PreviewPublicarEmprendimientoView() {
+    val navController = rememberNavController() // NavController simulado
     MaterialTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-      //      PublicarEmprendimientoView()
+            PublicarEmprendimientoView(navController = navController)
         }
     }
 }
