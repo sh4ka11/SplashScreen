@@ -222,6 +222,9 @@ fun AppNavHost() {
         composable(AppScreens.PublicarEmprendimientoView.route) {
             PublicarEmprendimientoView(navController)
         }
+        composable(AppScreens.PublicarEmprendimientoView.route) {
+            WineShopApp(navController)
+        }
 
 
 
