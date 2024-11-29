@@ -74,7 +74,7 @@ fun AppNavHost() {
 //Lago
 
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "NotificacionesUsu") {
+    NavHost(navController = navController, startDestination = Screen.HOMEPRINCIPAL.name) {
 
         //emprendedor menu
 
@@ -130,7 +130,7 @@ fun AppNavHost() {
             Contactanosinver(navController = navController)
         }
 
- // rutas k
+        // rutas k
         composable(AppScreens.ChatScreen.route) {
             ChatScreen(navController)
         }
@@ -158,7 +158,14 @@ fun AppNavHost() {
         composable(AppScreens.Notificaciones2Inver.route) {
             Notificaciones2Inver(navController)
         }
+        ////
+        composable(AppScreens.HomeScreen.route) {
+            HomeScreen(navController)
+        }
 
+        composable(AppScreens.PublicarEmprendimientoView.route) {
+            PublicarEmprendimientoView(navController)
+        }
 
 
 
@@ -175,9 +182,10 @@ fun AppNavHost() {
 
 
 
-composable(AppScreens.Busquedaemprendeusuario.route){
-    Busquedaemprendeusuario(navController)
-}
+
+        composable(AppScreens.Busquedaemprendeusuario.route){
+            Busquedaemprendeusuario(navController)
+        }
         composable(AppScreens.WineShopApp.route){
             WineShopApp(navController)
         }
@@ -274,6 +282,8 @@ composable(AppScreens.Busquedaemprendeusuario.route){
             composable("ingrese_correo_usuario") {
                 Olvidarcorr(navController = navController)
             }
+        // Add this if not already defined
+
 
 
 //        composable("profileEdit") { PersonalProfileEditScreen() } // Aquí navegas a la vista de edición
@@ -291,6 +301,7 @@ composable(AppScreens.Busquedaemprendeusuario.route){
 //        composable("notificacionesusu") {
 //            Notificaciones2Usu(navController = navController)
 //        }
+
         }
 
     }
