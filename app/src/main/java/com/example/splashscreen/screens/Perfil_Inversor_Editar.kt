@@ -231,9 +231,8 @@ private fun EditableField(label: String, value: String) {
 }
 
 
-
 @Preview(showBackground = true, widthDp = 430, heightDp = 894)
 @Composable
-fun ProfileEditScreen() {
+fun PreviewProfileEditScreen() {
     ProfileEditScreen()
 }

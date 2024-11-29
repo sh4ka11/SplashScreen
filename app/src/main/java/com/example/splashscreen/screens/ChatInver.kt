@@ -1,5 +1,6 @@
 package com.example.splashscreen.screens
 
+import MenuItem
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -41,9 +42,11 @@ fun ChatInverScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    val drawerInverState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val coroutineInverScope = rememberCoroutineScope()
+    // Elimina drawerInverState y usa solo drawerState
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val coroutineScope = rememberCoroutineScope()
     var searchInverQuery by remember { mutableStateOf("") }
+    val scope = rememberCoroutineScope()
 
     // Sample chat messages
     val allInverChatMessages = listOf(
@@ -67,7 +70,7 @@ fun ChatInverScreen(
     }
 
     ModalNavigationDrawer(
-        drawerState = drawerInverState,
+        drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet(
                 modifier = Modifier.width(300.dp)
@@ -104,25 +107,37 @@ fun ChatInverScreen(
 
                 Divider()
 
-                // Drawer menu items
-                listOf(
-                    "Mi Perfil" to Icons.Default.Person,
-                    "Inicio" to Icons.Default.Home,
-                    "Busqueda por categoria" to Icons.Default.Search,
-                    "Consultar redes" to Icons.Default.Share,
-                    "Lista de emprendimientos" to Icons.Default.List,
-                    "Notificaciones" to Icons.Default.Notifications,
-                    "Chat" to Icons.Default.Email,
-                    "Cerrar Sesión" to Icons.Default.ExitToApp,
-                    "Ayuda" to Icons.Default.Info
-                ).forEach { (texto, icono) ->
+                // Drawer menu items with navigation
+                val menuItems = listOf(
+                    MenuItem("Mi Perfil", Icons.Default.Person, "user_profile_main_viewInver"),
+                    MenuItem("Inicio", Icons.Default.Home, "HomeUsuarioInver"),
+                    MenuItem("Búsqueda por categoría", Icons.Default.Search, "busquedaInver"),
+                    MenuItem("Lista de emprendimientos", Icons.Default.List, "emprendimientosInver"),
+                    MenuItem("Notificaciones", Icons.Default.Notifications, "notificacionesInver"),
+                    MenuItem("Chat", Icons.Default.Email, "chatInver"),
+                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar-sesion"),
+                    MenuItem("Ayuda", Icons.Default.Info, "ayudaInver")
+                )
+
+                menuItems.forEach { menuItem ->
                     NavigationDrawerItem(
-                        icon = { Icon(icono, contentDescription = texto) },
-                        label = { Text(texto) },
-                        selected = texto == "Chat",
+                        icon = { Icon(menuItem.icono, contentDescription = menuItem.texto) },
+                        label = { Text(menuItem.texto) },
+                        selected = false,
                         onClick = {
-                            coroutineInverScope.launch {
-                                drawerInverState.close()
+                            scope.launch {
+                                drawerState.close()
+                                // Manejo especial para cerrar sesión
+                                if (menuItem.ruta == "cerrar-sesion") {
+                                    // Aquí puedes agregar la lógica para cerrar sesión
+                                    navController.navigate("login") {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            inclusive = true
+                                        }
+                                    }
+                                } else {
+                                    navController.navigate(menuItem.ruta)
+                                }
                             }
                         }
                     )
@@ -151,9 +166,9 @@ fun ChatInverScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            coroutineInverScope.launch {
-                                if (drawerInverState.isClosed) drawerInverState.open()
-                                else drawerInverState.close()
+                            coroutineScope.launch {
+                                if (drawerState.isClosed) drawerState.open()
+                                else drawerState.close()
                             }
                         }
                     ) {

@@ -1,5 +1,6 @@
 package com.example.splashscreen.screens
 
+import MenuItem
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -102,6 +103,8 @@ fun ChatScreenInver(
                 modifier = Modifier.width(300.dp)
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
+
+                // Profile section in drawer
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -128,25 +131,40 @@ fun ChatScreenInver(
                         )
                     }
                 }
+
                 Divider()
-                listOf(
-                    "Mi Perfil" to Icons.Default.Person,
-                    "Inicio" to Icons.Default.Home,
-                    "Busqueda por categoria" to Icons.Default.Search,
-                    "Consultar redes" to Icons.Default.Share,
-                    "Lista de emprendimientos" to Icons.Default.List,
-                    "Notificaciones" to Icons.Default.Notifications,
-                    "Chat" to Icons.Default.Email,
-                    "Cerrar Sesión" to Icons.Default.ExitToApp,
-                    "Ayuda" to Icons.Default.Info
-                ).forEach { (texto, icono) ->
+
+                // Drawer menu items with navigation
+                val menuItems = listOf(
+                    MenuItem("Mi Perfil", Icons.Default.Person, "user_profile_main_viewInver"),
+                    MenuItem("Inicio", Icons.Default.Home, "HomeUsuarioInver"),
+                    MenuItem("Búsqueda por categoría", Icons.Default.Search, "busquedaInver"),
+                    MenuItem("Lista de emprendimientos", Icons.Default.List, "emprendimientosInver"),
+                    MenuItem("Notificaciones", Icons.Default.Notifications, "notificacionesInver"),
+                    MenuItem("Chat", Icons.Default.Email, "chatInver"),
+                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar-sesion"),
+                    MenuItem("Ayuda", Icons.Default.Info, "ayudaInver")
+                )
+
+                menuItems.forEach { menuItem ->
                     NavigationDrawerItem(
-                        icon = { Icon(icono, contentDescription = texto) },
-                        label = { Text(texto) },
-                        selected = texto == "Chat",
+                        icon = { Icon(menuItem.icono, contentDescription = menuItem.texto) },
+                        label = { Text(menuItem.texto) },
+                        selected = false,
                         onClick = {
                             scope.launch {
                                 drawerState.close()
+                                // Manejo especial para cerrar sesión
+                                if (menuItem.ruta == "cerrar-sesion") {
+                                    // Aquí puedes agregar la lógica para cerrar sesión
+                                    navController.navigate("login") {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            inclusive = true
+                                        }
+                                    }
+                                } else {
+                                    navController.navigate(menuItem.ruta)
+                                }
                             }
                         }
                     )

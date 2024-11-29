@@ -9,6 +9,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -26,12 +27,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ResenasUsuarioView() {
+fun ResenasUsuarioView(navController: NavController) {
     var expandedReviewIndex by remember { mutableStateOf<Int?>(null) }
     var showReplyField by remember { mutableStateOf<Int?>(null) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -45,88 +48,59 @@ fun ResenasUsuarioView() {
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
 
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Mi Perfil") },
-                    label = { Text("Mi Perfil") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
+                // Sección de perfil en el drawer
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Column {
+                        Image(
+                            painter = painterResource(id = R.drawable.image3_647598),
+                            contentDescription = "Foto de perfil",
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Usuario",
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = "usuario@email.com",
+                            fontSize = 14.sp,
+                            color = Color.Gray
+                        )
                     }
-                )
+                }
 
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Home, contentDescription = "Inicio") },
-                    label = { Text("Inicio") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
+                Divider()
 
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Search, contentDescription = "Busqueda por categoria") },
-                    label = { Text("Busqueda por categoria") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Share, contentDescription = "Consultar redes") },
-                    label = { Text("Consultar redes") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.List, contentDescription = "Lista de empredimientos") },
-                    label = { Text("Lista de empredimientos") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Notifications, contentDescription = "Notificaciones") },
-                    label = { Text("Notificaciones") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Email, contentDescription = "Chat") },
-                    label = { Text("Chat") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.ExitToApp, contentDescription = "Cerrar Sesión") },
-                    label = { Text("Cerrar Sesión") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Info, contentDescription = "Ayuda") },
-                    label = { Text("Ayuda") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
+                listOf(
+                    Triple("Mi Perfil", Icons.Default.Person, "user_profile_main_view"),
+                    Triple("Inicio", Icons.Default.Home, "HomePrincipal"),
+                    Triple("Búsqueda por categoría", Icons.Default.Search, "busqueda"),
+                    Triple("Consultar redes", Icons.Default.Share, "redes_route"),
+                    Triple("Lista de emprendimientos", Icons.Default.List, "Lista de emprendimientos"),
+                    Triple("Notificaciones", Icons.Default.Notifications, "NotificacionesUsu"),
+                    Triple("Chat", Icons.Default.Email, "chatUsu"),
+                    Triple("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar cesion"),
+                    Triple("Ayuda", Icons.Default.Info, "ayuda")
+                ).forEach { (texto, icono, route) ->
+                    NavigationDrawerItem(
+                        icon = { Icon(icono, contentDescription = texto) },
+                        label = { Text(texto) },
+                        selected = false,
+                        onClick = {
+                            scope.launch {
+                                navController.navigate(route)
+                                drawerState.close()
+                            }
+                        }
+                    )
+                }
             }
         }
     ) {
@@ -358,5 +332,6 @@ private fun ReviewCard(
 @Preview(showBackground = true)
 @Composable
 fun PreviewResenasUsuarioView() {
-    ResenasUsuarioView()
+    val navController = rememberNavController()
+    ResenasUsuarioView(navController = navController)
 }

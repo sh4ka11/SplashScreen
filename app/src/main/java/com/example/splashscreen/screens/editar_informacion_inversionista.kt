@@ -1,5 +1,6 @@
 package com.example.splashscreen.screens
 
+import MenuItem
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -25,7 +26,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.splashscreen.R
 import kotlinx.coroutines.launch
 
 data class PersonalProfiles(
@@ -41,7 +45,7 @@ data class PersonalProfiles(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Editinfoinver(
+fun Editinfoinver(navController: NavController,
     onMenuClick: () -> Unit = {},
     onUpdateProfile: () -> Unit = {}
 ) {
@@ -89,122 +93,71 @@ fun Editinfoinver(
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Profile header in drawer
-                Column(
+                // Profile section in drawer
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.Start
+                        .padding(16.dp)
                 ) {
-                    Image(
-                        painter = if (imageUri != null) {
-                            rememberAsyncImagePainter(imageUri)
-                        } else {
-                            painterResource(id = android.R.drawable.ic_menu_gallery)
-                        },
-                        contentDescription = "Profile Picture",
-                        modifier = Modifier
-                            .size(64.dp)
-                            .clip(CircleShape),
-                        contentScale = ContentScale.Crop
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = personalProfile.name,
-                        fontSize = 16.sp,
-                        color = Color.Black
-                    )
-                    Text(
-                        text = personalProfile.email,
-                        fontSize = 14.sp,
-                        color = Color.Gray
-                    )
+                    Column {
+                        Image(
+                            painter = painterResource(id = R.drawable.image3_647598),
+                            contentDescription = "Foto de perfil",
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Usuario",
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = "usuario@email.com",
+                            fontSize = 14.sp,
+                            color = Color.Gray
+                        )
+                    }
                 }
 
                 Divider()
 
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Mi Perfil") },
-                    label = { Text("Mi Perfil") },
-                    selected = true,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
+                // Drawer menu items with navigation
+                val menuItems = listOf(
+                    MenuItem("Mi Perfil", Icons.Default.Person, "user_profile_main_viewInver"),
+                    MenuItem("Inicio", Icons.Default.Home, "HomeUsuarioInver"),
+                    MenuItem("Búsqueda por categoría", Icons.Default.Search, "busquedaInver"),
+                    MenuItem("Lista de emprendimientos", Icons.Default.List, "emprendimientosInver"),
+                    MenuItem("Notificaciones", Icons.Default.Notifications, "notificacionesInver"),
+                    MenuItem("Chat", Icons.Default.Email, "chatInver"),
+                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar-sesion"),
+                    MenuItem("Ayuda", Icons.Default.Info, "ayudaInver")
                 )
 
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Home, contentDescription = "Inicio") },
-                    label = { Text("Inicio") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Search, contentDescription = "Busqueda por categoria") },
-                    label = { Text("Busqueda por categoria") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Share, contentDescription = "Consultar redes") },
-                    label = { Text("Consultar redes") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.List, contentDescription = "Lista de empredimientos") },
-                    label = { Text("Lista de empredimientos") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Notifications, contentDescription = "Notificaciones") },
-                    label = { Text("Notificaciones") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Email, contentDescription = "Chat") },
-                    label = { Text("Chat") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.ExitToApp, contentDescription = "Cerrar Sesión") },
-                    label = { Text("Cerrar Sesión") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Info, contentDescription = "Ayuda") },
-                    label = { Text("Ayuda") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
-                )
+                menuItems.forEach { menuItem ->
+                    NavigationDrawerItem(
+                        icon = { Icon(menuItem.icono, contentDescription = menuItem.texto) },
+                        label = { Text(menuItem.texto) },
+                        selected = false,
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                                // Manejo especial para cerrar sesión
+                                if (menuItem.ruta == "cerrar-sesion") {
+                                    // Aquí puedes agregar la lógica para cerrar sesión
+                                    navController.navigate("login") {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            inclusive = true
+                                        }
+                                    }
+                                } else {
+                                    navController.navigate(menuItem.ruta)
+                                }
+                            }
+                        }
+                    )
+                }
             }
         }
     ) {
@@ -461,5 +414,6 @@ private fun EditableField(
 @Preview(showBackground = true, widthDp = 430, heightDp = 894)
 @Composable
 fun infoinverPreview() {
-    Editinfoinver()
+    val navController = rememberNavController()
+    Editinfoinver(navController = navController)
 }

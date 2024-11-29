@@ -1,8 +1,10 @@
 package com.example.splashscreen.screens
 
+import MenuItem
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,8 +24,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import kotlinx.coroutines.launch
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.input.key.Key
+import com.example.splashscreen.navigation.AppScreens
 
 data class NotificacionInver(
     val tituloInver: String,
@@ -35,11 +42,13 @@ data class NotificacionInver(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotificacionesInver(
+    navController: NavController,
     onNavigateToScreenInver: (String) -> Unit = {}
 ) {
-    val drawerStateInver = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scopeInver = rememberCoroutineScope()
-    var imageUriInver by remember { mutableStateOf<Uri?>(null) }
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val coroutineScope = rememberCoroutineScope()
+    var searchInverQuery by remember { mutableStateOf("") }
+    val scope = rememberCoroutineScope()
 
     val notificacionesInver = remember {
         listOf(
@@ -75,15 +84,19 @@ fun NotificacionesInver(
             )
         )
     }
-
+    val filteredNotificaciones = notificacionesInver.filter {
+        it.tituloInver.contains(searchInverQuery, ignoreCase = true) ||
+                it.mensajeInver.contains(searchInverQuery, ignoreCase = true)
+    }
     ModalNavigationDrawer(
-        drawerState = drawerStateInver,
+        drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet(
                 modifier = Modifier.width(300.dp)
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
 
+                // Profile section in drawer
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -91,11 +104,7 @@ fun NotificacionesInver(
                 ) {
                     Column {
                         Image(
-                            painter = if (imageUriInver != null) {
-                                painterResource(id = R.drawable.image3_647598)
-                            } else {
-                                painterResource(id = R.drawable.image3_647598)
-                            },
+                            painter = painterResource(id = R.drawable.image3_647598),
                             contentDescription = "Foto de perfil",
                             modifier = Modifier
                                 .size(64.dp)
@@ -117,25 +126,37 @@ fun NotificacionesInver(
 
                 Divider()
 
-                listOf(
-                    "Mi Perfil" to Icons.Default.Person,
-                    "Inicio" to Icons.Default.Home,
-                    "Buscar por categoría" to Icons.Default.Search,
-                    "Consultar redes" to Icons.Default.Share,
-                    "Lista de emprendimientos" to Icons.Default.List,
-                    "Notificaciones" to Icons.Default.Notifications,
-                    "Chat" to Icons.Default.Email,
-                    "Cerrar Sesión" to Icons.Default.ExitToApp,
-                    "Ayuda" to Icons.Default.Info
-                ).forEach { (textoInver, iconoInver) ->
+                // Drawer menu items with navigation
+                val menuItems = listOf(
+                    MenuItem("Mi Perfil", Icons.Default.Person, "user_profile_main_viewInver"),
+                    MenuItem("Inicio", Icons.Default.Home, "HomeUsuarioInver"),
+                    MenuItem("Búsqueda por categoría", Icons.Default.Search, "busquedaInver"),
+                    MenuItem("Lista de emprendimientos", Icons.Default.List, "emprendimientosInver"),
+                    MenuItem("Notificaciones", Icons.Default.Notifications, "notificacionesInver"),
+                    MenuItem("Chat", Icons.Default.Email, "chatInver"),
+                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar-sesion"),
+                    MenuItem("Ayuda", Icons.Default.Info, "ayudaInver")
+                )
+
+                menuItems.forEach { menuItem ->
                     NavigationDrawerItem(
-                        icon = { Icon(iconoInver, contentDescription = textoInver) },
-                        label = { Text(textoInver) },
-                        selected = textoInver == "Notificaciones",
+                        icon = { Icon(menuItem.icono, contentDescription = menuItem.texto) },
+                        label = { Text(menuItem.texto) },
+                        selected = false,
                         onClick = {
-                            scopeInver.launch {
-                                drawerStateInver.close()
-                                onNavigateToScreenInver(textoInver)
+                            scope.launch {
+                                drawerState.close()
+                                // Manejo especial para cerrar sesión
+                                if (menuItem.ruta == "cerrar-sesion") {
+                                    // Aquí puedes agregar la lógica para cerrar sesión
+                                    navController.navigate("login") {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            inclusive = true
+                                        }
+                                    }
+                                } else {
+                                    navController.navigate(menuItem.ruta)
+                                }
                             }
                         }
                     )
@@ -144,7 +165,6 @@ fun NotificacionesInver(
         }
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            // Imagen de fondo
             Image(
                 painter = painterResource(id = R.drawable.fondo),
                 contentDescription = "Fondo",
@@ -152,95 +172,145 @@ fun NotificacionesInver(
                 contentScale = ContentScale.FillBounds
             )
 
-            // Contenido principal
             Scaffold(
                 topBar = {
                     CenterAlignedTopAppBar(
-                        title = { Text("Notificaciones", color = Color.White) },
+                        title = {
+                            Text(
+                                text = "Notificaciones Inver",
+                                color = Color.Black,
+                                fontSize = 18.sp
+                            )
+                        },
                         navigationIcon = {
                             IconButton(
                                 onClick = {
-                                    scopeInver.launch {
-                                        if (drawerStateInver.isClosed) drawerStateInver.open()
-                                        else drawerStateInver.close()
+                                    coroutineScope.launch {
+                                        if (drawerState.isClosed) drawerState.open()
+                                        else drawerState.close()
                                     }
                                 }
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Menu,
                                     contentDescription = "Menú",
-                                    tint = Color.White
+                                    tint = Color.Black
                                 )
                             }
                         },
                         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                            containerColor = Color(0xFF1C1B1F)
+                            containerColor = Color.White
                         )
                     )
                 },
                 containerColor = Color.Transparent
             ) { paddingValuesInver ->
-                LazyColumn(
+                Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(paddingValuesInver)
                 ) {
-                    items(notificacionesInver) { notificacionInver ->
-                        Card(
+                    TextField(
+                        value = searchInverQuery,
+                        onValueChange = { searchInverQuery = it },
+                        placeholder = { Text("Buscar notificaciones") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Buscar") }
+                    )
+
+                    if (filteredNotificaciones.isEmpty()) {
+                        Box(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 8.dp),
-                            shape = RoundedCornerShape(12.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White)
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            contentAlignment = Alignment.Center
                         ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                verticalAlignment = Alignment.Top
-                            ) {
-                                Image(
-                                    painter = painterResource(id = notificacionInver.imageResourceIdInver),
-                                    contentDescription = null,
+                            Text(
+                                text = "No se encontraron notificaciones",
+                                color = Color.Gray,
+                                fontSize = 16.sp
+                            )
+                        }
+                    } else {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            items(filteredNotificaciones) { notificacionInver ->
+                                Card(
                                     modifier = Modifier
-                                        .size(40.dp)
-                                        .clip(CircleShape)
-                                        .background(Color.LightGray),
-                                    contentScale = ContentScale.Crop
-                                )
-
-                                Spacer(modifier = Modifier.width(16.dp))
-
-                                Column(
-                                    modifier = Modifier.weight(1f)
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                                        .clickable { /* Optional: Add notification tap action */ },
+                                    shape = RoundedCornerShape(12.dp),
+                                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
                                 ) {
                                     Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(16.dp),
                                         verticalAlignment = Alignment.Top
                                     ) {
-                                        Text(
-                                            text = notificacionInver.tituloInver,
-                                            fontSize = 16.sp,
-                                            color = Color.Black,
+                                        Image(
+                                            painter = painterResource(id = notificacionInver.imageResourceIdInver),
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .size(40.dp)
+                                                .clip(CircleShape)
+                                                .background(Color.LightGray),
+                                            contentScale = ContentScale.Crop
+                                        )
+
+                                        Spacer(modifier = Modifier.width(16.dp))
+
+                                        Column(
                                             modifier = Modifier.weight(1f)
-                                        )
-                                        Text(
-                                            text = notificacionInver.horaInver,
-                                            fontSize = 12.sp,
-                                            color = Color.Gray
-                                        )
+                                        ) {
+                                            Row(
+                                                modifier = Modifier.fillMaxWidth(),
+                                                horizontalArrangement = Arrangement.SpaceBetween,
+                                                verticalAlignment = Alignment.Top
+                                            ) {
+                                                Text(
+                                                    text = notificacionInver.tituloInver,
+                                                    fontSize = 16.sp,
+                                                    color = Color.Black,
+                                                    fontWeight = FontWeight.Bold,
+                                                    modifier = Modifier
+                                                        .weight(1f)
+                                                        .padding(end = 8.dp)
+                                                )
+                                                Text(
+                                                    text = notificacionInver.horaInver,
+                                                    fontSize = 12.sp,
+                                                    color = Color.Gray
+                                                )
+                                            }
+
+                                            Spacer(modifier = Modifier.height(4.dp))
+
+                                            Text(
+                                                text = notificacionInver.mensajeInver,
+                                                fontSize = 14.sp,
+                                                color = Color.Gray,
+                                                maxLines = 2,
+                                                overflow = TextOverflow.Ellipsis
+                                            )
+                                            Spacer(modifier = Modifier.height(8.dp))
+                                            // Added "Ver más" button
+                                            Button(
+                                                onClick = { navController.navigate(AppScreens.Notificaciones2Inver.route) },
+                                                modifier = Modifier
+                                                    .align(Alignment.End)
+                                                    .padding(top = 8.dp),
+                                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1C1B1F))
+                                            ) {
+                                                Text(text = "Ver más", color = Color.White)
+                                            }
+                                        }
                                     }
-
-                                    Spacer(modifier = Modifier.height(4.dp))
-
-                                    Text(
-                                        text = notificacionInver.mensajeInver,
-                                        fontSize = 14.sp,
-                                        color = Color.Gray,
-                                        maxLines = 2,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
                                 }
                             }
                         }
@@ -254,5 +324,6 @@ fun NotificacionesInver(
 @Preview(showBackground = true, widthDp = 430, heightDp = 894)
 @Composable
 fun NotificacionesInverPreview() {
-    NotificacionesInver()
+    val navController = rememberNavController()
+    NotificacionesInver(navController = navController)
 }

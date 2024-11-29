@@ -71,6 +71,7 @@ fun Notificaciones2Usu(
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
 
+                // Sección de perfil en el drawer
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -78,11 +79,7 @@ fun Notificaciones2Usu(
                 ) {
                     Column {
                         Image(
-                            painter = if (imageUri != null) {
-                                painterResource(id = R.drawable.image3_647598)
-                            } else {
-                                painterResource(id = R.drawable.image3_647598)
-                            },
+                            painter = painterResource(id = R.drawable.image3_647598),
                             contentDescription = "Foto de perfil",
                             modifier = Modifier
                                 .size(64.dp)
@@ -105,24 +102,24 @@ fun Notificaciones2Usu(
                 Divider()
 
                 listOf(
-                    "Mi Perfil" to Icons.Default.Person,
-                    "Inicio" to Icons.Default.Home,
-                    "Busqueda por categoria" to Icons.Default.Search,
-                    "Consultar redes" to Icons.Default.Share,
-                    "Lista de emprendimientos" to Icons.Default.List,
-                    "Notificaciones" to Icons.Default.Notifications,
-                    "Chat" to Icons.Default.Email,
-                    "Cerrar Sesión" to Icons.Default.ExitToApp,
-                    "Ayuda" to Icons.Default.Info
-                ).forEach { (texto, icono) ->
+                    Triple("Mi Perfil", Icons.Default.Person, "user_profile_main_view"),
+                    Triple("Inicio", Icons.Default.Home, "HomePrincipal"),
+                    Triple("Búsqueda por categoría", Icons.Default.Search, "busqueda"),
+                    Triple("Consultar redes", Icons.Default.Share, "redes_route"),
+                    Triple("Lista de emprendimientos", Icons.Default.List, "Lista de emprendimientos"),
+                    Triple("Notificaciones", Icons.Default.Notifications, "NotificacionesUsu"),
+                    Triple("Chat", Icons.Default.Email, "chatUsu"),
+                    Triple("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar cesion"),
+                    Triple("Ayuda", Icons.Default.Info, "ayuda")
+                ).forEach { (texto, icono, route) ->
                     NavigationDrawerItem(
                         icon = { Icon(icono, contentDescription = texto) },
                         label = { Text(texto) },
-                        selected = texto == "Notificaciones",
+                        selected = false,
                         onClick = {
                             scope.launch {
+                                navController.navigate(route)
                                 drawerState.close()
-                                onNavigateToScreen(texto)
                             }
                         }
                     )

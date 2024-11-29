@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
+import com.example.splashscreen.navigation.AppScreens
 import kotlinx.coroutines.launch
 
 data class Notificacion(
@@ -87,7 +88,60 @@ fun NotificacionesUsu(
                 modifier = Modifier.width(300.dp)
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
-                // Perfil y otros items de navegación...
+
+                // Sección de perfil en el drawer
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Column {
+                        Image(
+                            painter = painterResource(id = R.drawable.image3_647598),
+                            contentDescription = "Foto de perfil",
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Usuario",
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = "usuario@email.com",
+                            fontSize = 14.sp,
+                            color = Color.Gray
+                        )
+                    }
+                }
+
+                Divider()
+
+                listOf(
+                    Triple("Mi Perfil", Icons.Default.Person, "user_profile_main_view"),
+                    Triple("Inicio", Icons.Default.Home, "HomePrincipal"),
+                    Triple("Búsqueda por categoría", Icons.Default.Search, "busqueda"),
+                    Triple("Consultar redes", Icons.Default.Share, "redes_route"),
+                    Triple("Lista de emprendimientos", Icons.Default.List, "Lista de emprendimientos"),
+                    Triple("Notificaciones", Icons.Default.Notifications, "NotificacionesUsu"),
+                    Triple("Chat", Icons.Default.Email, "chatUsu"),
+                    Triple("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar cesion"),
+                    Triple("Ayuda", Icons.Default.Info, "ayuda")
+                ).forEach { (texto, icono, route) ->
+                    NavigationDrawerItem(
+                        icon = { Icon(icono, contentDescription = texto) },
+                        label = { Text(texto) },
+                        selected = false,
+                        onClick = {
+                            scope.launch {
+                                navController.navigate(route)
+                                drawerState.close()
+                            }
+                        }
+                    )
+                }
             }
         }
     ) {
@@ -193,7 +247,7 @@ fun NotificacionesUsu(
                                 Spacer(modifier = Modifier.height(8.dp))
                                 // Botón para navegar
                                 Button(
-                                    onClick = { navController.navigate("notificacionesusu") },
+                                    onClick = {navController.navigate(AppScreens.Notificaciones2Usu.route)},
                                     modifier = Modifier
                                         .align(Alignment.End)
                                         .padding(top = 8.dp),
@@ -210,8 +264,4 @@ fun NotificacionesUsu(
     }
 }
 
-@Preview(showBackground = true, widthDp = 430, heightDp = 894)
-@Composable
-fun NotificacionesUsuPreview() {
-    NotificacionesUsu(navController = rememberNavController())
-}
+

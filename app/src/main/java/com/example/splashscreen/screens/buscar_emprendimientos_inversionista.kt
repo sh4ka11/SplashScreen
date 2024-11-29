@@ -1,5 +1,6 @@
 package com.example.splashscreen.screens
 
+import MenuItem
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -7,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -14,7 +16,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -54,78 +58,77 @@ fun Busquedaemprendeinver(navController: NavController) {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            ModalDrawerSheet(modifier = Modifier.width(300.dp)) {
-                Column(modifier = Modifier.padding(vertical = 16.dp), horizontalAlignment = Alignment.Start) {
-                    // Imagen del perfil
-                    Image(
-                        painter = painterResource(id = R.drawable.imagenrealdesebas),
-                        contentDescription = "Perfil",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(100.dp)
-                    )
+            ModalDrawerSheet(
+                modifier = Modifier.width(300.dp)
+            ) {
+                Spacer(modifier = Modifier.height(16.dp))
 
-                    // Nombre de usuario
-                    Text(
-                        text = "Inversionista",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(start = 16.dp, top = 8.dp)
-                    )
-
-                    // Correo electrónico
-                    Text(
-                        text = "usuario@example.com",
-                        fontSize = 14.sp,
-                        color = Color.Gray,
-                        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
-                    )
-
-                    // Línea divisoria
-                    Divider(modifier = Modifier
+                // Profile section in drawer
+                Box(
+                    modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp), color = Color.LightGray)
+                        .padding(16.dp)
+                ) {
+                    Column {
+                        Image(
+                            painter = painterResource(id = R.drawable.image3_647598),
+                            contentDescription = "Foto de perfil",
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Usuario",
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = "usuario@email.com",
+                            fontSize = 14.sp,
+                            color = Color.Gray
+                        )
+                    }
                 }
 
-                // Opciones del menú
+                Divider()
+
+                // Drawer menu items with navigation
                 val menuItems = listOf(
-                    Pair(Icons.Default.Person, "Mi Perfil"),
-                    Pair(Icons.Default.Home, "Inicio"),
-                    Pair(Icons.Default.Search, "Busqueda por categoria"),
-                    Pair(Icons.Default.Share, "Consultar redes"),
-                    Pair(Icons.Default.List, "Lista de emprendimientos"),
-                    Pair(Icons.Default.Notifications, "Notificaciones"),
-                    Pair(Icons.Default.Email, "Chat"),
-                    Pair(Icons.Default.ExitToApp, "Cerrar Sesión")
+                    MenuItem("Mi Perfil", Icons.Default.Person, "user_profile_main_viewInver"),
+                    MenuItem("Inicio", Icons.Default.Home, "HomeUsuarioInver"),
+                    MenuItem("Búsqueda por categoría", Icons.Default.Search, "busquedaInver"),
+                    MenuItem("Lista de emprendimientos", Icons.Default.List, "emprendimientosInver"),
+                    MenuItem("Notificaciones", Icons.Default.Notifications, "notificacionesInver"),
+                    MenuItem("Chat", Icons.Default.Email, "chatInver"),
+                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar-sesion"),
+                    MenuItem("Ayuda", Icons.Default.Info, "ayudaInver")
                 )
 
-                LazyColumn {
-                    items(menuItems) { (icon, label) ->
-                        NavigationDrawerItem(
-                            icon = { Icon(icon, contentDescription = label) },
-                            label = { Text(label) },
-                            selected = false,
-                            onClick = { scope.launch { drawerState.close() } }
-                        )
-                    }
+                menuItems.forEach { menuItem ->
+                    NavigationDrawerItem(
+                        icon = { Icon(menuItem.icono, contentDescription = menuItem.texto) },
+                        label = { Text(menuItem.texto) },
+                        selected = false,
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                                // Manejo especial para cerrar sesión
+                                if (menuItem.ruta == "cerrar-sesion") {
+                                    // Aquí puedes agregar la lógica para cerrar sesión
+                                    navController.navigate("login") {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            inclusive = true
+                                        }
+                                    }
+                                } else {
+                                    navController.navigate(menuItem.ruta)
+                                }
+                            }
+                        }
+                    )
 
-                    // Espaciador para empujar "Ayuda" hacia abajo
-                    item { Spacer(modifier = Modifier.weight(1f)) }
-
-                    // Espaciador adicional para ajustar la altura
-                    item { Spacer(modifier = Modifier.height(120.dp)) }
-
-                    // Opción "Ayuda"
-                    item {
-                        NavigationDrawerItem(
-                            icon = { Icon(Icons.Default.Info, contentDescription = "Ayuda") },
-                            label = { Text("Ayuda") },
-                            selected = false,
-                            onClick = { scope.launch { drawerState.close() } }
-                        )
-                    }
-                }
-            }
+            }}
         }
     ) {
         Column(modifier = Modifier

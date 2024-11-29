@@ -30,6 +30,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.splashscreen.R
 import kotlinx.coroutines.launch
@@ -50,7 +52,7 @@ data class PersonalProfile(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PersonalProfileEditScreen(
+fun PersonalProfileEditScreen(navController: NavController,
     onMenuClick: () -> Unit = {},
     onUpdateProfile: () -> Unit = {}
 ) {
@@ -110,61 +112,58 @@ fun PersonalProfileEditScreen(
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Profile header in drawer
-                Column(
+                // Sección de perfil en el drawer
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.Start
+                        .padding(16.dp)
                 ) {
-                    Image(
-                        painter = if (imageUri != null) {
-                            rememberAsyncImagePainter(imageUri)
-                        } else {
-                            painterResource(id = R.drawable.image3_647598)
-                        },
-                        contentDescription = "Profile Picture",
-                        modifier = Modifier
-                            .size(64.dp)
-                            .clip(CircleShape),
-                        contentScale = ContentScale.Crop
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = personalProfile.name,
-                        fontSize = 16.sp,
-                        color = Color.Black
-                    )
-                    Text(
-                        text = personalProfile.email,
-                        fontSize = 14.sp,
-                        color = Color.Gray
-                    )
+                    Column {
+                        Image(
+                            painter = painterResource(id = R.drawable.image3_647598),
+                            contentDescription = "Foto de perfil",
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Usuario",
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = "usuario@email.com",
+                            fontSize = 14.sp,
+                            color = Color.Gray
+                        )
+                    }
                 }
 
                 Divider()
+
                 listOf(
-                    "Mi Perfil" to Icons.Default.Person,
-                "Inicio" to Icons.Default.Home,
-                "Busqueda por categoria" to Icons.Default.Search,
-                "Consultar redes" to Icons.Default.Share,
-                "Lista de emprendimientos" to Icons.Default.List,
-                "Notificaciones" to Icons.Default.Notifications,
-                "Chat" to Icons.Default.Email,
-                "Cerrar Sesión" to Icons.Default.ExitToApp,
-                "Ayuda" to Icons.Default.Info
-                ).forEach { (texto, icono) ->
-                NavigationDrawerItem(
-                    icon = { Icon(icono, contentDescription = texto) },
-                    label = { Text(texto) },
-                    selected = texto == "Mi Perfil",
-                    onClick = {
-                        scope.launch {
-                            drawerState.close()
+                    Triple("Mi Perfil", Icons.Default.Person, "user_profile_main_view"),
+                    Triple("Inicio", Icons.Default.Home, "HomePrincipal"),
+                    Triple("Búsqueda por categoría", Icons.Default.Search, "busqueda"),
+                    Triple("Lista de emprendimientos", Icons.Default.List, "Lista de emprendimientos"),
+                    Triple("Notificaciones", Icons.Default.Notifications, "NotificacionesUsu"),
+                    Triple("Chat", Icons.Default.Email, "chatUsu"),
+                    Triple("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar cesion"),
+                    Triple("Ayuda", Icons.Default.Info, "ayuda")
+                ).forEach { (texto, icono, route) ->
+                    NavigationDrawerItem(
+                        icon = { Icon(icono, contentDescription = texto) },
+                        label = { Text(texto) },
+                        selected = false,
+                        onClick = {
+                            scope.launch {
+                                navController.navigate(route)
+                                drawerState.close()
+                            }
                         }
-                    }
-                )
-            }
+                    )
+                }
             }
         }
     )
@@ -479,5 +478,6 @@ private fun saveBitmapToFile(context: Context, bitmap: Bitmap): Uri {
 @Preview(showBackground = true, widthDp = 430, heightDp = 894)
 @Composable
 fun PersonalProfileEditScreenPreview() {
-    PersonalProfileEditScreen()
+    val navController = rememberNavController()
+    PersonalProfileEditScreen(navController = navController)
 }
