@@ -32,9 +32,8 @@ sealed class AppScreens(val route: String) {
 
      object HomeScreen :AppScreens("HomeScreen")
      object PublicarEmprendimientoView :AppScreens("PublicarEmprendimientoView")
-//
-//     object ConfirmationCodeScreen :AppScreens("ConfirmationCodeScreen")
-//     object HomeInversorScreen :AppScreens("HomeInversorScreen")
+
+
 //
 //     object ConfirmationCodeScreen :AppScreens("ConfirmationCodeScreen")
 //     object HomeInversorScreen :AppScreens("HomeInversorScreen")

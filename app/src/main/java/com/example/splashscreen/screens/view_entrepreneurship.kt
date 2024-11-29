@@ -362,5 +362,11 @@ fun ProductCard(title: String, description: String, imageRes: Int, price: String
         }
     }
 }
+@Preview(showBackground = true)
+@Composable
+fun WineShopAppPreview() {
+    WineShopApp(navController = rememberNavController())
+}
+
 
 

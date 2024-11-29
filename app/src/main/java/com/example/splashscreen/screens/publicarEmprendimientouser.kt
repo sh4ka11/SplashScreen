@@ -86,7 +86,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-
+import com.example.splashscreen.navigation.AppScreens
 
 
 /**
@@ -350,7 +350,7 @@ fun PublicarEmprendimientoView(navController: NavController) {
                     )
 
                     Button(
-                        onClick = {  },
+                        onClick = { navController.navigate(AppScreens.WineShopApp.route) },
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                             .padding(vertical = 32.dp)
