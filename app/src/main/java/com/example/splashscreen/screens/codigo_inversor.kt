@@ -31,6 +31,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
+import com.example.splashscreen.navigation.AppScreens
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -146,6 +147,8 @@ fun ConfirmationCodeScreen(navController: NavController? = null) {
                     onClick = {
                         if (code.all { it.value.isNotEmpty() }) {
                             showDialog = true
+                        } else {
+                            navController?.navigate(AppScreens.HomeInversorScreen.route)
                         }
                     },
                     modifier = Modifier

@@ -1,10 +1,12 @@
 package com.example.splashscreen.screens
 
+import MenuItem
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -12,13 +14,17 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import kotlinx.coroutines.launch
 
@@ -29,7 +35,7 @@ data class Categorias(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BusquedaFilinver() {
+fun BusquedaFilinver(navController: NavController) {
     var searchText by remember { mutableStateOf("") }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -69,96 +75,72 @@ fun BusquedaFilinver() {
             ModalDrawerSheet(
                 modifier = Modifier.width(300.dp)
             ) {
-                Column(
-                    modifier = Modifier.padding(vertical = 16.dp),
-                    horizontalAlignment = Alignment.Start // Alinea el contenido a la izquierda
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Profile section in drawer
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
                 ) {
-                    // Imagen del perfil con margen a la izquierda
-                    Image(
-                        painter = painterResource(id = R.drawable.imagenrealdesebas),
-                        contentDescription = "Perfil",
-                        modifier = Modifier
-                            .width(100.dp) // Ajusta el ancho según lo que desees
-                            .height(100.dp) // Mantiene la altura
-                            .padding(start = 8.dp) // Aplica un pequeño margen a la izquierda
-                    )
-
-                    // Nombre de usuario
-                    Text(
-                        text = "Inversionista",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(start = 16.dp, top = 8.dp)
-                    )
-
-                    // Correo electrónico
-                    Text(
-                        text = "usuario@example.com",
-                        fontSize = 14.sp,
-                        color = Color.Gray,
-                        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
-                    )
-
-                    // Línea divisoria
-                    Divider(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp),
-                        color = Color.LightGray
-                    )
+                    Column {
+                        Image(
+                            painter = painterResource(id = R.drawable.image3_647598),
+                            contentDescription = "Foto de perfil",
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Usuario",
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = "usuario@email.com",
+                            fontSize = 14.sp,
+                            color = Color.Gray
+                        )
+                    }
                 }
 
-                // Elementos del menú
-                val items = listOf(
-                    Pair(Icons.Default.Person, "Mi Perfil"),
-                    Pair(Icons.Default.Home, "Inicio"),
-                    Pair(Icons.Default.Search, "Busqueda por categoria"),
-                    Pair(Icons.Default.Share, "Consultar redes"),
-                    Pair(Icons.Default.List, "Lista de emprendimientos"),
-                    Pair(Icons.Default.Notifications, "Notificaciones"),
-                    Pair(Icons.Default.Email, "Chat"),
-                    Pair(Icons.Default.ExitToApp, "Cerrar Sesión") // Nueva opción de cerrar sesión
+                Divider()
+
+                // Drawer menu items with navigation
+                val menuItems = listOf(
+                    MenuItem("Mi Perfil", Icons.Default.Person, "user_profile_main_viewInver"),
+                    MenuItem("Inicio", Icons.Default.Home, "HomeUsuarioInver"),
+                    MenuItem("Búsqueda por categoría", Icons.Default.Search, "busquedaInver"),
+                    MenuItem("Lista de emprendimientos", Icons.Default.List, "emprendimientosInver"),
+                    MenuItem("Notificaciones", Icons.Default.Notifications, "notificacionesInver"),
+                    MenuItem("Chat", Icons.Default.Email, "chatInver"),
+                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar-sesion"),
+                    MenuItem("Ayuda", Icons.Default.Info, "ayudaInver")
                 )
 
-                // Usar LazyColumn para hacer que el menú sea desplazable
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(items) { (icon, label) ->
-                        NavigationDrawerItem(
-                            icon = { Icon(icon, contentDescription = label) },
-                            label = { Text(label) },
-                            selected = false,
-                            onClick = {
-                                scope.launch {
-                                    if (label == "Cerrar Sesión") {
-                                        // Aquí puedes agregar la lógica para cerrar sesión
-                                        // Por ejemplo: logoutUser()
+                menuItems.forEach { menuItem ->
+                    NavigationDrawerItem(
+                        icon = { Icon(menuItem.icono, contentDescription = menuItem.texto) },
+                        label = { Text(menuItem.texto) },
+                        selected = false,
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                                // Manejo especial para cerrar sesión
+                                if (menuItem.ruta == "cerrar-sesion") {
+                                    // Aquí puedes agregar la lógica para cerrar sesión
+                                    navController.navigate("login") {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            inclusive = true
+                                        }
                                     }
-                                    drawerState.close()
+                                } else {
+                                    navController.navigate(menuItem.ruta)
                                 }
                             }
-                        )
-                    }
-
-                    item {
-                        Spacer(modifier = Modifier.weight(1f)) // Empuja "Ayuda" hacia abajo
-                    }
-
-                    item {
-                        Spacer(modifier = Modifier.height(120.dp)) // Ajusta la altura según lo que desees
-                    }
-
-                    item {
-                        NavigationDrawerItem(
-                            icon = { Icon(Icons.Default.Info, contentDescription = "Ayuda") },
-                            label = { Text("Ayuda") },
-                            selected = false,
-                            onClick = {
-                                scope.launch { drawerState.close() }
-                            }
-                        )
-                    }
+                        }
+                    )
                 }
             }
         }
@@ -296,7 +278,7 @@ fun BusquedaFilinver() {
 @Preview(showBackground = true)
 @Composable
 fun BusquedaFilinverPreview() {
-    MaterialTheme {
-        BusquedaFilinver()
+    val navController = rememberNavController()
+    BusquedaFilinver(navController = navController)
     }
-}
+

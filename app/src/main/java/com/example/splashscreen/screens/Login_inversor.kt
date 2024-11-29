@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -258,7 +259,6 @@ fun LoginInversor(navController: NavController) {
 @Preview(showBackground = true)
 @Composable
 fun LoginInversorPreview() {
-    MaterialTheme {
-        //LoginInversor()
+    val navController = rememberNavController()
+    LoginInversor(navController = navController)
     }
-}

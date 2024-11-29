@@ -54,6 +54,7 @@ fun ChatScreen(
 
     // Sample chat messages
     val allChatMessages = listOf(
+
         ChatMessage(1, "Kevin targaryen", "MENSAJE", "4:15 PM", R.drawable.image3_647598),
         ChatMessage(2, "Kevin Alexis", "MENSAJE", "7:15 PM", R.drawable.image3_647598),
         ChatMessage(3, "Cristian sebastian", "MENSAJE", "9:15 PM", R.drawable.image3_647598),
@@ -82,7 +83,7 @@ fun ChatScreen(
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Profile section in drawer
+                // Sección de perfil en el drawer
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -112,26 +113,24 @@ fun ChatScreen(
 
                 Divider()
 
-                // Drawer menu items
                 listOf(
-                    "Mi Perfil" to Icons.Default.Person,
-                    "Inicio" to Icons.Default.Home,
-                    "Busqueda por categoria" to Icons.Default.Search,
-                    "Consultar redes" to Icons.Default.Share,
-                    "Lista de emprendimientos" to Icons.Default.List,
-                    "Notificaciones" to Icons.Default.Notifications,
-                    "Chat" to Icons.Default.Email,
-                    "Cerrar Sesión" to Icons.Default.ExitToApp,
-                    "Ayuda" to Icons.Default.Info
-                ).forEach { (texto, icono) ->
+                    Triple("Mi Perfil", Icons.Default.Person, "user_profile_main_view"),
+                    Triple("Inicio", Icons.Default.Home, "HomePrincipal"),
+                    Triple("Búsqueda por categoría", Icons.Default.Search, "busqueda"),
+                    Triple("Lista de emprendimientos", Icons.Default.List, "Lista de emprendimientos"),
+                    Triple("Notificaciones", Icons.Default.Notifications, "NotificacionesUsu"),
+                    Triple("Chat", Icons.Default.Email, "chatUsu"),
+                    Triple("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar cesion"),
+                    Triple("Ayuda", Icons.Default.Info, "ayuda")
+                ).forEach { (texto, icono, route) ->
                     NavigationDrawerItem(
                         icon = { Icon(icono, contentDescription = texto) },
                         label = { Text(texto) },
-                        selected = texto == "Chat",
+                        selected = false,
                         onClick = {
                             scope.launch {
+                                navController.navigate(route)
                                 drawerState.close()
-                                // Add navigation logic here if needed
                             }
                         }
                     )

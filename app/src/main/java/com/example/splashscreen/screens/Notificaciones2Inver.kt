@@ -1,5 +1,6 @@
 package com.example.splashscreen.screens
 
+import MenuItem
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,6 +23,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import kotlinx.coroutines.launch
 
@@ -35,8 +38,8 @@ data class InversionNotificacionModel(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Notificaciones2Inver(
-    onNavigateToScreen: (String) -> Unit = {}
+fun Notificaciones2Inver(navController: NavController,
+                         onNavigateToScreen: (String) -> Unit = {}
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -68,6 +71,7 @@ fun Notificaciones2Inver(
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
 
+                // Profile section in drawer
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -75,11 +79,7 @@ fun Notificaciones2Inver(
                 ) {
                     Column {
                         Image(
-                            painter = if (imageUri != null) {
-                                painterResource(id = R.drawable.image3_647598)
-                            } else {
-                                painterResource(id = R.drawable.image3_647598)
-                            },
+                            painter = painterResource(id = R.drawable.image3_647598),
                             contentDescription = "Foto de perfil",
                             modifier = Modifier
                                 .size(64.dp)
@@ -101,25 +101,37 @@ fun Notificaciones2Inver(
 
                 Divider()
 
-                listOf(
-                    "Mi Perfil" to Icons.Default.Person,
-                    "Inicio" to Icons.Default.Home,
-                    "Busqueda por categoria" to Icons.Default.Search,
-                    "Consultar redes" to Icons.Default.Share,
-                    "Lista de emprendimientos" to Icons.Default.List,
-                    "Notificaciones" to Icons.Default.Notifications,
-                    "Chat" to Icons.Default.Email,
-                    "Cerrar Sesión" to Icons.Default.ExitToApp,
-                    "Ayuda" to Icons.Default.Info
-                ).forEach { (texto, icono) ->
+                // Drawer menu items with navigation
+                val menuItems = listOf(
+                    MenuItem("Mi Perfil", Icons.Default.Person, "user_profile_main_viewInver"),
+                    MenuItem("Inicio", Icons.Default.Home, "HomeUsuarioInver"),
+                    MenuItem("Búsqueda por categoría", Icons.Default.Search, "busquedaInver"),
+                    MenuItem("Lista de emprendimientos", Icons.Default.List, "emprendimientosInver"),
+                    MenuItem("Notificaciones", Icons.Default.Notifications, "notificacionesInver"),
+                    MenuItem("Chat", Icons.Default.Email, "chatInver"),
+                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar-sesion"),
+                    MenuItem("Ayuda", Icons.Default.Info, "ayudaInver")
+                )
+
+                menuItems.forEach { menuItem ->
                     NavigationDrawerItem(
-                        icon = { Icon(icono, contentDescription = texto) },
-                        label = { Text(texto) },
-                        selected = texto == "Notificaciones",
+                        icon = { Icon(menuItem.icono, contentDescription = menuItem.texto) },
+                        label = { Text(menuItem.texto) },
+                        selected = false,
                         onClick = {
                             scope.launch {
                                 drawerState.close()
-                                onNavigateToScreen(texto)
+                                // Manejo especial para cerrar sesión
+                                if (menuItem.ruta == "cerrar-sesion") {
+                                    // Aquí puedes agregar la lógica para cerrar sesión
+                                    navController.navigate("login") {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            inclusive = true
+                                        }
+                                    }
+                                } else {
+                                    navController.navigate(menuItem.ruta)
+                                }
                             }
                         }
                     )
@@ -229,5 +241,6 @@ fun Notificaciones2Inver(
 @Preview(showBackground = true, widthDp = 430, heightDp = 894)
 @Composable
 fun Notificaciones2InverPreview() {
-    Notificaciones2Inver()
+    val navController = rememberNavController()
+    Notificaciones2Inver(navController = navController)
 }

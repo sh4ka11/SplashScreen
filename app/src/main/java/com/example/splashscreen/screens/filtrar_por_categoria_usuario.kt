@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -12,13 +13,17 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import kotlinx.coroutines.launch
 
@@ -29,7 +34,7 @@ data class Categoria(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Busquedafil() {
+fun Busquedafil(navController: NavController) {
     var searchText by remember { mutableStateOf("") }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -37,18 +42,18 @@ fun Busquedafil() {
     // Lista de categorías
     val categorias = remember {
         listOf(
-            Categorias("Articulos deportivos", R.drawable.deportes),
-            Categorias("Articulos para el hogar", R.drawable.hogar),
-            Categorias("Electronica", R.drawable.electronica),
-            Categorias("Indumentaria", R.drawable.indumentaria),
-            Categorias("Instrumentos musicales", R.drawable.musica),
-            Categorias("Productos para mascotas", R.drawable.mascotas),
-            Categorias("Suministros de oficina", R.drawable.oficina),
-            Categorias("Artesanias", R.drawable.artesanias),
-            Categorias("Herramientas de trabajo", R.drawable.herramientas),
-            Categorias("Educacion", R.drawable.educacion),
-            Categorias("Alimentacion", R.drawable.alimentacion),
-            Categorias("Vehiculos", R.drawable.vehiculos)
+            Categoria("Artículos deportivos", R.drawable.deportes),
+            Categoria("Artículos para el hogar", R.drawable.hogar),
+            Categoria("Electrónica", R.drawable.electronica),
+            Categoria("Indumentaria", R.drawable.indumentaria),
+            Categoria("Instrumentos musicales", R.drawable.musica),
+            Categoria("Productos para mascotas", R.drawable.mascotas),
+            Categoria("Suministros de oficina", R.drawable.oficina),
+            Categoria("Artesanías", R.drawable.artesanias),
+            Categoria("Herramientas de trabajo", R.drawable.herramientas),
+            Categoria("Educación", R.drawable.educacion),
+            Categoria("Alimentación", R.drawable.alimentacion),
+            Categoria("Vehículos", R.drawable.vehiculos)
         )
     }
 
@@ -69,96 +74,59 @@ fun Busquedafil() {
             ModalDrawerSheet(
                 modifier = Modifier.width(300.dp)
             ) {
-                Column(
-                    modifier = Modifier.padding(vertical = 16.dp),
-                    horizontalAlignment = Alignment.Start // Alinea el contenido a la izquierda
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Sección de perfil en el drawer
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
                 ) {
-                    // Imagen del perfil con margen a la izquierda
-                    Image(
-                        painter = painterResource(id = R.drawable.imagenrealdesebas),
-                        contentDescription = "Perfil",
-                        modifier = Modifier
-                            .width(100.dp) // Ajusta el ancho según lo que desees
-                            .height(100.dp) // Mantiene la altura
-                            .padding(start = 8.dp) // Aplica un pequeño margen a la izquierda
-                    )
-
-                    // Nombre de usuario
-                    Text(
-                        text = "Usuario",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(start = 16.dp, top = 8.dp)
-                    )
-
-                    // Correo electrónico
-                    Text(
-                        text = "usuario@example.com",
-                        fontSize = 14.sp,
-                        color = Color.Gray,
-                        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
-                    )
-
-                    // Línea divisoria
-                    Divider(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp),
-                        color = Color.LightGray
-                    )
+                    Column {
+                        Image(
+                            painter = painterResource(id = R.drawable.image3_647598),
+                            contentDescription = "Foto de perfil",
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Usuario",
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = "usuario@email.com",
+                            fontSize = 14.sp,
+                            color = Color.Gray
+                        )
+                    }
                 }
 
-                // Elementos del menú
-                val items = listOf(
-                    Pair(Icons.Default.Person, "Mi Perfil"),
-                    Pair(Icons.Default.Home, "Inicio"),
-                    Pair(Icons.Default.Search, "Busqueda por categoria"),
-                    Pair(Icons.Default.Share, "Consultar redes"),
-                    Pair(Icons.Default.List, "Lista de emprendimientos"),
-                    Pair(Icons.Default.Notifications, "Notificaciones"),
-                    Pair(Icons.Default.Email, "Chat"),
-                    Pair(Icons.Default.ExitToApp, "Cerrar Sesión") // Nueva opción de cerrar sesión
-                )
+                Divider()
 
-                // Usar LazyColumn para hacer que el menú sea desplazable
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(items) { (icon, label) ->
-                        NavigationDrawerItem(
-                            icon = { Icon(icon, contentDescription = label) },
-                            label = { Text(label) },
-                            selected = false,
-                            onClick = {
-                                scope.launch {
-                                    if (label == "Cerrar Sesión") {
-                                        // Aquí puedes agregar la lógica para cerrar sesión
-                                        // Por ejemplo: logoutUser()
-                                    }
-                                    drawerState.close()
-                                }
+                listOf(
+                    Triple("Mi Perfil", Icons.Default.Person, "user_profile_main_view"),
+                    Triple("Inicio", Icons.Default.Home, "HomePrincipal"),
+                    Triple("Búsqueda por categoría", Icons.Default.Search, "busqueda"),
+                    Triple("Lista de emprendimientos", Icons.Default.List, "Lista de emprendimientos"),
+                    Triple("Notificaciones", Icons.Default.Notifications, "NotificacionesUsu"),
+                    Triple("Chat", Icons.Default.Email, "chatUsu"),
+                    Triple("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar cesion"),
+                    Triple("Ayuda", Icons.Default.Info, "ayuda")
+                ).forEach { (texto, icono, route) ->
+                    NavigationDrawerItem(
+                        icon = { Icon(icono, contentDescription = texto) },
+                        label = { Text(texto) },
+                        selected = false,
+                        onClick = {
+                            scope.launch {
+                                navController.navigate(route)
+                                drawerState.close()
                             }
-                        )
-                    }
-
-                    item {
-                        Spacer(modifier = Modifier.weight(1f)) // Empuja "Ayuda" hacia abajo
-                    }
-
-                    item {
-                        Spacer(modifier = Modifier.height(120.dp)) // Ajusta la altura según lo que desees
-                    }
-
-                    item {
-                        NavigationDrawerItem(
-                            icon = { Icon(Icons.Default.Info, contentDescription = "Ayuda") },
-                            label = { Text("Ayuda") },
-                            selected = false,
-                            onClick = {
-                                scope.launch { drawerState.close() }
-                            }
-                        )
-                    }
+                        }
+                    )
                 }
             }
         }
@@ -295,8 +263,7 @@ fun Busquedafil() {
 
 @Preview(showBackground = true)
 @Composable
-fun Busquedafiltro() {
-    MaterialTheme {
-        Busquedafil()
-    }
+fun BusquedafilPreview() {
+    val navController = rememberNavController()
+    Busquedafil(navController = navController)
 }
