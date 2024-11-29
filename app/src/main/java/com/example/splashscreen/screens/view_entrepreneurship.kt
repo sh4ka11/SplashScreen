@@ -1,3 +1,6 @@
+
+package com.example.splashscreen.navigation
+
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -360,8 +363,4 @@ fun ProductCard(title: String, description: String, imageRes: Int, price: String
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewWineShopApp() {
-    WineShopApp(navController = rememberNavController())
-}
+

@@ -1,4 +1,4 @@
-package com.example.SplashScreen.screens
+package com.example.splashscreen.navigation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -26,12 +27,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
+import com.example.splashscreen.navigation.AppScreens
 
 @Composable
-fun Olvidar3(navController: NavHostController)
+fun Olvidar3(navController: NavController)
 {
     var telefono by remember { mutableStateOf("") }
     var showVerificationMessage by remember { mutableStateOf(false) }
@@ -159,29 +162,13 @@ fun Olvidar3(navController: NavHostController)
                 .border(1.dp, Color(0xff000000)),
         )
 
-        // Texto "Teléfono"
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .wrapContentSize()
-                .offset(x = 251.dp, y = 612.dp),
-            text = "Telefono",
-            color = Color(0xff000000),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
 
-        // Texto "Correo" clickeable
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .wrapContentSize()
                 .offset(x = 93.dp, y = 612.dp)
-                .clickable {
-                    navController.navigate("mandar_correo_usuario")
-                },
+                .clickable {},
             text = "Correo",
             color = Color(0xb2000000),
             fontSize = 20.sp,
@@ -189,6 +176,41 @@ fun Olvidar3(navController: NavHostController)
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
         )
+
+
+
+
+
+
+
+
+
+
+
+        // Texto "Teléfono"
+        Text(
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .wrapContentSize()
+                .offset(x = 93.dp, y = 612.dp) // Ubicación especificada
+                .clickable {
+                    navController.navigate(route = AppScreens.Olvidarcorr.route) // Navegar a la ruta deseada
+                },
+            text = "Correo", // El texto a mostrar
+            color = Color(0xb2000000), // Color del texto
+            fontSize = 20.sp, // Tamaño de fuente
+            fontWeight = FontWeight.Normal, // Peso de la fuente
+            textAlign = TextAlign.Left, // Alineación del texto
+            overflow = TextOverflow.Ellipsis, // Control de desbordamiento del texto
+        )
+
+
+
+
+
+
+
+
 
 
 
@@ -237,10 +259,4 @@ fun Olvidar3(navController: NavHostController)
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun Olvidar3() {
-    MaterialTheme {
-       Olvidar3(navController = rememberNavController())
-    }
-}
+

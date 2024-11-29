@@ -31,7 +31,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
-import java.time.format.TextStyle
+import kotlin.Pair
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,7 +48,7 @@ fun HomeScreen(navController: NavController) {
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Profile section in drawer
+                // Sección de perfil en el drawer
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -78,18 +78,17 @@ fun HomeScreen(navController: NavController) {
 
                 Divider()
 
-                // Drawer menu items
                 listOf(
-                    "Mi Perfil" to Icons.Default.Person,
-                    "Inicio" to Icons.Default.Home,
-                    "Busqueda por categoria" to Icons.Default.Search,
-                    "Consultar redes" to Icons.Default.Share,
-                    "Lista de emprendimientos" to Icons.Default.List,
-                    "Notificaciones" to Icons.Default.Notifications,
-                    "Chat" to Icons.Default.Email,
-                    "Cerrar Sesión" to Icons.Default.ExitToApp,
-                    "Ayuda" to Icons.Default.Info
-                ).forEach { (texto, icono) ->
+                    Triple("Mi Perfil", Icons.Default.Person, "user_profile_main_view"),
+                    Triple("Inicio", Icons.Default.Home, "HomePrincipal"),
+                    Triple("Búsqueda por categoría", Icons.Default.Search, "busqueda"),
+                    Triple("Consultar redes", Icons.Default.Share, "redes_route"),
+                    Triple("Lista de emprendimientos", Icons.Default.List, "Lista de emprendimientos"),
+                    Triple("Notificaciones", Icons.Default.Notifications, "NotificacionesUsu"),
+                    Triple("Chat", Icons.Default.Email, "chatUsu"),
+                    Triple("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar cesion"),
+                    Triple("Ayuda", Icons.Default.Info, "ayuda")
+                ).forEach { (texto, icono, route) ->
                     NavigationDrawerItem(
                         icon = { Icon(icono, contentDescription = texto) },
                         label = { Text(texto) },
@@ -116,11 +115,30 @@ fun HomeScreen(navController: NavController) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         // Profile Image
-
+                        Image(
+                            painter = painterResource(id = R.drawable.image3_647598),
+                            contentDescription = "Profile picture",
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
 
                         Spacer(modifier = Modifier.width(12.dp))
 
-
+                        // User Info
+                        Column {
+                            Text(
+                                text = "Usuario",
+                                color = Color.Black,
+                                fontSize = 16.sp
+                            )
+                            Text(
+                                text = "usuario@email.com",
+                                color = Color.Gray,
+                                fontSize = 12.sp
+                            )
+                        }
                     }
                 },
                 navigationIcon = {
@@ -178,23 +196,23 @@ fun EmprendeMainView() {
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .size(130.dp, 960.dp),
+                .size(430.dp, 960.dp),
         )
 
         // Rectangle 738
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 0.dp, y = 120.dp)
+                .offset(x = 0.dp, y = 176.dp)
                 .background(Color(0xfff5f5f3))
-                .size(430.dp, 610.dp),
+                .size(430.dp, 451.dp),
         )
 
         // Main title text
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 10.dp, y = 180.dp)
+                .offset(x = 16.dp, y = 241.dp)
                 .size(417.dp, 82.dp),
             text = "¡El enlace de emprendedores\n con  inversionistas!",
             color = Color(0xff000000),
@@ -208,19 +226,15 @@ fun EmprendeMainView() {
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 13.dp, y = 300.dp)
-                .size(370.dp, 170.dp),
-            text = "Emprende Link busca facilitar la colaboración y el crecimiento empresarial al conectar de manera eficiente a emprendedores con grandes empresas, creando oportunidades para el desarrollo conjunto de soluciones innovadoras.",
+                .offset(x = 23.dp, y = 338.dp)
+                .size(393.dp, 144.dp),
+            text = "Emprende Link busca facilitar la colaboración y el crecimiento empresarial al conectar de manera  eficiente a emprendedores con grandes empresas, creando oportunidades para el desarrollo  conjunto de soluciones innovadoras.",
             color = Color(0xb2000000),
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
             textAlign = TextAlign.Left,
             overflow = TextOverflow.Ellipsis,
-            style = androidx.compose.ui.text.TextStyle(
-                lineHeight = 27.sp // Ajusta este valor según el espacio que desees entre líneas
-            )
         )
-
 
         // Button background
         Box(
@@ -265,7 +279,7 @@ fun EmprendeMainView() {
                 .align(Alignment.TopStart)
                 .offset(x = -5.dp, y = 627.dp)
                 .background(Color(0xff000000))
-                .size(446.dp, 175.dp),
+                .size(435.dp, 171.dp),
         )
 
         // Create your venture text
@@ -282,15 +296,15 @@ fun EmprendeMainView() {
             overflow = TextOverflow.Ellipsis,
         )
 
-
+        // Logo
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 76.dp, y = 5.dp)
-                .size(250.dp, 100.dp),
+                .offset(x = 69.dp, y = 14.dp)
+                .size(361.dp, 155.dp),
         )
 
         // Gray rectangle

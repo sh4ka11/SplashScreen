@@ -188,11 +188,10 @@ fun InformacionObligatoriaScreen(navController: NavController) {
     }
 }
 
-@Preview(showBackground = true)
 @Composable
+@Preview(showBackground = true)
 fun infoObligatoriaPreview() {
     MaterialTheme {
-        // Pasar un NavController simulado
         InformacionObligatoriaScreen(navController = rememberNavController())
     }
 }

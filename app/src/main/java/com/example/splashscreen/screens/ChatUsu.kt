@@ -2,6 +2,7 @@ package com.example.splashscreen.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,6 +26,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import kotlinx.coroutines.launch
+
+// Navigation Routes (you can put this in a separate file)
+sealed class Screen(val route: String) {
+    object ChatDetail : Screen("chat_detail/{userId}") {
+        fun createRoute(userId: Int) = "chat_detail/$userId"
+    }
+}
 
 data class ChatMessage(
     val id: Int,
@@ -124,6 +131,7 @@ fun ChatScreen(
                         onClick = {
                             scope.launch {
                                 drawerState.close()
+                                // Add navigation logic here if needed
                             }
                         }
                     )
@@ -208,7 +216,10 @@ fun ChatScreen(
 
             // New Conversation Button
             OutlinedButton(
-                onClick = { },
+                onClick = {
+                    // Navigate to new conversation or open new chat screen
+                    navController.navigate(Screen.ChatDetail.createRoute(-1))
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp),
@@ -238,13 +249,18 @@ fun ChatScreen(
                 color = Color.LightGray
             )
 
-            // Chat List with enhanced spacing
+            // Chat List with navigation
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(filteredMessages) { message ->
-                    Column {
+                    Column(
+                        Modifier.clickable {
+                            // Navigate to chat detail screen with user ID
+                            navController.navigate(Screen.ChatDetail.createRoute(message.id))
+                        }
+                    ) {
                         ChatItem(message)
                         Divider(
                             modifier = Modifier
