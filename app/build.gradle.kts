@@ -1,3 +1,5 @@
+import android.databinding.internal.org.antlr.v4.runtime.atn.LexerATNSimulator.debug
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -20,15 +22,17 @@ android {
         }
     }
 
-    buildTypes {
+    buildTypes{
+        debug {
+            buildConfigField ("String", "API_BASE_URL", "https://apiemprendelink-production-9272.up.railway.app/api/")
+        }
         release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            buildConfigField ("String", "API_BASE_URL", "https://apiemprendelink-production-9272.up.railway.app/api/")
         }
     }
+
+
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -53,6 +57,8 @@ dependencies {
     // Retrofit para consumo de API
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
+
 
     // Librerías de Lifecycle y ViewModel para arquitectura
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
@@ -78,6 +84,7 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
+
 
     // Test y debug
     implementation ("androidx.navigation:navigation-compose:2.5.0-alpha01") // Verifica la versión más reciente

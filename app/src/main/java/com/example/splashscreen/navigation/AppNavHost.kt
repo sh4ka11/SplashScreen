@@ -19,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -28,6 +29,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.splashscreen.R
+import com.example.splashscreen.data.LoginViewModel
 import com.example.splashscreen.data.Movie
 import com.example.splashscreen.screens.Busquedaemprendeinver
 import com.example.splashscreen.screens.Busquedaemprendeusuario
@@ -70,8 +72,62 @@ import com.example.splashsreen.screens.Contactanosinver
 import com.example.splasscreen.screens.ConfirmationCodeScreen
 
 @Composable
+fun NavigationScreen(viewModel: LoginViewModel) {
+    val navController = rememberNavController()
+    val loadingProgressBar = viewModel.progressBar.value
+    val imageError = viewModel.imageErrorAuth.value
+    val isSuccessLoading = viewModel.isSuccessLoading.value
+
+    NavHost(
+        navController = navController,
+        startDestination = Screens.LOGIN.name
+    ) {
+        composable(Screens.LOGIN.name) {
+            LoginScreen(
+                loadingProgressBar = loadingProgressBar,
+                onclickLogin = viewModel::login,
+                imageError = imageError
+            )
+
+            // Add LaunchedEffect to handle navigation after successful login
+            LaunchedEffect(isSuccessLoading) {
+                if (isSuccessLoading) {
+                    when (viewModel.userType.value) {
+                        UserType.ENTREPRENEUR -> {
+                            navController.navigate(Screens.HOME_ENTREPRENEUR.name) {
+                                popUpTo(Screens.LOGIN.name) { inclusive = true }
+                            }
+                        }
+                        UserType.INVESTOR -> {
+                            navController.navigate(Screens.HOME_INVESTOR.name) {
+                                popUpTo(Screens.LOGIN.name) { inclusive = true }
+                            }
+                        }
+                        null -> {
+                            // Handle case where user type is not determined
+                            // You might want to add error handling or default navigation
+                        }
+                    }
+                }
+            }
+        }
+
+        composable(Screens.HOME_ENTREPRENEUR.name) {
+            HomeScreen(navController = navController)
+        }
+
+        composable(Screens.HOME_INVESTOR.name) {
+            HomeInversorScreen(navController = navController)
+        }
+    }
+}
+
+
+
+@Composable
 fun AppNavHost() {
 //Lago
+
 
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.HOMEPRINCIPAL.name) {
