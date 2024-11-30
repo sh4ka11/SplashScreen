@@ -1,6 +1,5 @@
 package com.example.splashscreen.navigation
-
-enum class Screen { // Names to identify the screens
+enum class Screen {
     LOGIN,
     HOMEUSUARIO,
     DETAIL,
@@ -14,17 +13,19 @@ enum class Screen { // Names to identify the screens
     CHAT,
     LOGOUT,
     EDITAREMPREDIMIENTO,
-    USERPROFILE
+    USERPROFILE,
+
+
+
 }
 
-
+// NavigationItem.kt
 sealed class NavigationItem(val route: String) {
     object Login: NavigationItem(Screen.LOGIN.name)
     object HomeUsuarios: NavigationItem(Screen.HOMEUSUARIO.name)
     object Register: NavigationItem(Screen.REGISTER.name)
     object Detail: NavigationItem(Screen.DETAIL.name)
     object HomePrincipal: NavigationItem(Screen.HOMEPRINCIPAL.name)
-
     object EditarEmpredimiento: NavigationItem(Screen.EDITAREMPREDIMIENTO.name)
     object MyProfile: NavigationItem(Screen.MYPROFILE.name)
     object SearchForEntrepreneurship: NavigationItem(Screen.SEARCHFORENTREPRENEURSHIP.name)
@@ -33,4 +34,20 @@ sealed class NavigationItem(val route: String) {
     object Notifications: NavigationItem(Screen.NOTIFICATIONS.name)
     object Chat: NavigationItem(Screen.CHAT.name)
     object Logout: NavigationItem(Screen.LOGOUT.name)
+
+
+
+
+
+}
+
+sealed class Screens(val name: String) {
+    object LOGIN : Screens("login")
+    object HOME_ENTREPRENEUR : Screens("homeEntrepreneur")
+    object HOME_INVESTOR : Screens("homeInvestor")
+}
+
+sealed class UserType {
+    object ENTREPRENEUR : UserType()
+    object INVESTOR : UserType()
 }

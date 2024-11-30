@@ -2,6 +2,7 @@ package com.example.splashscreen.screens
 
 
 
+import MenuItem
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -33,32 +34,137 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import com.example.splashscreen.navigation.NavigationItem
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VinotecaEcstasyApp(navController: NavController) {
     var mostrarInfoContacto by remember { mutableStateOf(true) }
+    val scrollState = rememberScrollState()
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet(
+                modifier = Modifier.width(300.dp)
+            ) {
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Profile section in drawer
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Column {
+                        Image(
+                            painter = painterResource(id = R.drawable.image3_647598),
+                            contentDescription = "Foto de perfil",
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Usuario",
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = "usuario@email.com",
+                            fontSize = 14.sp,
+                            color = Color.Gray
+                        )
+                    }
+                }
+
+                Divider()
+
+                // Drawer menu items with navigation
+                val menuItems = listOf(
+                    MenuItem("Mi Perfil", Icons.Default.Person, "user_profile_main_view"),
+                    MenuItem("Inicio", Icons.Default.Home, "HomeUsuario"),
+                    MenuItem("Búsqueda por categoría", Icons.Default.Search, "busqueda"),
+                    MenuItem("Lista de emprendimientos", Icons.Default.List, "emprendimientos"),
+                    MenuItem("Notificaciones", Icons.Default.Notifications, "notificaciones"),
+                    MenuItem("Chat", Icons.Default.Email, "chat"),
+                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar-sesion"),
+                    MenuItem("Ayuda", Icons.Default.Info, "ayuda")
+                )
+
+                menuItems.forEach { menuItem ->
+                    NavigationDrawerItem(
+                        icon = { Icon(menuItem.icono, contentDescription = menuItem.texto) },
+                        label = { Text(menuItem.texto) },
+                        selected = false,
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                                // Manejo especial para cerrar sesión
+                                if (menuItem.ruta == "cerrar-sesion") {
+                                    // Aquí puedes agregar la lógica para cerrar sesión
+                                    navController.navigate("login") {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            inclusive = true
+                                        }
+                                    }
+                                } else {
+                                    navController.navigate(menuItem.ruta)
+                                }
+                            }
+                        }
+                    )
+                }
+
+
+            }
+        }
+    )
+         {
+
+            EmprendeInversorMainView()
+        }
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("VINO EL ÉXTASIS", fontWeight = FontWeight.Bold, color = Color.White) },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color.Black
-                ),
-                actions = {
-                    IconButton(onClick = { mostrarInfoContacto = !mostrarInfoContacto }) {
+                title = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // Profile Image
+
+
+                        Spacer(modifier = Modifier.width(12.dp))
+
+
+                    }
+                },
+                navigationIcon = {
+                    IconButton(
+                        onClick = {
+                            scope.launch {
+                                if (drawerState.isClosed) drawerState.open()
+                                else drawerState.close()
+                            }
+                        }
+                    ) {
                         Icon(
-                            imageVector = if (mostrarInfoContacto) Icons.Filled.Person else Icons.Filled.Warning,
-                            contentDescription = "Alternar Info Contacto",
-                            tint = Color.White
+                            imageVector = Icons.Default.Menu,
+                            contentDescription = "Menú",
+                            tint = Color.Black
                         )
                     }
-                    
                 },
-                modifier = Modifier.shadow(4.dp)
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color.White
+                )
             )
         }
+
+
     ) { padding ->
         LazyColumn(
             modifier = Modifier
