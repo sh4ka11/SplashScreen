@@ -75,6 +75,8 @@ import com.example.splasscreen.screens.verificarcorreo
 fun AppNavHost() {
 //Lago
 
+
+
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.HOMEPRINCIPAL.name) {
 
