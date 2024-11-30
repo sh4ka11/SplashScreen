@@ -19,7 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -29,7 +28,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.splashscreen.R
-import com.example.splashscreen.data.LoginViewModel
 import com.example.splashscreen.data.Movie
 import com.example.splashscreen.screens.Busquedaemprendeinver
 import com.example.splashscreen.screens.Busquedaemprendeusuario
@@ -37,6 +35,7 @@ import com.example.splashscreen.screens.Busquedaemprendeusuario
 import com.example.splashscreen.screens.ChatInverScreen
 import com.example.splashscreen.screens.ChatScreen
 import com.example.splashscreen.screens.ChatUsu2
+import com.example.splashscreen.screens.EmprendeInversorMainView
 //import com.example.splashscreen.screens.ConfirmationCodeScreen
 import com.example.splashscreen.screens.HomeInversorScreen
 import com.example.splashscreen.screens.HomeScreen
@@ -70,64 +69,11 @@ import com.example.splasscreen.screens.ConfirmationCodeScreen
 import com.example.splashsreen.screens.Contactanosh
 import com.example.splashsreen.screens.Contactanosinver
 import com.example.splasscreen.screens.ConfirmationCodeScreen
-
-@Composable
-fun NavigationScreen(viewModel: LoginViewModel) {
-    val navController = rememberNavController()
-    val loadingProgressBar = viewModel.progressBar.value
-    val imageError = viewModel.imageErrorAuth.value
-    val isSuccessLoading = viewModel.isSuccessLoading.value
-
-    NavHost(
-        navController = navController,
-        startDestination = Screens.LOGIN.name
-    ) {
-        composable(Screens.LOGIN.name) {
-            LoginScreen(
-                loadingProgressBar = loadingProgressBar,
-                onclickLogin = viewModel::login,
-                imageError = imageError
-            )
-
-            // Add LaunchedEffect to handle navigation after successful login
-            LaunchedEffect(isSuccessLoading) {
-                if (isSuccessLoading) {
-                    when (viewModel.userType.value) {
-                        UserType.ENTREPRENEUR -> {
-                            navController.navigate(Screens.HOME_ENTREPRENEUR.name) {
-                                popUpTo(Screens.LOGIN.name) { inclusive = true }
-                            }
-                        }
-                        UserType.INVESTOR -> {
-                            navController.navigate(Screens.HOME_INVESTOR.name) {
-                                popUpTo(Screens.LOGIN.name) { inclusive = true }
-                            }
-                        }
-                        null -> {
-                            // Handle case where user type is not determined
-                            // You might want to add error handling or default navigation
-                        }
-                    }
-                }
-            }
-        }
-
-        composable(Screens.HOME_ENTREPRENEUR.name) {
-            HomeScreen(navController = navController)
-        }
-
-        composable(Screens.HOME_INVESTOR.name) {
-            HomeInversorScreen(navController = navController)
-        }
-    }
-}
-
-
+import com.example.splasscreen.screens.verificarcorreo
 
 @Composable
 fun AppNavHost() {
 //Lago
-
 
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.HOMEPRINCIPAL.name) {
@@ -214,7 +160,7 @@ fun AppNavHost() {
         composable(AppScreens.Notificaciones2Inver.route) {
             Notificaciones2Inver(navController)
         }
-        ////
+        ////WineShopApp PublicarEmprendimientoView
         composable(AppScreens.HomeScreen.route) {
             HomeScreen(navController)
         }
@@ -222,10 +168,37 @@ fun AppNavHost() {
         composable(AppScreens.PublicarEmprendimientoView.route) {
             PublicarEmprendimientoView(navController)
         }
-        composable(AppScreens.PublicarEmprendimientoView.route) {
+        composable(AppScreens.WineShopApp.route) {
             WineShopApp(navController)
         }
+        composable(AppScreens.HomeScreen.route) {
+            HomeScreen(navController)
+        }
 
+        composable(AppScreens.UserProfileMainView.route) {
+            UserProfileMainView(navController)
+        }
+
+        composable(AppScreens.PersonalProfileEditScreen.route) {
+            PersonalProfileEditScreen(navController)
+        }
+
+        composable(AppScreens.ConfirmationCodeScreen.route) {
+            ConfirmationCodeScreen(navController)
+        }
+        composable(AppScreens.InformacionObligatoriaScreen.route) {
+            InformacionObligatoriaScreen(navController)
+        }
+
+        composable(AppScreens.EmprendeInversorMainView.route) {
+            EmprendeInversorMainView(navController)
+        }
+        composable(AppScreens.ProfileScreen.route) {
+            ProfileScreen(navController)
+        }
+        composable(AppScreens.ProfileEditScreen.route) {
+            ProfileEditScreen(navController)
+        }
 
 
 
@@ -315,9 +288,7 @@ fun AppNavHost() {
         composable("confirmation_code") {
             ConfirmationCodeScreen(navController = navController)
         }
-        composable("informacion_obligatoria") {
-            InformacionObligatoriaScreen(navController = navController)
-        }
+
         composable("informacion_credencial") {
             InformacionCredencialScreen(navController = navController)
         }
@@ -364,4 +335,5 @@ fun AppNavHost() {
         }
 
     }
+
 

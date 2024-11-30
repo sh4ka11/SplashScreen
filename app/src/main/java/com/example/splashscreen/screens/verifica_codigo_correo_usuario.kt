@@ -28,12 +28,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
+import com.example.splashscreen.navigation.AppScreens
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun verificarcorreo() {
+fun verificarcorreo( navController: NavHostController) {
     var showDialog by remember { mutableStateOf(false) }
     val code = remember { List(6) { mutableStateOf("") } }
     val focusRequesters = remember { List(6) { FocusRequester() } }
@@ -262,7 +265,9 @@ fun verificarcorreo() {
 @Composable
 @Preview(showBackground = true)
 fun correoPreview() {
+    val navController = rememberNavController() // Controlador simulado para Preview
     MaterialTheme {
-        verificarcorreo()
+        verificarcorreo(navController = navController)
     }
 }
+

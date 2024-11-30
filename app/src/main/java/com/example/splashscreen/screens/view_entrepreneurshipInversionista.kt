@@ -124,7 +124,7 @@ fun VinotecaEcstasyApp(navController: NavController) {
     )
          {
 
-            EmprendeInversorMainView()
+            EmprendeInversorMainView(navController)
         }
 
     Scaffold(

@@ -22,6 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.splashscreen.navigation.AppScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -111,7 +113,9 @@ fun ProfileScreen(navController: NavController,
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Button(
-                                onClick = { "ProfileEditScreen" },
+                                onClick = {
+                                    navController.navigate(AppScreens.ProfileEditScreen.route)
+                                },
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color(0xFF2C2C2C)
                                 )
@@ -119,14 +123,7 @@ fun ProfileScreen(navController: NavController,
                                 Text("Editar perfil")
                             }
 
-                            Button(
-                                onClick = { /* Compartir perfil action */ },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFF2C2C2C)
-                                )
-                            ) {
-                                Text("Compartir perfil")
-                            }
+
                         }
                     }
                 }
@@ -216,6 +213,8 @@ sealed class NavigationItem(val route: String) {
 @Preview(showBackground = true, widthDp = 430, heightDp = 894)
 @Composable
 fun PreviewCodia1MainView() {
-    ProfileScreen()
+    val navController = rememberNavController() // NavController simulado para la vista previa
+    ProfileScreen(navController = navController)
 }
+
 

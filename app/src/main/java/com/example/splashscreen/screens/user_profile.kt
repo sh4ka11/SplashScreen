@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.data.UserProfile
+import com.example.splashscreen.navigation.AppScreens
 import com.example.splashscreen.navigation.NavigationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -115,7 +116,7 @@ fun UserProfileMainView(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Button(
-                                onClick = { navController.navigate("profileEdit") },
+                                onClick = { navController.navigate(AppScreens.PersonalProfileEditScreen.route) },
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color(0xFF2C2C2C)
                                 )
