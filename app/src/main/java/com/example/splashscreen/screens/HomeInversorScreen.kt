@@ -27,16 +27,18 @@ import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.example.splashscreen.navigation.AppScreens
 import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeInversorScreen(navController: NavController) {
+fun HomeInversorScreen(navController: NavController ) {
     val scrollState = rememberScrollState()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -177,14 +179,14 @@ fun HomeInversorScreen(navController: NavController) {
             )
 
             // Main content
-            EmprendeInversorMainView()
+            EmprendeInversorMainView(navController)
         }
     }
 }
 
 
 @Composable
-fun EmprendeInversorMainView() {
+fun EmprendeInversorMainView(navController: NavController) {
     Box(
         contentAlignment = Alignment.TopStart,
         modifier = Modifier
@@ -443,21 +445,21 @@ fun EmprendeInversorMainView() {
                 .align(Alignment.TopStart)
                 .offset(x = 133.dp, y = 2205.dp)
                 .background(Color(0xff38352e), RoundedCornerShape(10.dp))
-                .size(167.dp, 41.dp),
-        )
-        // Text-751:140-Crear un perfil
-        Text(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(x = 156.dp, y = 2211.dp)
-                .size(138.dp, 29.dp),
-            text = "Crear un perfil",
-            color = Color(0xffffffff),
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Left,
-            overflow = TextOverflow.Ellipsis,
-        )
+                .size(167.dp, 41.dp)
+                .clickable {
+                    navController.navigate(AppScreens.ProfileScreen.route)
+                }
+        ) {
+            Text(
+                text = "Crear un perfil",
+                color = Color(0xffffffff),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Normal,
+                modifier = Modifier.align(Alignment.Center),
+                textAlign = TextAlign.Center
+            )
+        }
+
         // Text-751:141-Sube de nivel tu negocio uniendote
         Text(
             modifier = Modifier

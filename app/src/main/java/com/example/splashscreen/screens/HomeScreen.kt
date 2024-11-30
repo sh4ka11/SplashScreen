@@ -22,6 +22,7 @@
     import com.example.splashscreen.R
     import androidx.compose.ui.draw.clipToBounds
     import androidx.compose.foundation.background
+    import androidx.compose.foundation.clickable
     import androidx.compose.foundation.rememberScrollState
     import androidx.compose.foundation.verticalScroll
     import androidx.compose.material.icons.Icons
@@ -429,21 +430,23 @@
                     .align(Alignment.TopStart)
                     .offset(x = 133.dp, y = 2205.dp)
                     .background(Color(0xff38352e), RoundedCornerShape(10.dp))
-                    .size(167.dp, 41.dp),
-            )
-            // Text-751:140-Crear un perfil
-            Text(
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .offset(x = 156.dp, y = 2211.dp)
-                    .size(138.dp, 29.dp),
-                text = "Crear un perfil",
-                color = Color(0xffffffff),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Normal,
-                textAlign = TextAlign.Left,
-                overflow = TextOverflow.Ellipsis,
-            )
+                    .size(167.dp, 41.dp)
+                    .clickable { navController.navigate(AppScreens.UserProfileMainView.route) } // Acción onClick
+            ) {
+                // Text-751:140-Crear un perfil
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.Center) // Centrar el texto dentro del Box
+                        .padding(start = 8.dp, end = 8.dp), // Ajustar el padding si es necesario
+                    text = "Crear un perfil",
+                    color = Color(0xffffffff),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center, // Centrar el texto horizontalmente
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+
             // Text-751:141-Sube de nivel tu negocio uniendote
             Text(
                 modifier = Modifier

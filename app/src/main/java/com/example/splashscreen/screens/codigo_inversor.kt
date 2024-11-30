@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
 import com.example.splashscreen.navigation.AppScreens
@@ -36,7 +37,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun ConfirmationCodeScreen(navController: NavController? = null) {
+fun ConfirmationCodeScreen(navController: NavHostController) {
     var showDialog by remember { mutableStateOf(false) }
     val code = remember { List(6) { mutableStateOf("") } }
     val focusRequesters = remember { List(6) { FocusRequester() } }
@@ -248,14 +249,14 @@ fun ConfirmationCodeScreen(navController: NavController? = null) {
                         )
                         Button(
                             onClick = {
-                                showDialog = false
-                                navController!!.navigate("infoObligatoria") // Navega a la vista deseada
+                                navController.navigate(AppScreens.InformacionObligatoriaScreen.route)
                             },
-                            modifier = Modifier.size(300.dp, 50.dp), // Tamaño del botón
+                            modifier = Modifier.size(300.dp, 50.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
                         ) {
                             Text("Aceptar", color = Color.White)
                         }
+
                     }
                 }
             }
