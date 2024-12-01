@@ -27,57 +27,50 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import kotlinx.coroutines.launch
+import coil.compose.rememberAsyncImagePainter
 import com.example.splashscreen.R
-
-data class UserProfile1(
-    val name: String,
-    val birthDate: String,
-    val email: String,
-    val location: String,
-    val phone: String,
-    val document: String,
-    val experienceFile: String,
-    val certification: String
-)
-
-data class MenuItem(
-    val texto: String,
-    val icono: androidx.compose.ui.graphics.vector.ImageVector,
-    val ruta: String
-)
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileEditScreen(
-    navController: NavController,
-    onUpdateProfile: () -> Unit = {}
+    navController: NavController
 ) {
+    // Drawer state
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+
+    // Drawer menu items
+    val menuItems = listOf(
+        MenuItem("Mi Perfil", Icons.Default.Person, "my_perfil_Inver"),
+        MenuItem("Inicio", Icons.Default.Home, "HomeInver"),
+        MenuItem("Búsqueda por categoría", Icons.Default.Search, "busquedaInver"),
+        MenuItem("Lista de emprendimientos", Icons.Default.List, "Lista_de_emprendimientosInver"),
+        MenuItem("Notificaciones", Icons.Default.Notifications, "notificacionesInver"),
+        MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar_cesion"),
+        MenuItem("Ayuda", Icons.Default.Info, "ayudaInver")
+    )
+
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         imageUri = uri
     }
-
-    var userProfile by remember {
-        mutableStateOf(
-            UserProfile(
-                name = "Cristian Sebastian Delgado Calvache",
-                birthDate = "Nacido(a) el 05 de septiembre de 2002",
-                email = "sdp402@gmail.com",
-                location = "POPAYAN-Cauca-Colombia",
-                phone = "3214567890",
-                document = "19861598659864",
-                experienceFile = "CERTIFICADOEXPERIENCIA.DOCX",
-                certification = "5678876445436"
-            )
+    var userProfile by remember { mutableStateOf(
+        UserProfile(
+            name = "Cristian Sebastian Delgado Calvache",
+            birthDate = "Nacido(a) el 05 de septiembre de 2002",
+            email = "sdp402@gmail.com",
+            location = "POPAYAN-Cauca-Colombia",
+            phone = "3214567890",
+            document = "19861598659864",
+            experienceFile = "CERTIFICADOEXPERIENCIA.DOCX",
+            certification = "5678876445436"
         )
-    }
+    ) }
 
     val scrollState = rememberScrollState()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -104,11 +97,11 @@ fun ProfileEditScreen(
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Usuario",
+                            text = userProfile.name,
                             fontSize = 16.sp
                         )
                         Text(
-                            text = "usuario@email.com",
+                            text = userProfile.email,
                             fontSize = 14.sp,
                             color = Color.Gray
                         )
@@ -116,28 +109,31 @@ fun ProfileEditScreen(
                 }
 
                 Divider()
-
-                // Drawer menu items with navigation
                 val menuItems = listOf(
-                    MenuItem("Mi Perfil", Icons.Default.Person, "user_profile_main_viewInver"),
-                    MenuItem("Inicio", Icons.Default.Home, "HomeUsuarioInver"),
+                    MenuItem("Mi Perfil", Icons.Default.Person, "my_perfil_Inver"),
+                    MenuItem("Inicio", Icons.Default.Home, "HomeInver"),
                     MenuItem("Búsqueda por categoría", Icons.Default.Search, "busquedaInver"),
-                    MenuItem("Lista de emprendimientos", Icons.Default.List, "emprendimientosInver"),
+                    MenuItem("Lista de emprendimientos", Icons.Default.List, "Lista_de_emprendimientosInver"),
                     MenuItem("Notificaciones", Icons.Default.Notifications, "notificacionesInver"),
                     MenuItem("Chat", Icons.Default.Email, "chatInver"),
-                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar-sesion"),
+                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar_cesion"),
                     MenuItem("Ayuda", Icons.Default.Info, "ayudaInver")
                 )
-
+                // Drawer menu items with navigation
                 menuItems.forEach { menuItem ->
                     NavigationDrawerItem(
-                        icon = { Icon(menuItem.icono, contentDescription = menuItem.texto) },
+                        icon = {
+                            Icon(
+                                menuItem.icono,
+                                contentDescription = menuItem.texto
+                            )
+                        },
                         label = { Text(menuItem.texto) },
                         selected = false,
                         onClick = {
                             scope.launch {
                                 drawerState.close()
-                                // Manejo especial para cerrar sesión
+                                // Special handling for logout
                                 if (menuItem.ruta == "cerrar-sesion") {
                                     navController.navigate("login") {
                                         popUpTo(navController.graph.startDestinationId) {
@@ -157,16 +153,13 @@ fun ProfileEditScreen(
         Scaffold(
             topBar = {
                 CenterAlignedTopAppBar(
-                    title = { },
+                    title = { Text("Editar Perfil", color = Color.White) },
                     navigationIcon = {
-                        IconButton(
-                            onClick = {
-                                scope.launch {
-                                    if (drawerState.isClosed) drawerState.open()
-                                    else drawerState.close()
-                                }
+                        IconButton(onClick = {
+                            scope.launch {
+                                drawerState.open()
                             }
-                        ) {
+                        }) {
                             Icon(
                                 imageVector = Icons.Default.Menu,
                                 contentDescription = "Menu",
@@ -195,7 +188,11 @@ fun ProfileEditScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.image3_647598),
+                        painter = if (imageUri != null) {
+                            rememberAsyncImagePainter(imageUri)
+                        } else {
+                            painterResource(id = android.R.drawable.ic_menu_gallery)
+                        },
                         contentDescription = "Profile Picture",
                         modifier = Modifier
                             .size(120.dp)
@@ -227,7 +224,7 @@ fun ProfileEditScreen(
 
                         // Actualizar Button
                         Button(
-                            onClick = onUpdateProfile,
+                            onClick = { /* Update profile logic */ },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 24.dp),

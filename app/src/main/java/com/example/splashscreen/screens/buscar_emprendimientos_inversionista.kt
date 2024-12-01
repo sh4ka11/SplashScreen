@@ -95,13 +95,12 @@ fun Busquedaemprendeinver(navController: NavController) {
 
                 // Drawer menu items with navigation
                 val menuItems = listOf(
-                    MenuItem("Mi Perfil", Icons.Default.Person, "user_profile_main_viewInver"),
-                    MenuItem("Inicio", Icons.Default.Home, "HomeUsuarioInver"),
+                    MenuItem("Mi Perfil", Icons.Default.Person, "my_perfil_Inver"),
+                    MenuItem("Inicio", Icons.Default.Home, "HomeInver"),
                     MenuItem("Búsqueda por categoría", Icons.Default.Search, "busquedaInver"),
-                    MenuItem("Lista de emprendimientos", Icons.Default.List, "emprendimientosInver"),
+                    MenuItem("Lista de emprendimientos", Icons.Default.List, "Lista_de_emprendimientosInver"),
                     MenuItem("Notificaciones", Icons.Default.Notifications, "notificacionesInver"),
-                    MenuItem("Chat", Icons.Default.Email, "chatInver"),
-                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar-sesion"),
+                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar_cesion"),
                     MenuItem("Ayuda", Icons.Default.Info, "ayudaInver")
                 )
 

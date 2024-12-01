@@ -52,16 +52,26 @@ sealed class AppScreens(val route: String) {
 
 
 
+//     object NotificacionesInver :AppScreens("NotificacionesInver")
+//     object Notificaciones2Inver :AppScreens("Notificaciones2Inver")
+//
+//     object NotificacionesInver :AppScreens("NotificacionesInver")
+//     object Notificaciones2Inver :AppScreens("Notificaciones2Inver")
+//
+//     object NotificacionesInver :AppScreens("NotificacionesInver")
+//     object Notificaciones2Inver :AppScreens("Notificaciones2Inver")
 
 
 
+     object BusinessListView :AppScreens("BusinessListView")
+     //object WineShopApp :AppScreens("WineShopApp")
+
+//     object HomeInversorScreen :AppScreens("HomeInversorScreen")
+     object ListaEmprendimientosInver :AppScreens("ListaEmprendimientosInver")
 
 
-
-
-
-
-
+//     object ListaEmprendimientosInver :AppScreens("ListaEmprendimientosInver")
+//     object VinotecaEcstasyApp :AppScreens("VinotecaEcstasyApp")
 
 
 

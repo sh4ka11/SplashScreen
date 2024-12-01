@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 import androidx.compose.foundation.BorderStroke
 import com.example.splashscreen.R
 import androidx.compose.ui.unit.sp
+import com.example.splashscreen.navigation.AppScreens
 
 data class BusinessItem(
     val name: String,
@@ -120,13 +121,12 @@ fun ListaEmprendimientosInver(
 
                 // Drawer menu items with navigation
                 val menuItems = listOf(
-                    MenuItem("Mi Perfil", Icons.Default.Person, "user_profile_main_viewInver"),
-                    MenuItem("Inicio", Icons.Default.Home, "HomeUsuarioInver"),
+                    MenuItem("Mi Perfil", Icons.Default.Person, "my_perfil_Inver"),
+                    MenuItem("Inicio", Icons.Default.Home, "HomeInver"),
                     MenuItem("Búsqueda por categoría", Icons.Default.Search, "busquedaInver"),
-                    MenuItem("Lista de emprendimientos", Icons.Default.List, "emprendimientosInver"),
+                    MenuItem("Lista de emprendimientos", Icons.Default.List, "Lista_de_emprendimientosInver"),
                     MenuItem("Notificaciones", Icons.Default.Notifications, "notificacionesInver"),
-                    MenuItem("Chat", Icons.Default.Email, "chatInver"),
-                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar-sesion"),
+                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar_cesion"),
                     MenuItem("Ayuda", Icons.Default.Info, "ayudaInver")
                 )
 
@@ -203,6 +203,7 @@ fun ListaEmprendimientosInver(
                     items(businesses) { business ->
                         BusinessCard(
                             business = business,
+                            navController = navController,
                             onVisitClick = { onVisitClick(business) }
                         )
                     }
@@ -215,7 +216,8 @@ fun ListaEmprendimientosInver(
 @Composable
 private fun BusinessCard(
     business: BusinessItem,
-    onVisitClick: () -> Unit,
+    navController: NavController,
+    onVisitClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -278,8 +280,9 @@ private fun BusinessCard(
                 )
 
                 // Visit Button
+
                 Button(
-                    onClick = onVisitClick,
+                    onClick = {navController.navigate(AppScreens.VinotecaEcstasyApp.route)},
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(vertical = 16.dp),
@@ -319,8 +322,8 @@ private fun BusinessCard(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewListaEmprendimientosInver() {
-    ListaEmprendimientosInver(navController = rememberNavController())
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewListaEmprendimientosInver() {
+//    ListaEmprendimientosInver(navController = rememberNavController())
+//}

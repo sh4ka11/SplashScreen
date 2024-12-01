@@ -79,7 +79,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Divider
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.ui.text.input.KeyboardType
@@ -136,70 +138,57 @@ fun PublicarEmprendimientoView(navController: NavController) {
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
 
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Mi Perfil") },
-                    label = { Text("Mi Perfil") },
-                    selected = false,
-                    onClick = { scope.launch { drawerState.close() } }
-                )
+                // Sección de perfil en el drawer
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Column {
+                        Image(
+                            painter = painterResource(id = R.drawable.image3_647598),
+                            contentDescription = "Foto de perfil",
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Usuario",
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = "usuario@email.com",
+                            fontSize = 14.sp,
+                            color = Color.Gray
+                        )
+                    }
+                }
 
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Home, contentDescription = "Inicio") },
-                    label = { Text("Inicio") },
-                    selected = false,
-                    onClick = { scope.launch { drawerState.close() } }
-                )
+                Divider()
 
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Search, contentDescription = "Busqueda por categoria") },
-                    label = { Text("Busqueda por categoria") },
-                    selected = false,
-                    onClick = { scope.launch { drawerState.close() } }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Share, contentDescription = "Consultar redes") },
-                    label = { Text("Consultar redes") },
-                    selected = false,
-                    onClick = { scope.launch { drawerState.close() } }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.List, contentDescription = "Lista de empredimientos") },
-                    label = { Text("Lista de empredimientos") },
-                    selected = false,
-                    onClick = { scope.launch { drawerState.close() } }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Notifications, contentDescription = "Notificaciones") },
-                    label = { Text("Notificaciones") },
-                    selected = false,
-                    onClick = { scope.launch { drawerState.close() } }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Email, contentDescription = "Chat") },
-                    label = { Text("Chat") },
-                    selected = false,
-                    onClick = { scope.launch { drawerState.close() } }
-                )
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.ExitToApp, contentDescription = "Cerrar Sesión") },
-                    label = { Text("Cerrar Sesión") },
-                    selected = false,
-                    onClick = { scope.launch { drawerState.close() } }
-                )
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Info, contentDescription = "Ayuda") },
-                    label = { Text("Ayuda") },
-                    selected = false,
-                    onClick = { scope.launch { drawerState.close() } }
-                )
+                listOf(
+                    Triple("Mi Perfil", Icons.Default.Person, "user_profile_main_view"),
+                    Triple("Inicio", Icons.Default.Home, "HomePrincipal"),
+                    Triple("Búsqueda por categoría", Icons.Default.Search, "busqueda"),
+                    Triple("Lista de emprendimientos", Icons.Default.List, "Lista de emprendimientos"),
+                    Triple("Notificaciones", Icons.Default.Notifications, "NotificacionesUsu"),
+                    Triple("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar cesion"),
+                    Triple("Ayuda", Icons.Default.Info, "ayuda")
+                ).forEach { (texto, icono, route) ->
+                    NavigationDrawerItem(
+                        icon = { Icon(icono, contentDescription = texto) },
+                        label = { Text(texto) },
+                        selected = false,
+                        onClick = {
+                            scope.launch {
+                                navController.navigate(route)
+                                drawerState.close()
+                            }
+                        }
+                    )
+                }
             }
         }
     ) {
