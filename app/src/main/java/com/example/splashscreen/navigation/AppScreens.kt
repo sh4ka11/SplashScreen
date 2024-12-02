@@ -43,11 +43,11 @@ sealed class AppScreens(val route: String) {
      object ProfileScreen :AppScreens("ProfileScreen")
 
      object ProfileEditScreen :AppScreens("ProfileEditScreen")
+
+   object UserRegistrationCorreo :AppScreens("UserRegistrationCorreo")
+     object user_registration_codeve_correo :AppScreens("user_registration_codeve_correo")
 //
-//     object ConfirmationCodeScreen :AppScreens("ConfirmationCodeScreen")
-//     object HomeInversorScreen :AppScreens("HomeInversorScreen")
-//
-//     object ConfirmationCodeScreen :AppScreens("ConfirmationCodeScreen")
+     object UserAdditionalInfoScreen :AppScreens("UserAdditionalInfoScreen")
 //     object HomeInversorScreen :AppScreens("HomeInversorScreen")
 
 

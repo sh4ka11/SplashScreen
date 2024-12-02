@@ -61,6 +61,7 @@ import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.UserRegistrationCorreo
 import com.example.splashscreen.screens.UserRegistrationScreen
 import com.example.splashscreen.screens.VinotecaEcstasyApp
+import com.example.splashscreen.screens.user_registration_codeve_correo
 import com.example.splashsreen.screens.Contactanosh
 import com.example.splasscreen.screens.ConfirmationCodeScreen
 //import com.example.splashsreen.screens.Busquedaemprendeusuario
@@ -193,6 +194,15 @@ fun AppNavHost() {
         }
         composable(AppScreens.ProfileEditScreen.route) {
             ProfileEditScreen(navController)
+        }
+        composable(AppScreens.UserRegistrationCorreo.route) {
+            UserRegistrationCorreo(navController)
+        }
+        composable(AppScreens.user_registration_codeve_correo.route) {
+            user_registration_codeve_correo(navController)
+        }
+        composable(AppScreens.UserAdditionalInfoScreen.route) {
+            UserAdditionalInfoScreen(navController)
         }
 
 

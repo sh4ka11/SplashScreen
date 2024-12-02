@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
+import com.example.splashscreen.navigation.AppScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -168,11 +169,10 @@ fun UserRegistrationCorreo(navController: NavController) {
                     visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation()
                 )
 
-                // Register Button
+                // Register Button user_registration_codeve_correo  RegistroDatosUsuario  onClick = { navController.navigate(AppScreens.PublicarEmprendimientoView.route) },
                 Button(
                     onClick = {
-                        navController.navigate("RegistroDatosUsuario")
-                    },
+                        navController.navigate(AppScreens.user_registration_codeve_correo.route)                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF38352E)
                     ),

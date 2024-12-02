@@ -151,6 +151,7 @@ fun HomePrincipalaScreen(navController: NavController) {
         }
             //Como colocar un link
         //ah
+
         Button(
             onClick = { navController.navigate("registroUsuarioTelefono") },
             colors = ButtonDefaults.buttonColors(
