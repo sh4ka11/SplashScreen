@@ -29,6 +29,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.splashscreen.R
+import com.example.splashscreen.navigation.AppScreens
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -224,7 +225,9 @@ fun ProfileEditScreen(
 
                         // Actualizar Button
                         Button(
-                            onClick = { /* Update profile logic */ },
+                            onClick = {
+                                navController.navigate(AppScreens.ProfileScreen.route) // Navega a ProfileScreen
+                            },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 24.dp),
@@ -239,6 +242,7 @@ fun ProfileEditScreen(
                                 fontSize = 16.sp
                             )
                         }
+
                     }
                 }
 
