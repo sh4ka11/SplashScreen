@@ -1,3 +1,4 @@
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -5,12 +6,18 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-
+import com.example.splashscreen.R
+import com.example.splashscreen.navigation.NavigationItem
+import com.example.splashscreen.screens.UserRegistrationCorreo
 
 @Composable
 fun LoginScreen(
@@ -30,14 +37,23 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "Logo Emprende Link",
+                modifier = Modifier.size(200.dp)
+            )
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Iniciar Sesión",
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(bottom = 16.dp)
+                text = "¡BIENVENIDO!",
+                style = MaterialTheme.typography.bodyLarge,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
             )
 
+            Spacer(modifier = Modifier.height(16.dp))
+
             // Email TextField
-            TextField(
+            OutlinedTextField(
                 value = viewModel.email,
                 onValueChange = { viewModel.onEmailChanged(it) },
                 label = { Text("Correo Electrónico") },
@@ -45,16 +61,24 @@ fun LoginScreen(
                 singleLine = true
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             // Password TextField
-            TextField(
+            OutlinedTextField(
                 value = viewModel.password,
                 onValueChange = { viewModel.onPasswordChanged(it) },
                 label = { Text("Contraseña") },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = "¿Olvidaste tu contraseña?",
+                style = MaterialTheme.typography.bodySmall,
+                color = Color.Gray
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -65,7 +89,7 @@ fun LoginScreen(
                     viewModel.login(
                         onLoginSuccess = {
                             // Navegar a la pantalla principal
-                            navController.navigate("HomeUsuario") {
+                            navController.navigate(NavigationItem.HomeUsuarios.route) {
                                 popUpTo("LoginPrueba") { inclusive = true }
                             }
                         },
@@ -76,7 +100,8 @@ fun LoginScreen(
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = !viewModel.isLoading
+                enabled = !viewModel.isLoading,
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {
                 if (viewModel.isLoading) {
                     CircularProgressIndicator(
@@ -84,7 +109,7 @@ fun LoginScreen(
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 } else {
-                    Text("Iniciar Sesión")
+                    Text("Iniciar Sesión", color = Color.White)
                 }
             }
 
@@ -101,15 +126,16 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Register Link
-            TextButton(
+            // Register Button
+            Button(
                 onClick = {
-                    navController.navigate("RegistrationPrueba")
-                }
+                    navController.navigate("UserRegistrationCorreo")
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {
-                Text("¿No tienes cuenta? Regístrate")
+                Text("Registrarse", color = Color.White)
             }
         }
     }
 }
-

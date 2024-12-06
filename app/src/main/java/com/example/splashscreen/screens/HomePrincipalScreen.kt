@@ -131,7 +131,7 @@ fun HomePrincipalaScreen(navController: NavController) {
         }
 
         Button(
-            onClick = {navController.navigate("loginUsuario") },
+            onClick = {navController.navigate("LoginPrueba") },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.White
             ),

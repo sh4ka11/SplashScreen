@@ -125,7 +125,7 @@ fun UserAdditionalInfoScreen(navController: NavController) {
 
                     // Botón Siguiente (mantiene su color original)
                     Button(
-                        onClick = { navController.navigate("loginUsuario") },
+                        onClick = { navController.navigate("LoginPrueba") },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(50.dp)

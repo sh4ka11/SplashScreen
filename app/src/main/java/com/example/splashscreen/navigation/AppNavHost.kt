@@ -43,7 +43,7 @@ import com.example.splashscreen.screens.InformacionObligatoriaScreen
 import com.example.splashscreen.screens.ListaEmprendimientosInver
 import com.example.splashscreen.screens.LoginInversor
 //import com.example.splashscreen.screens.LoginScreen
-import com.example.splashscreen.screens.LoginUser
+//import com.example.splashscreen.screens.LoginUser
 import com.example.splashscreen.screens.NavigationRoutes
 import com.example.splashscreen.screens.Notificaciones2Inver
 import com.example.splashscreen.screens.Notificaciones2Usu
@@ -80,7 +80,7 @@ fun AppNavHost() {
 
 
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "LoginPrueba") {
+    NavHost(navController = navController, startDestination = Screen.HOMEPRINCIPAL.name) {
 
         composable("LoginPrueba") {
             LoginScreen(navController = navController)
@@ -314,7 +314,7 @@ fun AppNavHost() {
         }
 
         composable("loginUsuario") {
-            LoginUser(navController = navController)
+//            LoginUser(navController = navController)
         }
         composable("loginInversinista") {
             UserRegistrationCorreo(navController = navController)

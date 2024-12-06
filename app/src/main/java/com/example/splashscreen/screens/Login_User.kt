@@ -30,7 +30,7 @@ import com.example.splashscreen.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginUser(navController: NavController) {
+fun LoginUsere(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -259,6 +259,6 @@ fun LoginUser(navController: NavController) {
 @Composable
 fun LoginUserPreview() {
     MaterialTheme {
-      //  LoginInversor()
+//        LoginUsere()
         }
 }

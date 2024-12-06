@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
-import com.example.splashscreen.data.UserProfile
 import kotlinx.coroutines.launch
 import com.example.splashscreen.navigation.AppScreens
 import com.example.splashscreen.navigation.NavigationItem
