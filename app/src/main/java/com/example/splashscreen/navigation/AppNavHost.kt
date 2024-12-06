@@ -1,6 +1,7 @@
 package com.example.splashscreen.navigation
 
 import BusinessListView
+import LoginScreen
 //import WineEditAppApp
 //import WineShopApp
 import ai.codia.x.composeui.demo.HomePincipalScreen
@@ -43,7 +44,7 @@ import com.example.splashscreen.screens.InformacionCredencialScreen
 import com.example.splashscreen.screens.InformacionObligatoriaScreen
 import com.example.splashscreen.screens.ListaEmprendimientosInver
 import com.example.splashscreen.screens.LoginInversor
-import com.example.splashscreen.screens.LoginScreen
+//import com.example.splashscreen.screens.LoginScreen
 import com.example.splashscreen.screens.LoginUser
 import com.example.splashscreen.screens.NavigationRoutes
 import com.example.splashscreen.screens.Notificaciones2Inver
@@ -58,6 +59,7 @@ import com.example.splashscreen.screens.ProfileScreen
 import com.example.splashscreen.screens.PublicarEmprendimientoView
 import com.example.splashscreen.screens.RegisterInversor
 import com.example.splashscreen.screens.RegisterPhoneView
+import com.example.splashscreen.screens.RegistrationScreen
 import com.example.splashscreen.screens.UserAdditionalInfoScreen
 import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.UserRegistrationCorreo
@@ -75,10 +77,17 @@ import com.example.splasscreen.screens.verificarcorreo
 fun AppNavHost() {
 //Lago
 
-
+//    Screen.LoginPrueba.name
 
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.HOMEPRINCIPAL.name) {
+    NavHost(navController = navController, startDestination = "LoginPrueba") {
+
+        composable("LoginPrueba") {
+            LoginScreen(navController = navController)
+        }
+//        composable("RegistrationPrueba") {
+//            RegistrationScreenPrueba(navController = navController)
+//        }
 
         //emprendedor menu
 

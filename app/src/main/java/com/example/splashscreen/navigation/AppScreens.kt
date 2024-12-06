@@ -4,6 +4,15 @@ package com.example.splashscreen.navigation
 
 sealed class AppScreens(val route: String) {
 
+
+
+    object LoginScreen : AppScreens("LoginPrueba")
+    object RegistrationScreen : AppScreens("RegistrationPrueba")
+
+
+//    object LoginScreen : AppScreens("login_screen")
+
+
     object WineShopApp : AppScreens("WineShopApp")
     object Busquedaemprendeusuario : AppScreens("Busquedaemprendeusuario")
 

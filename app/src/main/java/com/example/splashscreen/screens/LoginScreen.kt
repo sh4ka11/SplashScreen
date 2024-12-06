@@ -28,7 +28,7 @@ import com.example.splashscreen.R
 import com.example.splashscreen.navigation.NavigationItem
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreens(navController: NavController) {
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -94,5 +94,5 @@ fun LoginScreen(navController: NavController) {
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(rememberNavController())
+    LoginScreens(rememberNavController())
 }

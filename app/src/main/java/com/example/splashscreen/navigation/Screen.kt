@@ -14,7 +14,7 @@ enum class Screen {
     LOGOUT,
     EDITAREMPREDIMIENTO,
     USERPROFILE,
-
+    LoginPrueba
 
 
 }
@@ -34,20 +34,8 @@ sealed class NavigationItem(val route: String) {
     object Notifications: NavigationItem(Screen.NOTIFICATIONS.name)
     object Chat: NavigationItem(Screen.CHAT.name)
     object Logout: NavigationItem(Screen.LOGOUT.name)
-
-
-
+    object LoginPrueba: NavigationItem(Screen.LoginPrueba.name)
 
 
 }
 
-sealed class Screens(val name: String) {
-    object LOGIN : Screens("login")
-    object HOME_ENTREPRENEUR : Screens("homeEntrepreneur")
-    object HOME_INVESTOR : Screens("homeInvestor")
-}
-
-sealed class UserType {
-    object ENTREPRENEUR : UserType()
-    object INVESTOR : UserType()
-}

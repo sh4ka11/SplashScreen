@@ -5,16 +5,16 @@
       <SelectionState runConfigName="MainActivity">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PreviewChatUsu">
+      <SelectionState runConfigName="LoginScreenPreviewPruebas">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PreviewPublicarEmprendimientoView">
+      <SelectionState runConfigName="RegisteerScreenPreviewPruebas">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PreviewCodia1MainView">
+      <SelectionState runConfigName="RegisteerScreenPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PreviewProfileEditScreen">
+      <SelectionState runConfigName="HomeScreenPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
