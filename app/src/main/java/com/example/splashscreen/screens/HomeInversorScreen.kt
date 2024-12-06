@@ -83,13 +83,12 @@ fun HomeInversorScreen(navController: NavController ) {
 
                 // Drawer menu items with navigation
                 val menuItems = listOf(
-                    MenuItem("Mi Perfil", Icons.Default.Person, "user_profile_main_viewInver"),
-                    MenuItem("Inicio", Icons.Default.Home, "HomeUsuarioInver"),
+                    MenuItem("Mi Perfil", Icons.Default.Person, "my_perfil_Inver"),
+                    MenuItem("Inicio", Icons.Default.Home, "HomeInver"),
                     MenuItem("Búsqueda por categoría", Icons.Default.Search, "busquedaInver"),
-                    MenuItem("Lista de emprendimientos", Icons.Default.List, "emprendimientosInver"),
+                    MenuItem("Lista de emprendimientos", Icons.Default.List, "Lista_de_emprendimientosInver"),
                     MenuItem("Notificaciones", Icons.Default.Notifications, "notificacionesInver"),
-                    MenuItem("Chat", Icons.Default.Email, "chatInver"),
-                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar-sesion"),
+                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar_cesion"),
                     MenuItem("Ayuda", Icons.Default.Info, "ayudaInver")
                 )
 
@@ -263,18 +262,28 @@ fun EmprendeInversorMainView(navController: NavController) {
         )
 
         // Button text
-        Text(
-            modifier = Modifier
+
+        Button(
+            onClick = { navController.navigate(AppScreens.ListaEmprendimientosInver.route) },                modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(x = 59.dp, y = 553.dp)
-                .size(292.dp, 26.dp),
-            text = "Busca empredimientos",
-            color = Color(0xffffffff),
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Center,
-            overflow = TextOverflow.Ellipsis,
-        )
+                .offset(x = 94.dp, y = 545.dp)
+                .size(222.dp, 46.dp)
+                .background(Color(0xff38352e), RoundedCornerShape(10.dp)),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xff38352e), // Fondo del botón
+                contentColor = Color(0xffffffff)    // Color del texto
+            ),
+            shape = RoundedCornerShape(10.dp),
+            contentPadding = PaddingValues(0.dp)
+        ) {
+            Text(
+                text = "Busca empredimientos",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Normal,
+                textAlign = TextAlign.Center,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
 
         // Ready to start text
         Text(
@@ -538,9 +547,9 @@ fun EmprendeInversorMainView(navController: NavController) {
 
 }
 
-@Preview(showBackground = true)
-@Composable
-fun HomeInversorScreenPreview() {
-    val navController = rememberNavController() // Create a NavController for preview
-    HomeInversorScreen(navController = navController) // Pass it to HomeScreen
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun HomeInversorScreenPreview() {
+//    val navController = rememberNavController() // Create a NavController for preview
+//    HomeInversorScreen(navController = navController) // Pass it to HomeScreen
+//}

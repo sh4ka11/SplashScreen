@@ -50,6 +50,7 @@ android {
 }
 
 dependencies {
+
     // Retrofit para consumo de API
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -97,6 +98,9 @@ dependencies {
     implementation ("io.coil-kt:coil-compose:2.4.0")
     implementation ("androidx.activity:activity-compose:1.7.2")
 
+    implementation("androidx.compose.ui:ui:1.x.x")
+    implementation("androidx.compose.material3:material3:1.x.x")
+    implementation("androidx.navigation:navigation-compose:2.x.x")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

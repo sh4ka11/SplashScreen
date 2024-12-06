@@ -148,9 +148,8 @@ fun ConfirmationCodeScreen(navController: NavHostController) {
                     onClick = {
                         if (code.all { it.value.isNotEmpty() }) {
                             showDialog = true
-                        } else {
-                            navController?.navigate(AppScreens.HomeInversorScreen.route)
                         }
+                        // Eliminamos el else para que no haga nada si el código no está completo
                     },
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)

@@ -33,9 +33,7 @@ import com.example.splashscreen.data.Movie
 import com.example.splashscreen.screens.Busquedaemprendeinver
 import com.example.splashscreen.screens.Busquedaemprendeusuario
 import com.example.splashscreen.screens.Busquedaemprendeusuario
-import com.example.splashscreen.screens.ChatInverScreen
-import com.example.splashscreen.screens.ChatScreen
-import com.example.splashscreen.screens.ChatUsu2
+
 import com.example.splashscreen.screens.EmprendeInversorMainView
 //import com.example.splashscreen.screens.ConfirmationCodeScreen
 import com.example.splashscreen.screens.HomeInversorScreen
@@ -65,6 +63,7 @@ import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.UserRegistrationCorreo
 import com.example.splashscreen.screens.UserRegistrationScreen
 import com.example.splashscreen.screens.VinotecaEcstasyApp
+import com.example.splashscreen.screens.user_registration_codeve_correo
 import com.example.splashsreen.screens.Contactanosh
 import com.example.splasscreen.screens.ConfirmationCodeScreen
 //import com.example.splashsreen.screens.Busquedaemprendeusuario
@@ -78,6 +77,7 @@ fun AppNavHost() {
 //Lago
 
 //    Screen.LoginPrueba.name
+
 
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "LoginPrueba") {
@@ -106,9 +106,7 @@ fun AppNavHost() {
         composable("NotificacionesUsu") {
             NotificacionesUsu(navController = navController)
         }
-        composable("chatUsu") {
-            ChatScreen(navController = navController)
-        }
+
         composable("cerrar cesion") {
             HomePincipalScreen(navController = navController)
         }
@@ -118,25 +116,24 @@ fun AppNavHost() {
 
 
         //inversor menu
-        composable("HomePrincipalInver") {
-            HomeInversorScreen(navController = navController)
-        }
-        composable("user_profile_main_viewInver") {
+
+        composable("my_perfil_Inver") {
             ProfileScreen(navController = navController)
+        }
+        composable("HomeInver") {
+            HomeInversorScreen(navController = navController)
         }
         composable("busquedaInver") {
             Busquedaemprendeinver(navController = navController)
         }
-        composable("Lista de emprendimientosInver") {
+        composable("Lista_de_emprendimientosInver") {
             ListaEmprendimientosInver(navController = navController)
         }
         composable("NotificacionesInver") {
             NotificacionesInver(navController = navController)
         }
-        composable("chatInver") {
-            ChatInverScreen(navController = navController)
-        }
-        composable("cerrar cesion") {
+
+        composable("cerrar_cesion") {
             HomePincipalScreen(navController = navController)
         }
         composable("ayudaInver") {
@@ -144,12 +141,8 @@ fun AppNavHost() {
         }
 
         // rutas k
-        composable(AppScreens.ChatScreen.route) {
-            ChatScreen(navController)
-        }
-        composable(AppScreens.ChatUsu2.route) {
-            ChatUsu2(navController)
-        }
+
+
 
         composable(AppScreens.NotificacionesUsu.route) {
             NotificacionesUsu(navController)
@@ -179,6 +172,7 @@ fun AppNavHost() {
         composable(AppScreens.PublicarEmprendimientoView.route) {
             PublicarEmprendimientoView(navController)
         }
+        //eror miguel
         composable(AppScreens.WineShopApp.route) {
             WineShopApp(navController)
         }
@@ -210,7 +204,43 @@ fun AppNavHost() {
         composable(AppScreens.ProfileEditScreen.route) {
             ProfileEditScreen(navController)
         }
+        composable(AppScreens.UserRegistrationCorreo.route) {
+            UserRegistrationCorreo(navController)
+        }
+        composable(AppScreens.user_registration_codeve_correo.route) {
+            user_registration_codeve_correo(navController)
+        }
+        composable(AppScreens.UserAdditionalInfoScreen.route) {
+            UserAdditionalInfoScreen(navController)
+        }
 
+
+
+
+
+
+
+        composable(AppScreens.BusinessListView.route) {
+            BusinessListView(navController)
+        }
+//        composable(AppScreens.WineShopApp.route) {
+//            WineShopApp(navController)
+//        }
+
+//        composable(AppScreens.verificarcorreo.route) {
+//            verificarcorreo(navController)
+//        }
+        composable(AppScreens.ListaEmprendimientosInver.route) {
+            ListaEmprendimientosInver(navController)
+        }
+
+
+        composable(AppScreens.ListaEmprendimientosInver.route) {
+            ListaEmprendimientosInver(navController)
+        }
+        composable(AppScreens.VinotecaEcstasyApp.route) {
+            VinotecaEcstasyApp(navController)
+        }
 
 
         //Rutas Sebas coecciones
@@ -346,5 +376,4 @@ fun AppNavHost() {
         }
 
     }
-
 

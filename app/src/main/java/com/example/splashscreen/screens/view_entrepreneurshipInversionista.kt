@@ -84,14 +84,13 @@ fun VinotecaEcstasyApp(navController: NavController) {
 
                 // Drawer menu items with navigation
                 val menuItems = listOf(
-                    MenuItem("Mi Perfil", Icons.Default.Person, "user_profile_main_view"),
-                    MenuItem("Inicio", Icons.Default.Home, "HomeUsuario"),
-                    MenuItem("Búsqueda por categoría", Icons.Default.Search, "busqueda"),
-                    MenuItem("Lista de emprendimientos", Icons.Default.List, "emprendimientos"),
-                    MenuItem("Notificaciones", Icons.Default.Notifications, "notificaciones"),
-                    MenuItem("Chat", Icons.Default.Email, "chat"),
-                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar-sesion"),
-                    MenuItem("Ayuda", Icons.Default.Info, "ayuda")
+                    MenuItem("Mi Perfil", Icons.Default.Person, "my_perfil_Inver"),
+                    MenuItem("Inicio", Icons.Default.Home, "HomeInver"),
+                    MenuItem("Búsqueda por categoría", Icons.Default.Search, "busquedaInver"),
+                    MenuItem("Lista de emprendimientos", Icons.Default.List, "Lista_de_emprendimientosInver"),
+                    MenuItem("Notificaciones", Icons.Default.Notifications, "notificacionesInver"),
+                    MenuItem("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar_cesion"),
+                    MenuItem("Ayuda", Icons.Default.Info, "ayudaInver")
                 )
 
                 menuItems.forEach { menuItem ->

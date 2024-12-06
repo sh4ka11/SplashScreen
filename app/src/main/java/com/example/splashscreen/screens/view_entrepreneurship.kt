@@ -203,7 +203,11 @@ fun WineShopApp(navController: NavController) {
         }
     }
 }
-
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewWineShopApp() {
+//    WineShopApp(navController = rememberNavController())
+//}
 
 @Composable
 fun ContactInfoCard() {

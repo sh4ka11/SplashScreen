@@ -98,7 +98,6 @@ fun Busquedaemprendeusuario(navController: NavHostController) {
                     Triple("Búsqueda por categoría", Icons.Default.Search, "busqueda"),
                     Triple("Lista de emprendimientos", Icons.Default.List, "Lista de emprendimientos"),
                     Triple("Notificaciones", Icons.Default.Notifications, "NotificacionesUsu"),
-                    Triple("Chat", Icons.Default.Email, "chatUsu"),
                     Triple("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar cesion"),
                     Triple("Ayuda", Icons.Default.Info, "ayuda")
                 ).forEach { (texto, icono, route) ->

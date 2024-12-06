@@ -63,7 +63,7 @@ fun HomePrincipalaScreen(navController: NavController) {
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 5.dp, y = 0.dp)
-                .size(400.dp, 350.dp),
+                .size(400.dp, 500.dp),
         )
 
         Box(
@@ -83,7 +83,7 @@ fun HomePrincipalaScreen(navController: NavController) {
                 .align(Alignment.TopStart)
                 .offset(x = 5.dp, y = 176.dp)
                 .background(Color(0xfff5f5f3))
-                .size(430.dp, 436.dp),
+                .size(500.dp, 436.dp),
         )
 
         Text(
@@ -117,7 +117,7 @@ fun HomePrincipalaScreen(navController: NavController) {
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xfff5f5f3)
             ),
-            shape = RoundedCornerShape(10.dp),
+            shape = RoundedCornerShape(20.dp),
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 112.dp, y = 480.dp)
@@ -151,8 +151,9 @@ fun HomePrincipalaScreen(navController: NavController) {
         }
             //Como colocar un link
         //ah
+
         Button(
-            onClick = { navController.navigate("registroUsuarioTelefono") },
+            onClick = { navController.navigate("UserRegistrationCorreo") },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xff38352e)
             ),
@@ -192,7 +193,7 @@ fun HomePrincipalaScreen(navController: NavController) {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.drawable.image7_751144),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier

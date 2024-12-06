@@ -52,25 +52,35 @@ sealed class AppScreens(val route: String) {
      object ProfileScreen :AppScreens("ProfileScreen")
 
      object ProfileEditScreen :AppScreens("ProfileEditScreen")
+
+   object UserRegistrationCorreo :AppScreens("UserRegistrationCorreo")
+     object user_registration_codeve_correo :AppScreens("user_registration_codeve_correo")
 //
-//     object ConfirmationCodeScreen :AppScreens("ConfirmationCodeScreen")
+     object UserAdditionalInfoScreen :AppScreens("UserAdditionalInfoScreen")
 //     object HomeInversorScreen :AppScreens("HomeInversorScreen")
+
+
+
+//     object NotificacionesInver :AppScreens("NotificacionesInver")
+//     object Notificaciones2Inver :AppScreens("Notificaciones2Inver")
 //
-//     object ConfirmationCodeScreen :AppScreens("ConfirmationCodeScreen")
+//     object NotificacionesInver :AppScreens("NotificacionesInver")
+//     object Notificaciones2Inver :AppScreens("Notificaciones2Inver")
+//
+//     object NotificacionesInver :AppScreens("NotificacionesInver")
+//     object Notificaciones2Inver :AppScreens("Notificaciones2Inver")
+
+
+
+     object BusinessListView :AppScreens("BusinessListView")
+     //object WineShopApp :AppScreens("WineShopApp")
+
 //     object HomeInversorScreen :AppScreens("HomeInversorScreen")
+     object ListaEmprendimientosInver :AppScreens("ListaEmprendimientosInver")
 
 
-
-
-
-
-
-
-
-
-
-
-
+//     object ListaEmprendimientosInver :AppScreens("ListaEmprendimientosInver")
+//     object VinotecaEcstasyApp :AppScreens("VinotecaEcstasyApp")
 
 
 

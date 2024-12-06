@@ -3,11 +3,13 @@ package com.example.splashscreen.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -31,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreen.R
+import com.example.splashscreen.navigation.AppScreens
 
 @Composable
 fun user_registration_codeve_correo(navController: NavController) {
@@ -45,13 +48,13 @@ fun user_registration_codeve_correo(navController: NavController) {
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         // Call to EmprendeMainView (if this is your main content)
-        usertecodevView()
+        usertecodevView(navController)
     }
 }
 
 
 @Composable
-fun usertecodevView() {
+fun usertecodevView(navController: NavController) {
 
         // Box-710:228-REGISTRO DE USUARIO 5
         Box(
@@ -95,29 +98,35 @@ fun usertecodevView() {
                     .align(Alignment.TopStart)
                     .offset(x = 39.dp, y = 680.dp)
                     .background(Color(0xff38352e), RoundedCornerShape(10.dp))
-                    .size(361.dp, 57.dp),
+                    .size(361.dp, 57.dp)
+                    .clickable {
+                        navController.navigate(AppScreens.UserAdditionalInfoScreen.route)
+                    }
             )
+            {
+                // Texto dentro de la caja
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.Center) // Centrar el texto dentro de la caja
+                        .padding(8.dp),
+                    text = "Siguiente",
+                    color = Color(0xfff9f7f3),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
             // Empty-710:266-Rectangle 728
             Box(
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .offset(x = 40.dp, y = 848.dp)
                     .background(Color(0xff38352e), RoundedCornerShape(10.dp))
-                    .size(361.dp, 57.dp),
+                    .size(361.dp, 57.dp)
+
             )
-            // Text-710:233-Siguiente
-            Text(
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .offset(x = 155.dp, y = 693.dp)
-                    .size(111.dp, 20.dp),
-                text = "Siguiente",
-                color = Color(0xfff9f7f3),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Normal,
-                textAlign = TextAlign.Center,
-                overflow = TextOverflow.Ellipsis,
-            )
+
             // Empty-710:235-Rectangle 722
             Box(
                 modifier = Modifier

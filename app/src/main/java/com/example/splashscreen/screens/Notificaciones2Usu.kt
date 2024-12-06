@@ -105,10 +105,8 @@ fun Notificaciones2Usu(
                     Triple("Mi Perfil", Icons.Default.Person, "user_profile_main_view"),
                     Triple("Inicio", Icons.Default.Home, "HomePrincipal"),
                     Triple("Búsqueda por categoría", Icons.Default.Search, "busqueda"),
-                    Triple("Consultar redes", Icons.Default.Share, "redes_route"),
                     Triple("Lista de emprendimientos", Icons.Default.List, "Lista de emprendimientos"),
                     Triple("Notificaciones", Icons.Default.Notifications, "NotificacionesUsu"),
-                    Triple("Chat", Icons.Default.Email, "chatUsu"),
                     Triple("Cerrar Sesión", Icons.Default.ExitToApp, "cerrar cesion"),
                     Triple("Ayuda", Icons.Default.Info, "ayuda")
                 ).forEach { (texto, icono, route) ->
