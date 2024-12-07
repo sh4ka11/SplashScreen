@@ -9,6 +9,8 @@ import kotlinx.coroutines.launch
 class LoginViewModel : ViewModel() {
     var email by mutableStateOf("")
     var password by mutableStateOf("")
+    var role by mutableStateOf("")
+
     var isLoading: Boolean = false
     var loginError: String? = null
 
@@ -24,35 +26,35 @@ class LoginViewModel : ViewModel() {
         onLoginSuccess: () -> Unit,
         onLoginFailure: (String) -> Unit
     ) {
-        // Basic validation
         if (email.isBlank() || password.isBlank()) {
             onLoginFailure("Por favor, complete todos los campos")
+            return
+        }
+
+        if (role.isBlank()) {
+            onLoginFailure("Por favor, seleccione un rol")
             return
         }
 
         isLoading = true
         viewModelScope.launch {
             try {
-                // Logging for debugging (consider removing in production)
-                println("Sending login: Email=$email")
+                println("Sending login: Email=$email, Role=$role")
 
                 val loginRequest = LoginRequest(
                     email = email,
                     password = password,
-                    role = "entrepreneur" // Consider how role is determined
+                    role = role
                 )
 
                 val response = RetrofitInstance.apiService.loginUser(loginRequest)
 
-
-                // Detailed logging (remove in production)
                 println("Response code: ${response.code()}")
                 println("Response body: ${response.body()}")
                 println("Error body: ${response.errorBody()?.string()}")
 
                 if (response.isSuccessful) {
                     response.body()?.let { loginResponse ->
-                        // Implement token saving logic
                         saveToken(loginResponse.access_token)
                         onLoginSuccess()
                     } ?: run {
@@ -79,7 +81,6 @@ class LoginViewModel : ViewModel() {
     }
 
     private fun saveToken(token: String) {
-        // Implement token saving logic
-        // For example, using SharedPreferences or a secure token storage method
+
     }
 }

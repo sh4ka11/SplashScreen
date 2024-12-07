@@ -1,29 +1,26 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.splashscreen.R
 import com.example.splashscreen.navigation.NavigationItem
-import com.example.splashscreen.screens.UserRegistrationCorreo
 
 @Composable
 fun LoginScreen(
     navController: NavController,
     viewModel: LoginViewModel = viewModel()
 ) {
+    var selectedRole by remember { mutableStateOf("") }
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
@@ -49,6 +46,45 @@ fun LoginScreen(
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Role Selection
+            Text(
+                text = "Selecciona tu rol",
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Button(
+                    onClick = {
+                        selectedRole = "entrepreneur"
+                        viewModel.role = "entrepreneur"
+                    },
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (selectedRole == "entrepreneur") Color.Black else Color.Gray
+                    )
+                ) {
+                    Text("Emprendedor", color = Color.White)
+                }
+                Button(
+                    onClick = {
+                        selectedRole = "investor"
+                        viewModel.role = "investor"
+                    },
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (selectedRole == "investor") Color.Black else Color.Gray
+                    )
+                ) {
+                    Text("Inversor", color = Color.White)
+                }
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -86,10 +122,21 @@ fun LoginScreen(
             // Login Button
             Button(
                 onClick = {
+                    // Validate role selection before login
+                    if (selectedRole.isBlank()) {
+                        viewModel.loginError = "Por favor, seleccione un rol"
+                        return@Button
+                    }
+
                     viewModel.login(
                         onLoginSuccess = {
-                            // Navegar a la pantalla principal
-                            navController.navigate(NavigationItem.HomeUsuarios.route) {
+                            // Navigate based on selected role
+                            val route = when (selectedRole) {
+                                "entrepreneur" -> NavigationItem.HomeUsuarios.route
+                                "investor" -> "HomeInver"
+                                else -> NavigationItem.HomeUsuarios.route
+                            }
+                            navController.navigate(route) {
                                 popUpTo("LoginPrueba") { inclusive = true }
                             }
                         },
@@ -100,7 +147,7 @@ fun LoginScreen(
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = !viewModel.isLoading,
+                enabled = !viewModel.isLoading && selectedRole.isNotBlank(),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {
                 if (viewModel.isLoading) {
@@ -129,7 +176,7 @@ fun LoginScreen(
             // Register Button
             Button(
                 onClick = {
-                    navController.navigate("UserRegistrationCorreo")
+                    navController.navigate("RegistrationPrueba")
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black)

@@ -2,9 +2,12 @@ package com.example.splashscreen.navigation
 
 import BusinessListView
 import LoginScreen
+import UserRegistrationScreen
 //import WineEditAppApp
 //import WineShopApp
 import ai.codia.x.composeui.demo.HomePincipalScreen
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
@@ -61,7 +64,6 @@ import com.example.splashscreen.screens.RegistrationScreen
 import com.example.splashscreen.screens.UserAdditionalInfoScreen
 import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.UserRegistrationCorreo
-import com.example.splashscreen.screens.UserRegistrationScreen
 import com.example.splashscreen.screens.VinotecaEcstasyApp
 import com.example.splashscreen.screens.user_registration_codeve_correo
 import com.example.splashsreen.screens.Contactanosh
@@ -72,6 +74,7 @@ import com.example.splashsreen.screens.Contactanosinver
 import com.example.splasscreen.screens.ConfirmationCodeScreen
 import com.example.splasscreen.screens.verificarcorreo
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavHost() {
 //Lago
@@ -85,9 +88,10 @@ fun AppNavHost() {
         composable("LoginPrueba") {
             LoginScreen(navController = navController)
         }
-//        composable("RegistrationPrueba") {
-//            RegistrationScreenPrueba(navController = navController)
-//        }
+
+        composable("RegistrationPrueba") {
+            UserRegistrationScreen(navController = navController)
+        }
 
         //emprendedor menu
 
@@ -300,9 +304,9 @@ fun AppNavHost() {
             HomeInversorScreen(navController = navController)
         }
 
-        composable("registroUsuarioTelefono") {
-            UserRegistrationScreen(navController = navController)
-        }
+//        composable("registroUsuarioTelefono") {
+//            UserRegistrationScreen(navController = navController)
+//        }
         composable("registroUsuarioCorreo") {
             UserRegistrationCorreo(navController = navController)
         }

@@ -33,7 +33,7 @@ object NavigationRoutes {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserRegistrationScreen(navController: NavController) {
+fun UserRegistrationScreenn(navController: NavController) {
     var phoneNumber by remember { mutableStateOf("") }
 
     Box(
@@ -271,5 +271,5 @@ fun PhoneRegistrationView(
 @Composable
 fun PhoneRegistrationnPreview() {
     val navController = rememberNavController()
-    UserRegistrationScreen(navController = navController)
+//    UserRegistrationScreen(navController = navController)
 }

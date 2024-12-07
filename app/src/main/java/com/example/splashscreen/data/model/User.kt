@@ -12,5 +12,6 @@ data class User(
     val image: String? = null,
     val email: String,
     val location: String,
-    val number: Int
+    val number: Int,
+
 )
