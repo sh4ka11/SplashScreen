@@ -71,7 +71,7 @@ fun HomePrincipalaScreen(navController: NavController) {
                 .align(Alignment.TopStart)
                 .size(430.dp, 960.dp),
         )
-
+ 
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
