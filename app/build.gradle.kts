@@ -72,6 +72,14 @@ dependencies {
     implementation(libs.androidx.appcompat)
     debugImplementation("androidx.compose.ui:ui-tooling:1.5.0")
 
+
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+
+    implementation ("com.cloudinary:cloudinary-android:3.0.2")
+
+
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
     // Navegación en Compose
     implementation("androidx.navigation:navigation-compose:2.7.7")
 

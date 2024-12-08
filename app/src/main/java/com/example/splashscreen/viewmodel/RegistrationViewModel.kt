@@ -1,3 +1,4 @@
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
@@ -5,13 +6,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.splashscreen.data.model.User
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
-class UserRegistrationViewModel : ViewModel() {
+class UserRegistrationViewModel() : ViewModel() {
     var name by mutableStateOf("")
     var lastname by mutableStateOf("")
     var email by mutableStateOf("")
@@ -19,35 +21,53 @@ class UserRegistrationViewModel : ViewModel() {
     var birthDate by mutableStateOf("")
     var location by mutableStateOf("")
     var password by mutableStateOf("")
-    var confirmPassword by mutableStateOf("")
+    var password_confirmation by mutableStateOf("")
+    val roleOptions = listOf("Investor", "Entrepreneur")
     var role by mutableStateOf("")
+    var image by mutableStateOf("https://res.cloudinary.com/dnwn5sjvs/image/upload/v1733695759/register/profile_pics/jdle571mdt4oyycpkoap.jpg")
 
     var isLoading by mutableStateOf(false)
     var registrationError by mutableStateOf<String?>(null)
 
+    fun setSelectedImage(uri: Uri?) {
+        image = uri?.toString() ?: ""
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun registerUser(onSuccess: () -> Unit) {
-        // Validaciones básicas
         if (validateFields()) {
             isLoading = true
             viewModelScope.launch {
                 try {
-                    // Simular registro (reemplazar con lógica real de registro)
-                    delay(2000)
-
-                    // Limpiar campos después del registro exitoso
-                    clearFields()
-
-                    // Llamar al callback de éxito
-                    onSuccess()
+                    val user = User(
+                        name = name,
+                        lastname = lastname,
+                        email = email,
+                        phone = phone,
+                        birth_date = birthDate,
+                        location = location,
+                        password = password,
+                        password_confirmation = password_confirmation,
+                        role = role,
+                        image = image
+                    )
+                    val response =  RetrofitInstance.apiService.registerUser(user)
+                    if (response.isSuccessful) {
+                        clearFields()
+                        onSuccess()
+                    } else {
+                        registrationError = "Error en el registro: ${response.message()}"
+                    }
                 } catch (e: Exception) {
-                    registrationError = "Error en el registro: ${e.message}"
+                    registrationError = "Error en el registro e: ${e.message}"
                 } finally {
                     isLoading = false
                 }
             }
         }
     }
+
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun validateFields(): Boolean {
@@ -77,10 +97,20 @@ class UserRegistrationViewModel : ViewModel() {
                 registrationError = "La contraseña debe tener al menos 6 caracteres"
                 return false
             }
-            password != confirmPassword -> {
+            password != password_confirmation -> {
                 registrationError = "Las contraseñas no coinciden"
                 return false
             }
+            role.isBlank() -> {
+                registrationError = "El rol es obligatorio"
+                return false
+            }
+            image == null -> {
+                registrationError = "Debe seleccionar una imagen de perfil"
+                return false
+            }
+
+
             else -> return true
         }
     }
@@ -117,6 +147,12 @@ class UserRegistrationViewModel : ViewModel() {
         birthDate = ""
         location = ""
         password = ""
-        confirmPassword = ""
-    }
+        password_confirmation = ""
+        role = ""
+        image = ""    }
 }
+
+
+
+
+
