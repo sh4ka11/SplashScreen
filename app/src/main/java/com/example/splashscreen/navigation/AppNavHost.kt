@@ -92,6 +92,10 @@ fun AppNavHost() {
         composable("RegistrationPrueba") {
             UserRegistrationScreen(navController = navController)
         }
+        composable("registroPrueba") {
+            UserRegistrationScreen(navController = navController)
+        }
+
 
         //emprendedor menu
 

@@ -1,3 +1,4 @@
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
@@ -5,49 +6,71 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.splashscreen.data.model.User
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
-class UserRegistrationViewModel : ViewModel() {
-    var name by mutableStateOf("")
-    var lastname by mutableStateOf("")
-    var email by mutableStateOf("")
-    var phone by mutableStateOf("")
-    var birthDate by mutableStateOf("")
-    var location by mutableStateOf("")
-    var password by mutableStateOf("")
-    var confirmPassword by mutableStateOf("")
-    var role by mutableStateOf("")
+class UserRegistrationViewModel() : ViewModel() {
+    var name by mutableStateOf("gus")
+    var lastname by mutableStateOf("andes")
+    var email by mutableStateOf("gasc2004@gmail.com")
+    var phone by mutableStateOf("123456789")
+    var birthDate by mutableStateOf("2000-12-12")
+    var location by mutableStateOf("pasto")
+    var number by mutableStateOf("123456789")
+    var password by mutableStateOf("123456789")
+    var password_confirmation by mutableStateOf("123456789")
+    val roleOptions = listOf("investor", "entrepreneur")
+    var role by mutableStateOf("investor")
+
+
+    var image by mutableStateOf<String?>(null)
 
     var isLoading by mutableStateOf(false)
     var registrationError by mutableStateOf<String?>(null)
 
+//    fun setSelectedImage(uri: Uri?) {
+//        image = uri?.toString() ?: ""
+//    }
     @RequiresApi(Build.VERSION_CODES.O)
     fun registerUser(onSuccess: () -> Unit) {
-        // Validaciones básicas
         if (validateFields()) {
             isLoading = true
             viewModelScope.launch {
                 try {
-                    // Simular registro (reemplazar con lógica real de registro)
-                    delay(2000)
-
-                    // Limpiar campos después del registro exitoso
-                    clearFields()
-
-                    // Llamar al callback de éxito
-                    onSuccess()
+                    val user = User(
+                        name = name,
+                        lastname = lastname,
+                        email = email,
+                        phone = phone,
+                        birth_date = birthDate,
+                        location = location,
+                        number = number,
+                        password = password,
+                        password_confirmation = password_confirmation,
+                        role = role,
+                        image = image
+                    )
+                    val response =  RetrofitInstance.apiService.registerUser(user)
+                    if (response.isSuccessful) {
+                        clearFields()
+                        onSuccess()
+                    } else {
+                        registrationError = "Error en el registro: ${response.message()}"
+                    }
                 } catch (e: Exception) {
-                    registrationError = "Error en el registro: ${e.message}"
+                    registrationError = "Error en el registro e: ${e.message}"
                 } finally {
                     isLoading = false
                 }
             }
         }
     }
+
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun validateFields(): Boolean {
@@ -77,10 +100,16 @@ class UserRegistrationViewModel : ViewModel() {
                 registrationError = "La contraseña debe tener al menos 6 caracteres"
                 return false
             }
-            password != confirmPassword -> {
+            password != password_confirmation -> {
                 registrationError = "Las contraseñas no coinciden"
                 return false
             }
+            role.isBlank() -> {
+                registrationError = "El rol es obligatorio"
+                return false
+            }
+
+
             else -> return true
         }
     }
@@ -116,7 +145,16 @@ class UserRegistrationViewModel : ViewModel() {
         phone = ""
         birthDate = ""
         location = ""
+        number =""
         password = ""
-        confirmPassword = ""
+        password_confirmation = ""
+        role = ""
+        image = null
     }
+
 }
+
+
+
+
+
