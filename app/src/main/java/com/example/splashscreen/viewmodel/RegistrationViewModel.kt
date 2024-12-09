@@ -14,25 +14,27 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
 class UserRegistrationViewModel() : ViewModel() {
-    var name by mutableStateOf("")
-    var lastname by mutableStateOf("")
-    var email by mutableStateOf("")
-    var phone by mutableStateOf("")
-    var birthDate by mutableStateOf("")
-    var location by mutableStateOf("")
-    var password by mutableStateOf("")
-    var password_confirmation by mutableStateOf("")
-    val roleOptions = listOf("Investor", "Entrepreneur")
-    var role by mutableStateOf("")
-    var image by mutableStateOf("https://res.cloudinary.com/dnwn5sjvs/image/upload/v1733695759/register/profile_pics/jdle571mdt4oyycpkoap.jpg")
+    var name by mutableStateOf("gus")
+    var lastname by mutableStateOf("andes")
+    var email by mutableStateOf("gasc2004@gmail.com")
+    var phone by mutableStateOf("123456789")
+    var birthDate by mutableStateOf("2000-12-12")
+    var location by mutableStateOf("pasto")
+    var number by mutableStateOf("123456789")
+    var password by mutableStateOf("123456789")
+    var password_confirmation by mutableStateOf("123456789")
+    val roleOptions = listOf("investor", "entrepreneur")
+    var role by mutableStateOf("investor")
+
+
+    var image by mutableStateOf<String?>(null)
 
     var isLoading by mutableStateOf(false)
     var registrationError by mutableStateOf<String?>(null)
 
-    fun setSelectedImage(uri: Uri?) {
-        image = uri?.toString() ?: ""
-    }
-
+//    fun setSelectedImage(uri: Uri?) {
+//        image = uri?.toString() ?: ""
+//    }
     @RequiresApi(Build.VERSION_CODES.O)
     fun registerUser(onSuccess: () -> Unit) {
         if (validateFields()) {
@@ -46,6 +48,7 @@ class UserRegistrationViewModel() : ViewModel() {
                         phone = phone,
                         birth_date = birthDate,
                         location = location,
+                        number = number,
                         password = password,
                         password_confirmation = password_confirmation,
                         role = role,
@@ -105,10 +108,6 @@ class UserRegistrationViewModel() : ViewModel() {
                 registrationError = "El rol es obligatorio"
                 return false
             }
-            image == null -> {
-                registrationError = "Debe seleccionar una imagen de perfil"
-                return false
-            }
 
 
             else -> return true
@@ -146,10 +145,13 @@ class UserRegistrationViewModel() : ViewModel() {
         phone = ""
         birthDate = ""
         location = ""
+        number =""
         password = ""
         password_confirmation = ""
         role = ""
-        image = ""    }
+        image = null
+    }
+
 }
 
 

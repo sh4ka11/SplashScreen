@@ -155,14 +155,15 @@ fun UserRegistrationScreen(
             Dropdown(
                 selectedOption = viewModel.role,
                 onOptionSelected = { viewModel.role = it },
-                options = viewModel.roleOptions
+                options = viewModel.roleOptions.map { it.capitalize() }
             )
 
+
             // Profile Image Picker
-            ProfileImagePicker(
-                imageUri = viewModel.image,
-                onImageSelected = { uri -> viewModel.setSelectedImage(uri) }
-            )
+//            ProfileImagePicker(
+//                imageUri = viewModel.image,
+//                onImageSelected = { uri -> viewModel.setSelectedImage(uri) }
+//            )
 
             Spacer(modifier = Modifier.height(16.dp))
 

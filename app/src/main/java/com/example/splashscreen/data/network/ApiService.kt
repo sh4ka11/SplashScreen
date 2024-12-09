@@ -17,6 +17,4 @@ interface ApiService {
     @POST("/api/auth/register")
     suspend fun registerUser(@Body user: User): Response<Void>
 
-
-
 }
