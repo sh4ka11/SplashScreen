@@ -1,5 +1,6 @@
 package com.example.splashscreen.screens
 
+import UserProfileViewModel
 import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -21,7 +22,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.splashscreen.data.model.UserProfile
-import com.example.splashscreen.viewmodel.UserProfileViewModel
 
 @Composable
 fun UserProfileMainView(
