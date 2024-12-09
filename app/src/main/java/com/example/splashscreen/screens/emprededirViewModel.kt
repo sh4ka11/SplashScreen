@@ -6,7 +6,7 @@
 //import androidx.lifecycle.ViewModel
 //import androidx.lifecycle.viewModelScope
 //import com.example.splashscreen.data.emprededorState
-//import com.example.splashscreen.navigation.ApiService
+//import com.example.splashscreen.navigation.com.example.splashscreen.data.network.ApiService
 //import kotlinx.coroutines.launch
 //import Entrepreneurs
 //
@@ -24,7 +24,7 @@
 //            state = state.copy(
 //                isLoading = true
 //            )
-//            val apiService = ApiService.getInstance()
+//            val apiService = com.example.splashscreen.data.network.ApiService.getInstance()
 //            val  emprendedorList = apiService.getEmprededor()
 //            response= emprendedorList
 //
