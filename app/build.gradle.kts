@@ -60,7 +60,9 @@ dependencies {
 
     implementation ("com.google.code.gson:gson:2.8.9")
 
-    
+    implementation ("androidx.security:security-crypto:1.1.0-alpha06")
+
+
     // Librerías de Lifecycle y ViewModel para arquitectura
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation(libs.androidx.lifecycle.runtime.ktx)

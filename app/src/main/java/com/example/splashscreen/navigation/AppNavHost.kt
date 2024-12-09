@@ -24,6 +24,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -86,7 +87,10 @@ fun AppNavHost() {
     NavHost(navController = navController, startDestination = Screen.HOMEPRINCIPAL.name) {
 
         composable("LoginPrueba") {
-            LoginScreen(navController = navController)
+            LoginScreen(
+                navController = navController,
+                context = LocalContext.current  // Agrega esta línea
+            )
         }
 
         composable("RegistrationPrueba") {
