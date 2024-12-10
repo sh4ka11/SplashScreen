@@ -2,6 +2,7 @@ import com.example.splashscreen.data.model.LoginRequest
 import com.example.splashscreen.data.model.LoginResponse
 import com.example.splashscreen.data.model.User
 import com.example.splashscreen.data.model.UserProfile
+import com.example.splashscreen.data.model.UserProfileRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -19,8 +20,11 @@ interface ApiService {
     @POST("/api/auth/register")
     suspend fun registerUser(@Body user: User): Response<Void>
 
-    interface ApiService {
-        @POST("/api/auth/profile")
-        suspend fun getUserProfile(@Header("Authorization") token: String): Response<UserProfile>
-    }
+    @POST("/api/auth/profile")
+    suspend fun getUserProfile(
+        @Header("Authorization") token: String,
+        @Body requestBody: UserProfileRequest
+    ): Response<UserProfile>
+
+
 }

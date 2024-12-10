@@ -11,3 +11,6 @@ data class UserProfile(
     @SerializedName("birthdate") val birthDate: String,
     @SerializedName("image") val image: String
 )
+data class UserProfileRequest(
+    val userId: String // Cambia esto según lo que la API requiera.
+)

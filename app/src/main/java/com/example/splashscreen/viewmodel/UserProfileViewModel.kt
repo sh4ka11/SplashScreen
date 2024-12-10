@@ -1,9 +1,8 @@
-package com.example.splashscreen.viewmodel
-
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.splashscreen.data.model.UserProfile
+import com.example.splashscreen.data.model.UserProfileRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -24,7 +23,7 @@ class UserProfileViewModel : ViewModel() {
             _isLoading.value = true
             _error.value = null
 
-            // Recuperar token de SharedPreferences
+            // Obtener token de SharedPreferences
             val token = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
                 .getString("token", null)
 
@@ -35,16 +34,22 @@ class UserProfileViewModel : ViewModel() {
             }
 
             try {
-                val response: Response<com.example.splashscreen.screens.UserProfile> = RetrofitInstance.apiService.getUserProfile("Bearer $token")
+                // Preparar el cuerpo de la solicitud
+                val requestBody = UserProfileRequest(userId = "12345") // Ajusta según lo esperado por la API
+
+                // Llamada a la API
+                val response: Response<UserProfile> = RetrofitInstance.apiService.getUserProfile(
+                    token = "Bearer $token",
+                    requestBody = requestBody
+                )
+
                 if (response.isSuccessful) {
                     _user.value = response.body()
-                    _error.value = null
                 } else {
-                    val errorMessage = response.errorBody()?.string() ?: "Error en la respuesta de la API"
-                    _error.value = "Error: $errorMessage (${response.code()})"
+                    _error.value = "Error: ${response.errorBody()?.string() ?: "Error desconocido"} (${response.code()})"
                 }
             } catch (e: Exception) {
-                _error.value = "Excepción al obtener perfil: ${e.localizedMessage}"
+                _error.value = "Error: ${e.localizedMessage}"
             } finally {
                 _isLoading.value = false
             }
