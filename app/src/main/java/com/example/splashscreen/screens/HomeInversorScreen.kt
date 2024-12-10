@@ -261,7 +261,7 @@ fun EmprendeInversorMainView(navController: NavController) {
                 .size(222.dp, 46.dp),
         )
 
-        // Button text
+        // Button text  = navController.navigate(AppScreens.ListaEmprendimientosInver.route
 
         Button(
             onClick = { navController.navigate(AppScreens.ListaEmprendimientosInver.route) },                modifier = Modifier

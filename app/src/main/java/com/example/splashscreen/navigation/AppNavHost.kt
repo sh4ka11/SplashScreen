@@ -2,40 +2,19 @@ package com.example.splashscreen.navigation
 
 import BusinessListView
 import LoginScreen
+import UserProfileScreen
 import UserRegistrationScreen
 //import WineEditAppApp
 //import WineShopApp
 import ai.codia.x.composeui.demo.HomePincipalScreen
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import com.example.splashscreen.R
-import com.example.splashscreen.data.Movie
 import com.example.splashscreen.screens.Busquedaemprendeinver
-import com.example.splashscreen.screens.Busquedaemprendeusuario
 import com.example.splashscreen.screens.Busquedaemprendeusuario
 
 import com.example.splashscreen.screens.EmprendeInversorMainView
@@ -48,7 +27,6 @@ import com.example.splashscreen.screens.ListaEmprendimientosInver
 import com.example.splashscreen.screens.LoginInversor
 //import com.example.splashscreen.screens.LoginScreen
 //import com.example.splashscreen.screens.LoginUser
-import com.example.splashscreen.screens.NavigationRoutes
 import com.example.splashscreen.screens.Notificaciones2Inver
 import com.example.splashscreen.screens.Notificaciones2Usu
 import com.example.splashscreen.screens.NotificacionesInver
@@ -60,8 +38,6 @@ import com.example.splashscreen.screens.ProfileEditScreen
 import com.example.splashscreen.screens.ProfileScreen
 import com.example.splashscreen.screens.PublicarEmprendimientoView
 import com.example.splashscreen.screens.RegisterInversor
-import com.example.splashscreen.screens.RegisterPhoneView
-import com.example.splashscreen.screens.RegistrationScreen
 import com.example.splashscreen.screens.UserAdditionalInfoScreen
 import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.UserRegistrationCorreo
@@ -70,10 +46,7 @@ import com.example.splashscreen.screens.user_registration_codeve_correo
 import com.example.splashsreen.screens.Contactanosh
 import com.example.splasscreen.screens.ConfirmationCodeScreen
 //import com.example.splashsreen.screens.Busquedaemprendeusuario
-import com.example.splashsreen.screens.Contactanosh
 import com.example.splashsreen.screens.Contactanosinver
-import com.example.splasscreen.screens.ConfirmationCodeScreen
-import com.example.splasscreen.screens.verificarcorreo
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -100,6 +73,9 @@ fun AppNavHost() {
             UserRegistrationScreen(navController = navController)
         }
 
+        composable("userPerfil") {
+            UserProfileScreen(navController = navController)
+        }
 
         //emprendedor menu
 

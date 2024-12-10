@@ -1,16 +1,16 @@
 package com.example.splashscreen.data.model
 
-import com.google.gson.annotations.SerializedName
 
 data class UserProfile(
-    @SerializedName("id") val id: String,
-    @SerializedName("name") val name: String,
-    @SerializedName("email") val email: String,
-    @SerializedName("phone") val phone: String,
-    @SerializedName("location") val location: String,
-    @SerializedName("birthdate") val birthDate: String,
-    @SerializedName("image") val image: String
-)
-data class UserProfileRequest(
-    val userId: String // Cambia esto según lo que la API requiera.
+    val id: Int,
+    val name: String,
+    val lastname: String,
+    val birth_date: String,
+    val phone: String,
+    val image: String?,
+    val email: String,
+    val location: String,
+    val number: Int,
+    val created_at: String,
+    val updated_at: String
 )
