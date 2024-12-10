@@ -1,4 +1,3 @@
-import com.example.splashscreen.data.network.ApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

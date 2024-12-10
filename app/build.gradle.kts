@@ -62,6 +62,7 @@ dependencies {
 
     implementation ("androidx.security:security-crypto:1.1.0-alpha06")
 
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
 
     // Librerías de Lifecycle y ViewModel para arquitectura
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")

@@ -3,14 +3,29 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
 import com.example.splashscreen.data.model.LoginRequest
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth_preferences")
+
 class LoginViewModel(private val context: Context) : ViewModel() {
+    companion object {
+        val ACCESS_TOKEN_KEY = stringPreferencesKey("access_token")
+        val ROLE_KEY = stringPreferencesKey("role")
+        val TOKEN_TIMESTAMP_KEY = longPreferencesKey("token_timestamp")
+    }
+
+    // Existing properties
     var email by mutableStateOf("gasc2004@gmail.com")
     var password by mutableStateOf("123456789")
     var role by mutableStateOf("")
@@ -18,22 +33,7 @@ class LoginViewModel(private val context: Context) : ViewModel() {
     var isLoading: Boolean = false
     var loginError: String? = null
 
-    // Create an encrypted SharedPreferences instance
-    private val sharedPreferences by lazy {
-        val masterKeyAlias = MasterKey.DEFAULT_MASTER_KEY_ALIAS
-        val masterKey = MasterKey.Builder(context)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-
-        EncryptedSharedPreferences.create(
-            context,
-            "secure_auth_prefs",
-            masterKey,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-    }
-
+    // New methods to handle email and password changes
     fun onEmailChanged(newEmail: String) {
         email = newEmail
     }
@@ -42,25 +42,64 @@ class LoginViewModel(private val context: Context) : ViewModel() {
         password = newPassword
     }
 
+    // Rest of the existing code remains the same...
+    fun saveToken(token: String) {
+        viewModelScope.launch {
+            if (token.isBlank()) {
+                Log.e("LoginViewModel", "Attempting to save an empty token")
+                return@launch
+            }
+
+            context.dataStore.edit { preferences ->
+                preferences[ACCESS_TOKEN_KEY] = token
+                preferences[ROLE_KEY] = role
+                preferences[TOKEN_TIMESTAMP_KEY] = System.currentTimeMillis()
+            }
+        }
+    }
+
+    fun getToken(): Flow<String?> = context.dataStore.data.map { preferences ->
+        val token = preferences[ACCESS_TOKEN_KEY]
+        val tokenTimestamp = preferences[TOKEN_TIMESTAMP_KEY] ?: 0
+
+        val TOKEN_EXPIRATION = 30 * 24 * 60 * 60 * 1000L
+        if (token != null && (System.currentTimeMillis() - tokenTimestamp) < TOKEN_EXPIRATION) {
+            token
+        } else {
+            null
+        }
+    }
+
+    fun isLoggedIn(): Flow<Boolean> = getToken().map { it != null }
+
+    fun clearToken() {
+        viewModelScope.launch {
+            context.dataStore.edit { preferences ->
+                preferences.clear()
+            }
+            email = ""
+            password = ""
+            role = ""
+        }
+    }
+
     fun login(
         onLoginSuccess: () -> Unit,
         onLoginFailure: (String) -> Unit
     ) {
         if (email.isBlank() || password.isBlank()) {
-            onLoginFailure("Por favor, complete todos los campos")
+            onLoginFailure("Please complete all fields")
             return
         }
 
         if (role.isBlank()) {
-            onLoginFailure("Por favor, seleccione un rol")
+            onLoginFailure("Please select a role")
             return
         }
 
         isLoading = true
         viewModelScope.launch {
             try {
-                println("Sending login: Email=$email, Role=$role")
-
                 val loginRequest = LoginRequest(
                     email = email,
                     password = password,
@@ -68,10 +107,6 @@ class LoginViewModel(private val context: Context) : ViewModel() {
                 )
 
                 val response = RetrofitInstance.apiService.loginUser(loginRequest)
-
-                println("Response code: ${response.code()}")
-                println("Response body: ${response.body()}")
-                println("Error body: ${response.errorBody()?.string()}")
 
                 if (response.isSuccessful) {
                     response.body()?.let { loginResponse ->
@@ -98,43 +133,5 @@ class LoginViewModel(private val context: Context) : ViewModel() {
                 isLoading = false
             }
         }
-    }
-
-    fun saveToken(token: String) {
-        // Validar que el token no esté vacío
-        if (token.isBlank()) {
-            Log.e("LoginViewModel", "Intentando guardar un token vacío")
-            return
-        }
-
-        sharedPreferences.edit()
-            .putString("access_token", token)
-            .putString("role", role)
-            .putLong("token_timestamp", System.currentTimeMillis())
-            .apply()
-    }
-
-    fun getToken(): String? {
-        // Opcional: Agregar lógica para verificar la validez del token
-        val token = sharedPreferences.getString("access_token", null)
-        val tokenTimestamp = sharedPreferences.getLong("token_timestamp", 0)
-
-        // Ejemplo: Invalidar token después de 30 días
-        val tokenAge = System.currentTimeMillis() - tokenTimestamp
-        val TOKEN_EXPIRATION = 30 * 24 * 60 * 60 * 1000L // 30 días en milisegundos
-
-        return if (token != null && tokenAge < TOKEN_EXPIRATION) token else null
-    }
-
-    fun isLoggedIn(): Boolean {
-        return !getToken().isNullOrBlank()
-    }
-
-    fun clearToken() {
-        sharedPreferences.edit().clear().apply()
-        // Opcional: Reiniciar otros estados de la aplicación
-        email = ""
-        password = ""
-        role = ""
     }
 }
