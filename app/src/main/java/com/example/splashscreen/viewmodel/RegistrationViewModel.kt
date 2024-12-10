@@ -14,9 +14,9 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
 class UserRegistrationViewModel() : ViewModel() {
-    var name by mutableStateOf("gus")
+    var name by mutableStateOf("gustavo")
     var lastname by mutableStateOf("andes")
-    var email by mutableStateOf("gustavoandressanchezceron@gmail.com")
+    var email by mutableStateOf("gasc2004@gmail.com")
     var phone by mutableStateOf("123456789")
     var birthDate by mutableStateOf("2000-12-12")
     var location by mutableStateOf("pasto")
@@ -24,7 +24,7 @@ class UserRegistrationViewModel() : ViewModel() {
     var password by mutableStateOf("123456789")
     var password_confirmation by mutableStateOf("123456789")
     val roleOptions = listOf("investor", "entrepreneur")
-    var role by mutableStateOf("entrepreneur")
+    var role by mutableStateOf("investor")
 
 
     var image by mutableStateOf<String?>(null)

@@ -21,10 +21,9 @@ import com.example.splashscreen.navigation.NavigationItem
 @Composable
 fun LoginScreen(
     navController: NavController,
-    context: Context,
     viewModel: LoginViewModel = viewModel(factory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return LoginViewModel(context) as T
+            return LoginViewModel(navController.context) as T
         }
     })
 ) {

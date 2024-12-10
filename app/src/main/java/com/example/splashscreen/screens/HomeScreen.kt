@@ -236,9 +236,9 @@
                 overflow = TextOverflow.Ellipsis,
             )
     
-            // Button background
+            // Button background  -AppScreens.PublicarEmprendimientoView.route
             Button(
-                onClick = { navController.navigate(AppScreens.PublicarEmprendimientoView.route) },                modifier = Modifier
+                onClick = { navController.navigate("userPerfil") },                modifier = Modifier
                     .align(Alignment.TopStart)
                     .offset(x = 94.dp, y = 545.dp)
                     .size(222.dp, 46.dp)
@@ -524,10 +524,10 @@
     }
     
     
-    
-    @Preview(showBackground = true)
-    @Composable
-    fun HomeScreenPreview() {
-        val navController = rememberNavController() // Create a NavController for preview
-        HomeScreen(navController = navController) // Pass it to HomeScreen
-    }
+//
+//    @Preview(showBackground = true)
+//    @Composable
+//    fun HomeScreenPreview() {
+//        val navController = rememberNavController() // Create a NavController for preview
+//        HomeScreen(navController = navController) // Pass it to HomeScreen
+//    }

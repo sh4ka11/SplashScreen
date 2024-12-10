@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth_preferences")
 
 class LoginViewModel(private val context: Context) : ViewModel() {
+
     companion object {
         val ACCESS_TOKEN_KEY = stringPreferencesKey("access_token")
         val ROLE_KEY = stringPreferencesKey("role")
@@ -26,7 +27,7 @@ class LoginViewModel(private val context: Context) : ViewModel() {
     }
 
     // Existing properties
-    var email by mutableStateOf("gasc2004@gmail.com")
+    var email by mutableStateOf("gustavoandressanchezceron@gmail.com")
     var password by mutableStateOf("123456789")
     var role by mutableStateOf("")
 

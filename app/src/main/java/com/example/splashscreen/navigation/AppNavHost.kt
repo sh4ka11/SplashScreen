@@ -2,7 +2,9 @@ package com.example.splashscreen.navigation
 
 import BusinessListView
 import LoginScreen
+import LoginViewModel
 import UserProfileScreen
+import UserProfileViewModel
 import UserRegistrationScreen
 //import WineEditAppApp
 //import WineShopApp
@@ -10,10 +12,13 @@ import ai.codia.x.composeui.demo.HomePincipalScreen
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.splashscreen.data.repository.UserProfileViewModelFactory
 import com.example.splashscreen.screens.Busquedaemprendeinver
 import com.example.splashscreen.screens.Busquedaemprendeusuario
 
@@ -36,16 +41,15 @@ import com.example.splashscreen.screens.PersonalProfileEditScreen
 //import com.example.splashscreen.screens.PersonalProfileEditScreen
 import com.example.splashscreen.screens.ProfileEditScreen
 import com.example.splashscreen.screens.ProfileScreen
+import com.example.splashscreen.screens.Pruebavista
 import com.example.splashscreen.screens.PublicarEmprendimientoView
 import com.example.splashscreen.screens.RegisterInversor
 import com.example.splashscreen.screens.UserAdditionalInfoScreen
-import com.example.splashscreen.screens.UserProfileMainView
 import com.example.splashscreen.screens.UserRegistrationCorreo
 import com.example.splashscreen.screens.VinotecaEcstasyApp
 import com.example.splashscreen.screens.user_registration_codeve_correo
 import com.example.splashsreen.screens.Contactanosh
 import com.example.splasscreen.screens.ConfirmationCodeScreen
-//import com.example.splashsreen.screens.Busquedaemprendeusuario
 import com.example.splashsreen.screens.Contactanosinver
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -60,10 +64,7 @@ fun AppNavHost() {
     NavHost(navController = navController, startDestination = Screen.HOMEPRINCIPAL.name) {
 
         composable("LoginPrueba") {
-            LoginScreen(
-                navController = navController,
-                context = LocalContext.current  // Agrega esta línea
-            )
+            LoginScreen(navController = navController)
         }
 
         composable("RegistrationPrueba") {
@@ -73,15 +74,20 @@ fun AppNavHost() {
             UserRegistrationScreen(navController = navController)
         }
 
+        composable("PruebaPerfil") {
+            Pruebavista(navController = navController)
+        }
+
         composable("userPerfil") {
             UserProfileScreen(navController = navController)
         }
 
         //emprendedor menu
 
-        composable("user_profile_main_view") {
-            UserProfileMainView(navController = navController)
-        }
+//        composable("user_profile_main_view") {
+//            UserProfileMainView(navController = navController)
+//        }
+
         composable("HomePrincipal") {
             HomeScreen(navController = navController)
         }
@@ -168,9 +174,9 @@ fun AppNavHost() {
             HomeScreen(navController)
         }
 
-        composable(AppScreens.UserProfileMainView.route) {
-            UserProfileMainView(navController)
-        }
+//        composable(AppScreens.UserProfileMainView.route) {
+//            UserProfileMainView(navController)
+//        }
 
         composable(AppScreens.PersonalProfileEditScreen.route) {
             PersonalProfileEditScreen(navController)

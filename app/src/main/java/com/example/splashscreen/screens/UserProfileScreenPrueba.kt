@@ -1,3 +1,4 @@
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -12,8 +13,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.splashscreen.R
@@ -21,11 +22,9 @@ import com.example.splashscreen.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserProfileScreen(
-    viewModel: UserProfileViewModel,
-    onEditProfile: () -> Unit = {},
-    navController: NavController
+    navController: NavController,
+    viewModel: UserProfileViewModel = UserProfileViewModel(navController.context)
     ) {
-    // Trigger profile fetch when screen is first loaded
     LaunchedEffect(Unit) {
         viewModel.fetchUserProfile()
     }
@@ -35,9 +34,9 @@ fun UserProfileScreen(
             TopAppBar(
                 title = { Text("My Profile") },
                 actions = {
-                    IconButton(onClick = onEditProfile) {
-                        Icon(Icons.Default.Edit, contentDescription = "Edit Profile")
-                    }
+//                    IconButton(onClick = onEditProfile) {
+//                        Icon(Icons.Default.Edit, contentDescription = "Edit Profile")
+//                    }
                 }
             )
         }
@@ -137,4 +136,7 @@ fun ProfileInfoItem(label: String, value: String) {
             fontWeight = FontWeight.Medium
         )
     }
+
 }
+
+
