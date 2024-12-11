@@ -64,14 +64,12 @@ fun PersonalProfileEditScreen(navController: NavController,
     var tempProfile by remember {
         mutableStateOf(
             PersonalProfile(
-                name = "Cristian Sebastian Delgado Calvache",
-                birthDate = "Nacido(a) el 05 de septiembre de 2002",
-                email = "sdp402@gmail.com",
-                location = "POPAYAN-Cauca-Colombia",
-                phone = "3214567890",
-                document = "19861598659864",
-                gender = "MASCULINO",
-                stage = "Primera fase: la idea de negocio"
+                name = "gustavo andes ",
+                birthDate = "2000-12-12",
+                email = "gasc2004@gmail.com",
+                location = "pasto",
+                phone = "123456789",
+
             )
         )
     }

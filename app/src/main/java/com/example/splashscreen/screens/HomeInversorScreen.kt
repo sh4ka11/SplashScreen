@@ -264,7 +264,7 @@ fun EmprendeInversorMainView(navController: NavController) {
         // Button text  = navController.navigate(AppScreens.ListaEmprendimientosInver.route
 
         Button(
-            onClick = { navController.navigate(AppScreens.ListaEmprendimientosInver.route) },                modifier = Modifier
+            onClick = { navController.navigate("userPerfil") },modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(x = 94.dp, y = 545.dp)
                 .size(222.dp, 46.dp)
@@ -277,7 +277,7 @@ fun EmprendeInversorMainView(navController: NavController) {
             contentPadding = PaddingValues(0.dp)
         ) {
             Text(
-                text = "Busca empredimientos",
+                text = "ver perfil",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Normal,
                 textAlign = TextAlign.Center,

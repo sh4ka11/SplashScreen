@@ -251,7 +251,7 @@
                 contentPadding = PaddingValues(0.dp)
             ) {
                 Text(
-                    text = "Crea tu emprendimiento",
+                    text = "ver perfil",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Normal,
                     textAlign = TextAlign.Center,

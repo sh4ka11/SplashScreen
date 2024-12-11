@@ -26,14 +26,16 @@ interface ApiService {
 //        @Header("Authorization") token: String,
 //        @Body requestBody: UserProfileRequest
 //    ): Response<UserProfile>
-//
+
+
+
 
         @POST("api/auth/me")
         suspend fun getUserInfo(
             @Header("Authorization") token: String
         ): UserProfile
 
-        @PUT("users/profile") // Ajusta la ruta según tu API
+        @PUT("/update/") // Ajusta la ruta según tu API
         suspend fun updateUserProfile(
             @Header("Authorization") token: String,
             @Body userProfile: UserProfile
