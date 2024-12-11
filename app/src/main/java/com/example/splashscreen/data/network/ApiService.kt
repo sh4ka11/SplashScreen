@@ -7,6 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface ApiService {
     // Duplicate interface nested inside
@@ -30,6 +31,12 @@ interface ApiService {
         @POST("api/auth/me")
         suspend fun getUserInfo(
             @Header("Authorization") token: String
+        ): UserProfile
+
+        @PUT("users/profile") // Ajusta la ruta según tu API
+        suspend fun updateUserProfile(
+            @Header("Authorization") token: String,
+            @Body userProfile: UserProfile
         ): UserProfile
 
 

@@ -195,8 +195,8 @@ fun AppNavHost() {
         composable(AppScreens.ProfileScreen.route) {
             ProfileScreen(navController)
         }
-        composable(AppScreens.ProfileEditScreen.route) {
-            ProfileEditScreen(navController)
+        composable(AppScreens.PersonalProfileEditScreen.route) {
+            PersonalProfileEditScreen(navController)
         }
         composable(AppScreens.UserRegistrationCorreo.route) {
             UserRegistrationCorreo(navController)

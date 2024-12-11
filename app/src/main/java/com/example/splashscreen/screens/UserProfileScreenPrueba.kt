@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.splashscreen.R
+import com.example.splashscreen.navigation.AppScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,9 +35,12 @@ fun UserProfileScreen(
             TopAppBar(
                 title = { Text("Mi perfil xd") },
                 actions = {
-//                    IconButton(onClick = onEditProfile) {
-//                        Icon(Icons.Default.Edit, contentDescription = "Edit Profile")
-//                    }
+                    IconButton(onClick = {
+                        navController.navigate(AppScreens.PersonalProfileEditScreen.route)
+                    }) {
+                        Icon(Icons.Default.Edit, contentDescription = "Edit Profile")
+                    }
+
                 }
             )
         }
