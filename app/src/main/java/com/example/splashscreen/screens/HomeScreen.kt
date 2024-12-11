@@ -79,7 +79,7 @@
                     Divider()
     
                     listOf(
-                        Triple("Mi Perfil", Icons.Default.Person, "user_profile_main_view"),
+                        Triple("Mi Perfil", Icons.Default.Person, "userPerfil"),
                         Triple("Inicio", Icons.Default.Home, "HomePrincipal"),
                         Triple("Búsqueda por categoría", Icons.Default.Search, "busqueda"),
                         Triple("Lista de emprendimientos", Icons.Default.List, "Lista de emprendimientos"),

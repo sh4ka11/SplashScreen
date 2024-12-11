@@ -32,7 +32,7 @@ fun UserProfileScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("My Profile") },
+                title = { Text("Mi perfil xd") },
                 actions = {
 //                    IconButton(onClick = onEditProfile) {
 //                        Icon(Icons.Default.Edit, contentDescription = "Edit Profile")
