@@ -112,10 +112,10 @@ fun UserProfileScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // Contact Information
-                ProfileInfoItem(label = "Email", value = profile.email)
-                ProfileInfoItem(label = "Phone", value = profile.phone)
-                ProfileInfoItem(label = "Birth Date", value = profile.birth_date)
-                ProfileInfoItem(label = "Location", value = profile.location)
+                ProfileInfoItem(label = "Correo ", value = profile.email)
+                ProfileInfoItem(label = "Celular", value = profile.phone)
+                ProfileInfoItem(label = "fecha de nacimiento", value = profile.birth_date)
+                ProfileInfoItem(label = "Ubicacion", value = profile.location)
             }
         }
     }
@@ -142,5 +142,4 @@ fun ProfileInfoItem(label: String, value: String) {
     }
 
 }
-
 
